@@ -20,9 +20,9 @@ Fit a von Bertalanffy growth model to tags and otoliths.
 \details{
 The parameter list contains the following elements:
 \itemize{
-  \item \code{log_Linf}
+  \item \code{log_L1}
+  \item \code{log_L2}
   \item \code{log_k}
-  \item \code{t0}
   \item \code{log_sigma_1}
   \item \code{log_sigma_2}
   \item \code{log_age} (vector)

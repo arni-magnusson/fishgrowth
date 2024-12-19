@@ -8,9 +8,9 @@
 #' @details
 #' The parameter list contains the following elements:
 #' \itemize{
-#'   \item \code{log_Linf}
+#'   \item \code{log_L1}
+#'   \item \code{log_L2}
 #'   \item \code{log_k}
-#'   \item \code{t0}
 #'   \item \code{log_sigma_1}
 #'   \item \code{log_sigma_2}
 #'   \item \code{log_age} (vector)
@@ -23,6 +23,8 @@
 #'   \item \code{liberty} (vector)
 #'   \item \code{Aoto} (vector)
 #'   \item \code{Loto} (vector)
+#'   \item \code{t1}
+#'   \item \code{t2}
 #'   \item \code{L_short}
 #'   \item \code{L_long}
 #' }
@@ -30,7 +32,7 @@
 #' @return
 #' List produced by \code{\link[RTMB]{MakeADFun}}.
 #'
-#' @importFrom RTMB ADREPORT getAll MakeADFun REPORT dnorm
+#' @importFrom RTMB ADREPORT dnorm MakeADFun REPORT
 #'
 #' @export
 
@@ -43,9 +45,9 @@ vonbert <- function(par, data)
 vb_objfun <- function(par, data)
 {
   # Extract parameters
-  log_Linf <- par$log_Linf
+  log_L1 <- par$log_L1
+  log_L2 <- par$log_L2
   log_k <- par$log_k
-  t0 <- par$t0
   log_sigma_1 <- par$log_sigma_1
   log_sigma_2 <- par$log_sigma_2
   log_age <- par$log_age
@@ -56,11 +58,14 @@ vb_objfun <- function(par, data)
   liberty <- data$liberty
   Aoto <- data$Aoto
   Loto <- data$Loto
+  t1 <- data$t1
+  t2 <- data$t2
   L_short <- data$L_short
   L_long <- data$L_long
 
   # Calculate parameters
-  Linf <- exp(log_Linf)
+  L1 <- exp(log_L1)
+  L2 <- exp(log_L2)
   k <- exp(log_k)
   sigma_1 <- exp(log_sigma_1)
   sigma_2 <- exp(log_sigma_2)
@@ -69,9 +74,9 @@ vb_objfun <- function(par, data)
   age <- exp(log_age)
 
   # Calculate Lhat and sigma
-  Lrel_hat <- Linf * (1 - exp(-k * (age - t0)))
-  Lrec_hat <- Linf * (1 - exp(-k * (age + liberty - t0)))
-  Loto_hat <- Linf * (1 - exp(-k * (Aoto - t0)))
+  Lrel_hat <- L1 + (L2-L1) * (1-exp(-k*(age-t1))) / (1-exp(-k*(t2-t1)))
+  Lrec_hat <- L1 + (L2-L1) * (1-exp(-k*(age+liberty-t1))) / (1-exp(-k*(t2-t1)))
+  Loto_hat <- L1 + (L2-L1) * (1-exp(-k*(Aoto-t1))) / (1-exp(-k*(t2-t1)))
   sigma_Lrel <- sigma_intercept + sigma_slope * Lrel_hat
   sigma_Lrec <- sigma_intercept + sigma_slope * Lrec_hat
   sigma_Loto <- sigma_intercept + sigma_slope * Loto_hat
@@ -83,14 +88,14 @@ vb_objfun <- function(par, data)
   nll <- sum(nll_Lrel) + sum(nll_Lrec) + sum(nll_Loto)
 
   # Calculate curve
-  age_seq = seq(0, 10, 1/365)  # age 1-10 years, day by day
-  curve <- Linf * (1 - exp(-k * (age_seq - t0)))
+  age_seq = seq(0, 10, 1/365)  # age 0-10 years, day by day
+  curve <- L1 + (L2-L1) * (1-exp(-k*(age_seq-t1))) / (1-exp(-k*(t2-t1)))
 
   # Report quantities of interest
   ADREPORT(curve)
-  REPORT(Linf)
+  REPORT(L1)
+  REPORT(L2)
   REPORT(k)
-  REPORT(t0)
   REPORT(age)
   REPORT(liberty)
   REPORT(Lrel)
@@ -100,6 +105,8 @@ vb_objfun <- function(par, data)
   REPORT(Lrel_hat)
   REPORT(Lrec_hat)
   REPORT(Loto_hat)
+  REPORT(t1)
+  REPORT(t2)
   REPORT(L_short)
   REPORT(L_long)
   REPORT(sigma_1)
