@@ -1,3 +1,39 @@
+#' von Bertalanffy
+#'
+#' Fit a von Bertalanffy growth model to tags and otoliths.
+#'
+#' @param par is a parameter list.
+#' @param data is a data list.
+#'
+#' @details
+#' The parameter list contains the following elements:
+#' \itemize{
+#'   \item \code{log_Linf}
+#'   \item \code{log_k}
+#'   \item \code{t0}
+#'   \item \code{log_sigma_1}
+#'   \item \code{log_sigma_2}
+#'   \item \code{log_age} (vector)
+#' }
+#'
+#' The data list contains the following elements:
+#' \itemize{
+#'   \item \code{Lrel} (vector)
+#'   \item \code{Lrec} (vector)
+#'   \item \code{liberty} (vector)
+#'   \item \code{Aoto} (vector)
+#'   \item \code{Loto} (vector)
+#'   \item \code{L_short}
+#'   \item \code{L_long}
+#' }
+#'
+#' @return
+#' List produced by \code{\link[RTMB]{MakeADFun}}.
+#'
+#' @importFrom RTMB ADREPORT getAll MakeADFun REPORT dnorm
+#'
+#' @export
+
 vonbert <- function(par, data)
 {
   wrap <- function(objfun, ...) function(par) objfun(par, ...)
@@ -6,9 +42,22 @@ vonbert <- function(par, data)
 
 vb_objfun <- function(par, data)
 {
-  # Extract data and parameters
-  getAll(data, warn=FALSE)
-  getAll(par)
+  # Extract parameters
+  log_Linf <- par$log_Linf
+  log_k <- par$log_k
+  t0 <- par$t0
+  log_sigma_1 <- par$log_sigma_1
+  log_sigma_2 <- par$log_sigma_2
+  log_age <- par$log_age
+
+  # Extract data
+  Lrel <- data$Lrel
+  Lrec <- data$Lrec
+  liberty <- data$liberty
+  Aoto <- data$Aoto
+  Loto <- data$Loto
+  L_short <- data$L_short
+  L_long <- data$L_long
 
   # Calculate parameters
   Linf <- exp(log_Linf)
