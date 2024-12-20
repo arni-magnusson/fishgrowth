@@ -18,24 +18,38 @@ List produced by \code{\link[RTMB]{MakeADFun}}.
 Fit a von Bertalanffy growth model to tags and otoliths.
 }
 \details{
-The parameter list contains the following elements:
+The \code{par} list contains the following elements:
 \itemize{
-  \item \code{log_L1}
-  \item \code{log_L2}
-  \item \code{log_k}
-  \item \code{log_sigma_1}
-  \item \code{log_sigma_2}
-  \item \code{log_age} (vector)
+  \item \code{log_L1}, predicted length at age \code{t1}
+  \item \code{log_L2}, predicted length at age \code{t2}
+  \item \code{log_k}, growth coefficient
+  \item \code{log_sigma_1}, growth variability at length \code{L_short}
+  \item \code{log_sigma_2}, growth variability at length \code{L_long}
+  \item \code{log_age} predicted age at release (vector)
 }
 
-The data list contains the following elements:
+The \code{data} list contains the following elements:
 \itemize{
-  \item \code{Lrel} (vector)
-  \item \code{Lrec} (vector)
-  \item \code{liberty} (vector)
-  \item \code{Aoto} (vector)
-  \item \code{Loto} (vector)
-  \item \code{L_short}
-  \item \code{L_long}
+  \item \code{Lrel}, length at release (vector)
+  \item \code{Lrec}, length at recapture (vector)
+  \item \code{liberty}, time at liberty in years (vector)
+  \item \code{Aoto}, age from otoliths (vector)
+  \item \code{Loto}, length from otoliths (vector)
+  \item \code{t1}, age where predicted length is \code{L1}
+  \item \code{t2}, age where predicted length is \code{L2}
+  \item \code{L_short}, length where sd(length) is \code{sigma_1}
+  \item \code{L_long}, length where sd(length) is \code{sigma_2}
 }
+}
+\references{
+von Bertalanffy, L. (1938).
+A quantitative theory of organic growth.
+\emph{Human Biology}, \bold{10}, 181-213.
+\url{https://www.jstor.org/stable/41447359}.
+
+Schnute, J. and Fournier, D.. 1980.
+A new approach to length-frequence analysis: Growth structure.
+\emph{Canadian Journal of Fisheries and Aquatic Science}, \bold{37},
+1337-1351.
+\doi{10.1139/f80-172}.
 }
