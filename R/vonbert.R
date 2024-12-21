@@ -30,7 +30,7 @@
 #' }
 #'
 #' @return
-#' List produced by \code{\link[RTMB]{MakeADFun}}.
+#' TMB model object, produced by \code{\link[RTMB]{MakeADFun}}.
 #'
 #' @references
 #' von Bertalanffy, L. (1938).
@@ -45,6 +45,11 @@
 #' \doi{10.1139/f80-172}.
 #'
 #' @importFrom RTMB ADREPORT dnorm MakeADFun REPORT
+#'
+#' @seealso
+#' \code{\link{otoliths.skj}} and \code{\link{tags.skj}} are example datasets.
+#'
+#' \code{\link{tao-package}} gives an overview of the package.
 #'
 #' @export
 

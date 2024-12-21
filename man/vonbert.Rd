@@ -12,7 +12,7 @@ vonbert(par, data)
 \item{data}{is a data list.}
 }
 \value{
-List produced by \code{\link[RTMB]{MakeADFun}}.
+TMB model object, produced by \code{\link[RTMB]{MakeADFun}}.
 }
 \description{
 Fit a von Bertalanffy growth model to tags and otoliths.
@@ -52,4 +52,9 @@ A new approach to length-frequence analysis: Growth structure.
 \emph{Canadian Journal of Fisheries and Aquatic Science}, \bold{37},
 1337-1351.
 \doi{10.1139/f80-172}.
+}
+\seealso{
+\code{\link{otoliths.skj}} and \code{\link{tags.skj}} are example datasets.
+
+\code{\link{tao-package}} gives an overview of the package.
 }
