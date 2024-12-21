@@ -37,7 +37,7 @@ tags <- data.frame(lenRel=round(lenRel.obs, 1), lenRec=round(lenRec.obs, 1),
                    liberty=round(liberty, 2))
 
 # Apply data selection
-dailyGrowth.obs <- (lenRec.obs-lenRel.obs)/365
+dailyGrowth.obs <- (lenRec.obs - lenRel.obs) / 365
 tags <- subset(tags, liberty >= 30/365      &  # min 1 month at liberty
                      liberty <= 3           &  # max 3 years at liberty
                      dailyGrowth.obs >= 0   &  # zero or positive growth
@@ -45,5 +45,6 @@ tags <- subset(tags, liberty >= 30/365      &  # min 1 month at liberty
                      lenRel >= 30)             # min 30 cm at release
 tags <- tags[1:Ntag,]
 
-write.csv(otoliths, "otoliths.skj.csv", quote=FALSE, row.names=FALSE)
-write.csv(tags, "tags.skj.csv", quote=FALSE, row.names=FALSE)
+write.table(otoliths, "otoliths.skj.tab", quote=FALSE, sep="\t",
+            row.names=FALSE)
+write.table(tags, "tags.skj.tab", quote=FALSE, sep="\t", row.names=FALSE)
