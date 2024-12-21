@@ -2,7 +2,7 @@
 #'
 #' @name otoliths.skj
 #'
-#' @title Example Otolith Data
+#' @title Otolith Data
 #'
 #' @description
 #' Simulated otolith data, resembling the skipjack tuna dataset analyzed by

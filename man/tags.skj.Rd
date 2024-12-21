@@ -3,7 +3,7 @@
 \docType{data}
 \name{tags.skj}
 \alias{tags.skj}
-\title{Example Tagging Data}
+\title{Tagging Data}
 \format{
 Data frame containing three columns:
 \tabular{ll}{

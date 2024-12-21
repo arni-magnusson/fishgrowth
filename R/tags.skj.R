@@ -2,7 +2,7 @@
 #'
 #' @name tags.skj
 #'
-#' @title Example Tagging Data
+#' @title Tagging Data
 #'
 #' @description
 #' Simulated tagging data, resembling the skipjack tuna dataset analyzed by

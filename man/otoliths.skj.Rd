@@ -3,7 +3,7 @@
 \docType{data}
 \name{otoliths.skj}
 \alias{otoliths.skj}
-\title{Example Otolith Data}
+\title{Otolith Data}
 \format{
 Data frame containing two columns:
 \tabular{ll}{
