@@ -47,7 +47,7 @@
 #' @importFrom RTMB ADREPORT dnorm MakeADFun REPORT
 #'
 #' @seealso
-#' \code{\link{otoliths.skj}} and \code{\link{tags.skj}} are example datasets.
+#' \code{\link{otoliths_skj}} and \code{\link{tags_skj}} are example datasets.
 #'
 #' \code{\link{tao-package}} gives an overview of the package.
 #'

@@ -54,7 +54,7 @@ A new approach to length-frequence analysis: Growth structure.
 \doi{10.1139/f80-172}.
 }
 \seealso{
-\code{\link{otoliths.skj}} and \code{\link{tags.skj}} are example datasets.
+\code{\link{otoliths_skj}} and \code{\link{tags_skj}} are example datasets.
 
 \code{\link{tao-package}} gives an overview of the package.
 }

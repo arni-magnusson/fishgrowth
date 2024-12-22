@@ -1,6 +1,6 @@
 #' @docType data
 #'
-#' @name tags.skj
+#' @name tags_skj
 #'
 #' @title Tagging Data
 #'
@@ -9,7 +9,7 @@
 #' Macdonald et al. (2022).
 #'
 #' @usage
-#' tags.skj
+#' tags_skj
 #'
 #' @format
 #' Data frame containing three columns:
@@ -35,13 +35,13 @@
 #' \url{https://meetings.wcpfc.int/node/16254}.
 #'
 #' @seealso
-#' \code{\link{otoliths.skj}} is an otolith example dataset.
+#' \code{\link{otoliths_skj}} is an otolith example dataset.
 #'
 #' \code{\link{vonbert}} fits a von Bertalanffy model.
 #'
 #' \code{\link{tao-package}} gives an overview of the package.
 #'
 #' @examples
-#' tags.skj
+#' tags_skj
 
 NA
