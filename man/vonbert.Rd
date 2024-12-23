@@ -2,7 +2,7 @@
 % Please edit documentation in R/vonbert.R
 \name{vonbert}
 \alias{vonbert}
-\title{von Bertalanffy}
+\title{Von Bertalanffy Growth Model}
 \usage{
 vonbert(par, data)
 }

@@ -1,4 +1,4 @@
-#' von Bertalanffy
+#' Von Bertalanffy Growth Model
 #'
 #' Fit a von Bertalanffy growth model to tags and otoliths.
 #'
