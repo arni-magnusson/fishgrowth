@@ -85,7 +85,7 @@
 richards <- function(par, data)
 {
   wrap <- function(objfun, ...) function(par) objfun(par, ...)
-  MakeADFun(wrap(vb_objfun, data=data), par, silent=TRUE)
+  MakeADFun(wrap(r_objfun, data=data), par, silent=TRUE)
 }
 
 r_objfun <- function(par, data)
