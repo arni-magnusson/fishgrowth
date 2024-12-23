@@ -25,14 +25,15 @@ The \code{par} list contains the following elements:
   \item \code{log_k}, growth coefficient
   \item \code{log_sigma_1}, growth variability at length \code{L_short}
   \item \code{log_sigma_2}, growth variability at length \code{L_long}
-  \item \code{log_age} predicted age at release (vector)
+  \item \code{log_age} age at release of tagged individuals (vector)
 }
 
 The \code{data} list contains the following elements:
 \itemize{
-  \item \code{Lrel}, length at release (vector)
-  \item \code{Lrec}, length at recapture (vector)
-  \item \code{liberty}, time at liberty in years (vector)
+  \item \code{Lrel}, length at release of tagged individuals (vector)
+  \item \code{Lrec}, length at recapture of tagged individuals (vector)
+  \item \code{liberty}, time at liberty of tagged individuals in years
+        (vector)
   \item \code{Aoto}, age from otoliths (vector)
   \item \code{Loto}, length from otoliths (vector)
   \item \code{t1}, age where predicted length is \code{L1}
@@ -41,14 +42,38 @@ The \code{data} list contains the following elements:
   \item \code{L_long}, length where sd(length) is \code{sigma_2}
 }
 }
+\note{
+The von Bertalanffy (1938) growth model, as parametrized by Schnute and
+Fournier (1980), predicts length at age as:
+
+\deqn{\hat L_t ~=~ L_1 \;+\; (L_2-L_1)\,
+      \frac{1\,-\,e^{-k(t-t_1)}}{\,1\,-\,e^{-k(t_2-t_1)}\,}}
+
+The variability of length at age increases linearly with length,
+
+\deqn{\sigma_L ~=~ \alpha \,+\, \beta \hat L_t}
+
+where the slope is \eqn{\beta=(\sigma_2-\sigma_1) /
+(L_\mathrm{long}-L_\mathrm{short})} and the intercept is \eqn{\alpha=\sigma_1
+- \beta L_\mathrm{short}}.
+
+The negative log-likelihood is calculated by comparing the observed and
+predicted lengths:
+\preformatted{
+  nll_Lrel <- -dnorm(Lrel, Lrel_hat, sigma_Lrel, TRUE)
+  nll_Lrec <- -dnorm(Lrec, Lrec_hat, sigma_Lrec, TRUE)
+  nll_Loto <- -dnorm(Loto, Loto_hat, sigma_Loto, TRUE)
+  nll <- sum(nll_Lrel) + sum(nll_Lrec) + sum(nll_Loto)
+}
+}
 \references{
 von Bertalanffy, L. (1938).
 A quantitative theory of organic growth.
 \emph{Human Biology}, \bold{10}, 181-213.
 \url{https://www.jstor.org/stable/41447359}.
 
-Schnute, J. and Fournier, D.. 1980.
-A new approach to length-frequence analysis: Growth structure.
+Schnute, J. and Fournier, D. 1980.
+A new approach to length-frequency analysis: Growth structure.
 \emph{Canadian Journal of Fisheries and Aquatic Science}, \bold{37},
 1337-1351.
 \doi{10.1139/f80-172}.
