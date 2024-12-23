@@ -18,8 +18,8 @@
 #' }
 #' \emph{Example data:}
 #' \tabular{ll}{
-#'   \code{\link{otoliths_skj}} \tab otolith data\cr
-#'   \code{\link{tags_skj}}     \tab tagging data
+#'   \code{\link{otoliths_ex}} \tab otolith data\cr
+#'   \code{\link{tags_ex}}     \tab tagging data
 #' }
 #'
 #' @author Arni Magnusson and Mark Maunder.

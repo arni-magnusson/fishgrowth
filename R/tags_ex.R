@@ -1,15 +1,15 @@
 #' @docType data
 #'
-#' @name tags_skj
+#' @name tags_ex
 #'
 #' @title Tagging Data
 #'
 #' @description
-#' Simulated tagging data, resembling the skipjack tuna dataset analyzed by
+#' Simulated tagging data, loosely based on a skipjack tuna dataset analyzed by
 #' Macdonald et al. (2022).
 #'
 #' @usage
-#' tags_skj
+#' tags_ex
 #'
 #' @format
 #' Data frame containing three columns:
@@ -35,13 +35,13 @@
 #' \url{https://meetings.wcpfc.int/node/16254}.
 #'
 #' @seealso
-#' \code{\link{otoliths_skj}} is an otolith example dataset.
+#' \code{\link{otoliths_ex}} is an otolith example dataset.
 #'
 #' \code{\link{vonbert}} fits a von Bertalanffy model.
 #'
 #' \code{\link{tao-package}} gives an overview of the package.
 #'
 #' @examples
-#' tags_skj
+#' tags_ex
 
 NA
