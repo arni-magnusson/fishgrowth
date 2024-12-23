@@ -74,6 +74,8 @@
 #' @importFrom RTMB ADREPORT dnorm MakeADFun REPORT
 #'
 #' @seealso
+#' \code{\link{vonbert}} is another growth model.
+#'
 #' \code{\link{otoliths_ex}} and \code{\link{tags_ex}} are example datasets.
 #'
 #' \code{\link{tao-package}} gives an overview of the package.

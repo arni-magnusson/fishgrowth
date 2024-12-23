@@ -37,7 +37,8 @@
 #' @seealso
 #' \code{\link{otoliths_ex}} is an otolith example dataset.
 #'
-#' \code{\link{vonbert}} fits a von Bertalanffy model.
+#' \code{\link{richards}} and \code{\link{vonbert}} are alternative growth
+#' models.
 #'
 #' \code{\link{tao-package}} gives an overview of the package.
 #'

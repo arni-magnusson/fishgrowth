@@ -79,6 +79,8 @@ A new approach to length-frequency analysis: Growth structure.
 \doi{10.1139/f80-172}.
 }
 \seealso{
+\code{\link{richards}} is another growth model.
+
 \code{\link{otoliths_ex}} and \code{\link{tags_ex}} are example datasets.
 
 \code{\link{tao-package}} gives an overview of the package.

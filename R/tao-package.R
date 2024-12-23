@@ -14,7 +14,8 @@
 #' @details
 #' \emph{Growth models:}
 #' \tabular{ll}{
-#'   \code{\link{vonbert}} \tab von Bertalanffy
+#'   \code{\link{richards}} \tab Richards\cr
+#'   \code{\link{vonbert}}  \tab von Bertalanffy
 #' }
 #' \emph{Example data:}
 #' \tabular{ll}{

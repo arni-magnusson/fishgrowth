@@ -39,7 +39,8 @@ otoliths_ex
 \seealso{
 \code{\link{tags_ex}} is a tagging example dataset.
 
-\code{\link{vonbert}} fits a von Bertalanffy model.
+\code{\link{richards}} and \code{\link{vonbert}} are alternative growth
+models.
 
 \code{\link{tao-package}} gives an overview of the package.
 }
