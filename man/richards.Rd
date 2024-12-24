@@ -73,7 +73,7 @@ A flexible growth function for empirical use.
 \emph{Journal of Experimental Botany}, \bold{10}, 290-300.
 \url{https://www.jstor.org/stable/23686557}.
 
-Schnute, J. 1981.
+Schnute, J. (1981).
 A versatile growth model with statistically stable parameters.
 \emph{Canadian Journal of Fisheries and Aquatic Science}, \bold{38},
 1128-1140.

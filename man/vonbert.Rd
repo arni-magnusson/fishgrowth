@@ -72,7 +72,7 @@ A quantitative theory of organic growth.
 \emph{Human Biology}, \bold{10}, 181-213.
 \url{https://www.jstor.org/stable/41447359}.
 
-Schnute, J. and Fournier, D. 1980.
+Schnute, J. and Fournier, D. (1980).
 A new approach to length-frequency analysis: Growth structure.
 \emph{Canadian Journal of Fisheries and Aquatic Science}, \bold{37},
 1337-1351.

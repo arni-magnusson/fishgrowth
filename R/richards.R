@@ -65,7 +65,7 @@
 #' \emph{Journal of Experimental Botany}, \bold{10}, 290-300.
 #' \url{https://www.jstor.org/stable/23686557}.
 #'
-#' Schnute, J. 1981.
+#' Schnute, J. (1981).
 #' A versatile growth model with statistically stable parameters.
 #' \emph{Canadian Journal of Fisheries and Aquatic Science}, \bold{38},
 #' 1128-1140.
@@ -85,10 +85,10 @@
 richards <- function(par, data)
 {
   wrap <- function(objfun, ...) function(par) objfun(par, ...)
-  MakeADFun(wrap(r_objfun, data=data), par, silent=TRUE)
+  MakeADFun(wrap(richards_objfun, data=data), par, silent=TRUE)
 }
 
-r_objfun <- function(par, data)
+richards_objfun <- function(par, data)
 {
   # Extract parameters
   log_L1 <- par$log_L1
