@@ -137,7 +137,6 @@ vonbert_objfun <- function(par, data)
   curve <- L1 + (L2-L1) * (1-exp(-k*(age_seq-t1))) / (1-exp(-k*(t2-t1)))
 
   # Report quantities of interest
-  ADREPORT(curve)
   REPORT(L1)
   REPORT(L2)
   REPORT(k)
@@ -162,7 +161,9 @@ vonbert_objfun <- function(par, data)
   REPORT(nll_Lrel)
   REPORT(nll_Lrec)
   REPORT(nll_Loto)
+  REPORT(age_seq)
   REPORT(curve)
+  ADREPORT(curve)
 
   nll
 }
