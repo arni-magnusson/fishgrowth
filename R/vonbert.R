@@ -90,12 +90,12 @@ vonbert <- function(par, data)
 vonbert_objfun <- function(par, data)
 {
   # Extract parameters
-  log_L1 <- par$log_L1
-  log_L2 <- par$log_L2
-  log_k <- par$log_k
-  log_sigma_1 <- par$log_sigma_1
-  log_sigma_2 <- par$log_sigma_2
-  log_age <- par$log_age
+  L1 <- exp(par$log_L1)
+  L2 <- exp(par$log_L2)
+  k <- exp(par$log_k)
+  sigma_1 <- exp(par$log_sigma_1)
+  sigma_2 <- exp(par$log_sigma_2)
+  age <- exp(par$log_age)
 
   # Extract data
   Lrel <- data$Lrel
@@ -108,15 +108,9 @@ vonbert_objfun <- function(par, data)
   L_short <- data$L_short
   L_long <- data$L_long
 
-  # Calculate parameters
-  L1 <- exp(log_L1)
-  L2 <- exp(log_L2)
-  k <- exp(log_k)
-  sigma_1 <- exp(log_sigma_1)
-  sigma_2 <- exp(log_sigma_2)
-  sigma_slope <- (sigma_2 - sigma_1) / (L_long - L_short)  # s <- a + b*age
+  # Calculate sigma coefficients (sigma = a + b*age)
+  sigma_slope <- (sigma_2 - sigma_1) / (L_long - L_short)
   sigma_intercept <- sigma_1 - L_short * sigma_slope
-  age <- exp(log_age)
 
   # Calculate Lhat and sigma
   Lrel_hat <- L1 + (L2-L1) * (1-exp(-k*(age-t1))) / (1-exp(-k*(t2-t1)))

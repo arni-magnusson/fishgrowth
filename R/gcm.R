@@ -88,12 +88,12 @@ gcm_objfun <- function(par, data)
 {
   # Extract parameters
   L0 <- par$L0
-  log_rmax <- par$log_rmax
-  log_k <- par$log_k
+  rmax <- exp(par$log_rmax)
+  k <- exp(par$log_k)
   t50 <- par$t50
-  log_sigma_1 <- par$log_sigma_1
-  log_sigma_2 <- par$log_sigma_2
-  log_age <- par$log_age
+  sigma_1 <- exp(par$log_sigma_1)
+  sigma_2 <- exp(par$log_sigma_2)
+  age <- exp(par$log_age)
 
   # Extract data
   Lrel <- data$Lrel
@@ -104,12 +104,8 @@ gcm_objfun <- function(par, data)
   L_short <- data$L_short
   L_long <- data$L_long
 
-  # Calculate parameters
-  rmax <- exp(log_rmax)
-  k <- exp(log_k)
-  sigma_1 <- exp(log_sigma_1)
-  sigma_2 <- exp(log_sigma_2)
-  sigma_slope <- (sigma_2 - sigma_1) / (L_long - L_short)  # s <- a + b*age
+  # Calculate sigma coefficients (sigma = a + b*age)
+  sigma_slope <- (sigma_2 - sigma_1) / (L_long - L_short)
   sigma_intercept <- sigma_1 - L_short * sigma_slope
   age <- exp(log_age)
 
