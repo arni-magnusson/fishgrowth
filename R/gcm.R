@@ -84,6 +84,11 @@ gcm <- function(par, data)
   MakeADFun(wrap(gcm_objfun, data=data), par, silent=TRUE)
 }
 
+gcm_curve <- function(t, L0, rmax, k, t50)
+{
+  L0 + rmax * ((log(1 + exp(-k*t50)) - log(1 + exp(k*(t-t50)))) / k + t)
+}
+
 gcm_objfun <- function(par, data)
 {
   # Extract parameters
@@ -109,12 +114,9 @@ gcm_objfun <- function(par, data)
   sigma_intercept <- sigma_1 - L_short * sigma_slope
 
   # Calculate Lhat and sigma
-  Lrel_hat <- L0 + rmax * ((log(1 + exp(-k*t50))
-    - log(1 + exp(k*(age-t50)))) / k + age)
-  Lrec_hat <- L0 + rmax * ((log(1 + exp(-k*t50))
-    - log(1 + exp(k*(age+liberty-t50)))) / k + age+liberty)
-  Loto_hat <- L0 + rmax * ((log(1 + exp(-k*t50))
-    - log(1 + exp(k*(Aoto-t50)))) / k + Aoto)
+  Lrel_hat <- gcm_curve(age, L0, rmax, k, t50)
+  Lrec_hat <- gcm_curve(age+liberty, L0, rmax, k, t50)
+  Loto_hat <- gcm_curve(Aoto, L0, rmax, k, t50)
   sigma_Lrel <- sigma_intercept + sigma_slope * Lrel_hat
   sigma_Lrec <- sigma_intercept + sigma_slope * Lrec_hat
   sigma_Loto <- sigma_intercept + sigma_slope * Loto_hat
@@ -127,8 +129,7 @@ gcm_objfun <- function(par, data)
 
   # Calculate curve
   age_seq = seq(0, 10, 1/365)  # age 0-10 years, day by day
-  curve <- L0 + rmax * ((log(1 + exp(-k*t50))
-    - log(1 + exp(k*(age_seq-t50)))) / k + age_seq)
+  curve <- gcm_curve(age_seq, L0, rmax, k, t50)
 
   # Report quantities of interest
   REPORT(L0)

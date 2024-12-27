@@ -87,6 +87,11 @@ vonbert <- function(par, data)
   MakeADFun(wrap(vonbert_objfun, data=data), par, silent=TRUE)
 }
 
+vonbert_curve <- function(t, L1, L2, k, t1, t2)
+{
+  L1 + (L2-L1) * (1-exp(-k*(t-t1))) / (1-exp(-k*(t2-t1)))
+}
+
 vonbert_objfun <- function(par, data)
 {
   # Extract parameters
@@ -113,9 +118,9 @@ vonbert_objfun <- function(par, data)
   sigma_intercept <- sigma_1 - L_short * sigma_slope
 
   # Calculate Lhat and sigma
-  Lrel_hat <- L1 + (L2-L1) * (1-exp(-k*(age-t1))) / (1-exp(-k*(t2-t1)))
-  Lrec_hat <- L1 + (L2-L1) * (1-exp(-k*(age+liberty-t1))) / (1-exp(-k*(t2-t1)))
-  Loto_hat <- L1 + (L2-L1) * (1-exp(-k*(Aoto-t1))) / (1-exp(-k*(t2-t1)))
+  Lrel_hat <- vonbert_curve(age, L1, L2, k, t1, t2)
+  Lrec_hat <- vonbert_curve(age+liberty, L1, L2, k, t1, t2)
+  Loto_hat <- vonbert_curve(Aoto, L1, L2, k, t1, t2)
   sigma_Lrel <- sigma_intercept + sigma_slope * Lrel_hat
   sigma_Lrec <- sigma_intercept + sigma_slope * Lrec_hat
   sigma_Loto <- sigma_intercept + sigma_slope * Loto_hat
@@ -128,7 +133,7 @@ vonbert_objfun <- function(par, data)
 
   # Calculate curve
   age_seq = seq(0, 10, 1/365)  # age 0-10 years, day by day
-  curve <- L1 + (L2-L1) * (1-exp(-k*(age_seq-t1))) / (1-exp(-k*(t2-t1)))
+  curve <- vonbert_curve(age_seq, L1, L2, k, t1, t2)
 
   # Report quantities of interest
   REPORT(L1)

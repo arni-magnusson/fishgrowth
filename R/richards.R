@@ -88,6 +88,11 @@ richards <- function(par, data)
   MakeADFun(wrap(richards_objfun, data=data), par, silent=TRUE)
 }
 
+richards_curve <- function(t, L1, L2, k, b, t1, t2)
+{
+  (L1^b + (L2^b-L1^b) * (1-exp(-k*(t-t1))) / (1-exp(-k*(t2-t1))))^(1/b)
+}
+
 richards_objfun <- function(par, data)
 {
   # Extract parameters
@@ -115,12 +120,9 @@ richards_objfun <- function(par, data)
   sigma_intercept <- sigma_1 - L_short * sigma_slope
 
   # Calculate Lhat and sigma
-  Lrel_hat <- (L1^b + (L2^b-L1^b) *
-               (1-exp(-k*(age-t1))) / (1-exp(-k*(t2-t1))))^(1/b)
-  Lrec_hat <- (L1^b + (L2^b-L1^b) *
-               (1-exp(-k*(age+liberty-t1))) / (1-exp(-k*(t2-t1))))^(1/b)
-  Loto_hat <- (L1^b + (L2^b-L1^b) *
-               (1-exp(-k*(Aoto-t1))) / (1-exp(-k*(t2-t1))))^(1/b)
+  Lrel_hat <- richards_curve(age, L1, L2, k, b, t1, t2)
+  Lrec_hat <- richards_curve(age+liberty, L1, L2, k, b, t1, t2)
+  Loto_hat <- richards_curve(Aoto, L1, L2, k, b, t1, t2)
   sigma_Lrel <- sigma_intercept + sigma_slope * Lrel_hat
   sigma_Lrec <- sigma_intercept + sigma_slope * Lrec_hat
   sigma_Loto <- sigma_intercept + sigma_slope * Loto_hat
@@ -133,8 +135,7 @@ richards_objfun <- function(par, data)
 
   # Calculate curve
   age_seq = seq(0, 10, 1/365)  # age 0-10 years, day by day
-  curve <- (L1^b + (L2^b-L1^b) *
-            (1-exp(-k*(age_seq-t1))) / (1-exp(-k*(t2-t1))))^(1/b)
+  curve <- richards_curve(age_seq, L1, L2, k, b, t1, t2)
 
   # Report quantities of interest
   REPORT(L1)
