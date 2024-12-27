@@ -113,7 +113,6 @@ richards_objfun <- function(par, data)
   # Calculate sigma coefficients (sigma = a + b*age)
   sigma_slope <- (sigma_2 - sigma_1) / (L_long - L_short)
   sigma_intercept <- sigma_1 - L_short * sigma_slope
-  age <- exp(log_age)
 
   # Calculate Lhat and sigma
   Lrel_hat <- (L1^b + (L2^b-L1^b) *
