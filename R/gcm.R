@@ -67,8 +67,9 @@
 #'       sigma_L = alpha + beta * Lhat}
 #'
 #' where the slope is \eqn{\beta=(\sigma_2-\sigma_1) /
-#' (L_\mathrm{long}-L_\mathrm{short})} and the intercept is \eqn{\alpha=\sigma_1
-#' - \beta L_\mathrm{short}}.
+#' (L_\mathrm{long}-L_\mathrm{short})}{beta = (sigma_2-sigma_1) /
+#' (L_long-L_short)} and the intercept is \eqn{\alpha=\sigma_1
+#' - \beta L_\mathrm{short}}{alpha = sigma_1 - beta * L_short}.
 #'
 #' The negative log-likelihood is calculated by comparing the observed and
 #' predicted lengths:
