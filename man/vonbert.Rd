@@ -25,9 +25,9 @@ vonbert_objfun(par, data)
 
 \item{k}{growth coefficient.}
 
-\item{t1}{age where predicted length is \code{L1}}
+\item{t1}{age where predicted length is \code{L1}.}
 
-\item{t2}{age where predicted length is \code{L2}}
+\item{t2}{age where predicted length is \code{L2}.}
 }
 \value{
 The \code{vonbert} function returns a TMB model object, produced by

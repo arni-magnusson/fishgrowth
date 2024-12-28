@@ -8,8 +8,8 @@
 #' @param L1 predicted length at age \code{t1}.
 #' @param L2 predicted length at age \code{t2}.
 #' @param k growth coefficient.
-#' @param t1 age where predicted length is \code{L1}
-#' @param t2 age where predicted length is \code{L2}
+#' @param t1 age where predicted length is \code{L1}.
+#' @param t2 age where predicted length is \code{L2}.
 #'
 #' @details
 #' The main function \code{vonbert} creates a model object, ready for parameter

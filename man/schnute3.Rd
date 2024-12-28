@@ -25,9 +25,9 @@ schnute3_objfun(par, data)
 
 \item{b}{shape parameter.}
 
-\item{t1}{age where predicted length is \code{L1}}
+\item{t1}{age where predicted length is \code{L1}.}
 
-\item{t2}{age where predicted length is \code{L2}}
+\item{t2}{age where predicted length is \code{L2}.}
 }
 \value{
 The \code{schnute3} function returns a TMB model object, produced by
