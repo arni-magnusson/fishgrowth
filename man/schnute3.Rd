@@ -119,7 +119,8 @@ A versatile growth model with statistically stable parameters.
 \doi{10.1139/f81-153}.
 }
 \seealso{
-\code{\link{vonbert}} is another growth model.
+\code{\link{gcm}}, \code{\link{richards}}, \code{schnute3}, and
+\code{\link{vonbert}} are alternative growth models.
 
 \code{\link{otoliths_ex}} and \code{\link{tags_ex}} are example datasets.
 

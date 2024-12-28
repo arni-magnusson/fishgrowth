@@ -100,7 +100,8 @@
 #' @importFrom RTMB ADREPORT dnorm MakeADFun REPORT
 #'
 #' @seealso
-#' \code{\link{vonbert}} is another growth model.
+#' \code{\link{gcm}}, \code{\link{richards}}, \code{schnute3}, and
+#' \code{\link{vonbert}} are alternative growth models.
 #'
 #' \code{\link{otoliths_ex}} and \code{\link{tags_ex}} are example datasets.
 #'

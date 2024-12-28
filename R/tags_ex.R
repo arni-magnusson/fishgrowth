@@ -35,10 +35,10 @@
 #' \url{https://meetings.wcpfc.int/node/16254}.
 #'
 #' @seealso
-#' \code{\link{otoliths_ex}} is an otolith example dataset.
+#' \code{\link{otoliths_ex}} and \code{tags_ex} are example datasets.
 #'
-#' \code{\link{richards}} and \code{\link{vonbert}} are alternative growth
-#' models.
+#' \code{\link{gcm}}, \code{\link{richards}}, \code{\link{schnute3}}, and
+#' \code{\link{vonbert}} are alternative growth models.
 #'
 #' \code{\link{tao-package}} gives an overview of the package.
 #'

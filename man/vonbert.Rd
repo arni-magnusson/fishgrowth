@@ -114,7 +114,8 @@ A new approach to length-frequency analysis: Growth structure.
 \doi{10.1139/f80-172}.
 }
 \seealso{
-\code{\link{richards}} is another growth model.
+\code{\link{gcm}}, \code{\link{richards}}, \code{\link{schnute3}}, and
+\code{vonbert} are alternative growth models.
 
 \code{\link{otoliths_ex}} and \code{\link{tags_ex}} are example datasets.
 
