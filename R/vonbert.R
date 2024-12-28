@@ -58,11 +58,13 @@
 #' Fournier (1980), predicts length at age as:
 #'
 #' \deqn{\hat L_t ~=~ L_1 \;+\; (L_2-L_1)\,
-#'       \frac{1\,-\,e^{-k(t-t_1)}}{\,1\,-\,e^{-k(t_2-t_1)}\,}}
+#'       \frac{1\,-\,e^{-k(t-t_1)}}{\,1\,-\,e^{-k(t_2-t_1)}\,}}{
+#'       L1 + (L2-L1) * (1-exp(-k*(t-t1))) / (1-exp(-k*(t2-t1)))}
 #'
 #' The variability of length at age increases linearly with length,
 #'
-#' \deqn{\sigma_L ~=~ \alpha \,+\, \beta \hat L_t}
+#' \deqn{\sigma_L ~=~ \alpha \,+\, \beta \hat L}{
+#'       sigma_L = alpha + beta * Lhat}
 #'
 #' where the slope is \eqn{\beta=(\sigma_2-\sigma_1) /
 #' (L_\mathrm{long}-L_\mathrm{short})} and the intercept is \eqn{\alpha=\sigma_1

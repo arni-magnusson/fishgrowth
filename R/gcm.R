@@ -58,11 +58,13 @@
 #' The growth cessation model (Maunder et al. 2018) predicts length at age as:
 #'
 #' \deqn{\hat L_t ~=~ r_{\max}\!\left[\,\frac{\log\!\left(1+e^{-k\:\!t_{50}}
-#'       \right) \;-\;\log\!\left(1+e^{k(t-t_{50})}\right)}{k}\;+\;t\:\right]}
+#'       \right) \;-\;\log\!\left(1+e^{k(t-t_{50})}\right)}{k}\;+\;t\:\right]}{
+#'       L0 + rmax * ((log(1 + exp(-k*t50)) - log(1 + exp(k*(t-t50)))) / k + t)}
 #'
 #' The variability of length at age increases linearly with length,
 #'
-#' \deqn{\sigma_L ~=~ \alpha \,+\, \beta \hat L_t}
+#' \deqn{\sigma_L ~=~ \alpha \,+\, \beta \hat L}{
+#'       sigma_L = alpha + beta * Lhat}
 #'
 #' where the slope is \eqn{\beta=(\sigma_2-\sigma_1) /
 #' (L_\mathrm{long}-L_\mathrm{short})} and the intercept is \eqn{\alpha=\sigma_1
