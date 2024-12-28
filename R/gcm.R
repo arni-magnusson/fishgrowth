@@ -4,8 +4,20 @@
 #'
 #' @param par is a parameter list.
 #' @param data is a data list.
+#' @param t age (vector).
+#' @param L0 predicted length at age 0.
+#' @param rmax shape parameter that determines the initial slope.
+#' @param k shape parameter that determines how quickly the growth curve reaches
+#'        the asymptotic maximum.
+#' @param t50 shape parameter that determines the logistic function midpoint.
 #'
 #' @details
+#' The main function \code{gcm} creates a model object, ready for parameter
+#' estimation. The auxiliary functions \code{gcm_curve} and \code{gcm_objfun}
+#' are called by the main function to calculate the regression curve and
+#' objective function value. The user can also call the auxiliary functions
+#' directly for plotting and model exploration.
+#'
 #' The \code{par} list contains the following elements:
 #' \itemize{
 #'   \item \code{L0}, predicted length at age 0
@@ -32,10 +44,17 @@
 #' }
 #'
 #' @return
-#' TMB model object, produced by \code{\link[RTMB]{MakeADFun}}.
+#' The \code{gcm} function returns a TMB model object, produced by
+#' \code{\link[RTMB]{MakeADFun}}.
+#'
+#' The \code{gcm_curve} function returns a numeric vector of predicted length at
+#' age.
+#'
+#' The \code{gcm_objfun} function returns the negative log-likelihood as a
+#' single number, describing the goodness of fit of \code{par} to the
+#' \code{data}.
 #'
 #' @note
-#'
 #' The growth cessation model (Maunder et al. 2018) predicts length at age as:
 #'
 #' \deqn{\hat L_t ~=~ r_{\max}\!\left[\,\frac{\log\!\left(1+e^{-k\:\!t_{50}}
@@ -84,10 +103,18 @@ gcm <- function(par, data)
   MakeADFun(wrap(gcm_objfun, data=data), par, silent=TRUE)
 }
 
+#' @rdname gcm
+#'
+#' @export
+
 gcm_curve <- function(t, L0, rmax, k, t50)
 {
   L0 + rmax * ((log(1 + exp(-k*t50)) - log(1 + exp(k*(t-t50)))) / k + t)
 }
+
+#' @rdname gcm
+#'
+#' @export
 
 gcm_objfun <- function(par, data)
 {

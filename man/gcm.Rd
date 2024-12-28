@@ -2,22 +2,53 @@
 % Please edit documentation in R/gcm.R
 \name{gcm}
 \alias{gcm}
+\alias{gcm_curve}
+\alias{gcm_objfun}
 \title{Growth Cessation Model}
 \usage{
 gcm(par, data)
+
+gcm_curve(t, L0, rmax, k, t50)
+
+gcm_objfun(par, data)
 }
 \arguments{
 \item{par}{is a parameter list.}
 
 \item{data}{is a data list.}
+
+\item{t}{age (vector).}
+
+\item{L0}{predicted length at age 0.}
+
+\item{rmax}{shape parameter that determines the initial slope.}
+
+\item{k}{shape parameter that determines how quickly the growth curve reaches
+the asymptotic maximum.}
+
+\item{t50}{shape parameter that determines the logistic function midpoint.}
 }
 \value{
-TMB model object, produced by \code{\link[RTMB]{MakeADFun}}.
+The \code{gcm} function returns a TMB model object, produced by
+\code{\link[RTMB]{MakeADFun}}.
+
+The \code{gcm_curve} function returns a numeric vector of predicted length at
+age.
+
+The \code{gcm_objfun} function returns the negative log-likelihood as a
+single number, describing the goodness of fit of \code{par} to the
+\code{data}.
 }
 \description{
 Fit a growth cessation model (GCM) to tags and otoliths.
 }
 \details{
+The main function \code{gcm} creates a model object, ready for parameter
+estimation. The auxiliary functions \code{gcm_curve} and \code{gcm_objfun}
+are called by the main function to calculate the regression curve and
+objective function value. The user can also call the auxiliary functions
+directly for plotting and model exploration.
+
 The \code{par} list contains the following elements:
 \itemize{
   \item \code{L0}, predicted length at age 0

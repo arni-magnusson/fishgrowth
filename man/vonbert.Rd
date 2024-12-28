@@ -2,22 +2,54 @@
 % Please edit documentation in R/vonbert.R
 \name{vonbert}
 \alias{vonbert}
+\alias{vonbert_curve}
+\alias{vonbert_objfun}
 \title{Von Bertalanffy Growth Model}
 \usage{
 vonbert(par, data)
+
+vonbert_curve(t, L1, L2, k, t1, t2)
+
+vonbert_objfun(par, data)
 }
 \arguments{
-\item{par}{is a parameter list.}
+\item{par}{a parameter list.}
 
-\item{data}{is a data list.}
+\item{data}{a data list.}
+
+\item{t}{age (vector).}
+
+\item{L1}{predicted length at age \code{t1}.}
+
+\item{L2}{predicted length at age \code{t2}.}
+
+\item{k}{growth coefficient.}
+
+\item{t1}{age where predicted length is \code{L1}}
+
+\item{t2}{age where predicted length is \code{L2}}
 }
 \value{
-TMB model object, produced by \code{\link[RTMB]{MakeADFun}}.
+The \code{vonbert} function returns a TMB model object, produced by
+\code{\link[RTMB]{MakeADFun}}.
+
+The \code{vonbert_curve} function returns a numeric vector of predicted
+length at age.
+
+The \code{vonbert_objfun} function returns the negative log-likelihood as a
+single number, describing the goodness of fit of \code{par} to the
+\code{data}.
 }
 \description{
 Fit a von Bertalanffy growth model to tags and otoliths.
 }
 \details{
+The main function \code{vonbert} creates a model object, ready for parameter
+estimation. The auxiliary functions \code{vonbert_curve} and
+\code{vonbert_objfun} are called by the main function to calculate the
+regression curve and objective function value. The user can also call the
+auxiliary functions directly for plotting and model exploration.
+
 The \code{par} list contains the following elements:
 \itemize{
   \item \code{log_L1}, predicted length at age \code{t1}

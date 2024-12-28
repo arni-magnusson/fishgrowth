@@ -2,22 +2,56 @@
 % Please edit documentation in R/richards.R
 \name{richards}
 \alias{richards}
+\alias{richards_curve}
+\alias{richards_objfun}
 \title{Richards Growth Model}
 \usage{
 richards(par, data)
+
+richards_curve(t, L1, L2, k, b, t1, t2)
+
+richards_objfun(par, data)
 }
 \arguments{
 \item{par}{is a parameter list.}
 
 \item{data}{is a data list.}
+
+\item{t}{age (vector).}
+
+\item{L1}{predicted length at age \code{t1}.}
+
+\item{L2}{predicted length at age \code{t2}.}
+
+\item{k}{growth coefficient.}
+
+\item{b}{shape parameter.}
+
+\item{t1}{age where predicted length is \code{L1}}
+
+\item{t2}{age where predicted length is \code{L2}}
 }
 \value{
-TMB model object, produced by \code{\link[RTMB]{MakeADFun}}.
+The \code{richards} function returns a TMB model object, produced by
+\code{\link[RTMB]{MakeADFun}}.
+
+The \code{richards_curve} function returns a numeric vector of predicted
+length at age.
+
+The \code{richards_objfun} function returns the negative log-likelihood as a
+single number, describing the goodness of fit of \code{par} to the
+\code{data}.
 }
 \description{
 Fit a Richards growth model to tags and otoliths.
 }
 \details{
+The main function \code{richards} creates a model object, ready for parameter
+estimation. The auxiliary functions \code{richards_curve} and
+\code{richards_objfun} are called by the main function to calculate the
+regression curve and objective function value. The user can also call the
+auxiliary functions directly for plotting and model exploration.
+
 The \code{par} list contains the following elements:
 \itemize{
   \item \code{log_L1}, predicted length at age \code{t1}

@@ -4,8 +4,21 @@
 #'
 #' @param par is a parameter list.
 #' @param data is a data list.
+#' @param t age (vector).
+#' @param L1 predicted length at age \code{t1}.
+#' @param L2 predicted length at age \code{t2}.
+#' @param k growth coefficient.
+#' @param b shape parameter.
+#' @param t1 age where predicted length is \code{L1}
+#' @param t2 age where predicted length is \code{L2}
 #'
 #' @details
+#' The main function \code{richards} creates a model object, ready for parameter
+#' estimation. The auxiliary functions \code{richards_curve} and
+#' \code{richards_objfun} are called by the main function to calculate the
+#' regression curve and objective function value. The user can also call the
+#' auxiliary functions directly for plotting and model exploration.
+#'
 #' The \code{par} list contains the following elements:
 #' \itemize{
 #'   \item \code{log_L1}, predicted length at age \code{t1}
@@ -32,10 +45,17 @@
 #' }
 #'
 #' @return
-#' TMB model object, produced by \code{\link[RTMB]{MakeADFun}}.
+#' The \code{richards} function returns a TMB model object, produced by
+#' \code{\link[RTMB]{MakeADFun}}.
+#'
+#' The \code{richards_curve} function returns a numeric vector of predicted
+#' length at age.
+#'
+#' The \code{richards_objfun} function returns the negative log-likelihood as a
+#' single number, describing the goodness of fit of \code{par} to the
+#' \code{data}.
 #'
 #' @note
-#'
 #' The Richards (1959) growth model, as parametrized by Schnute (1981, Eq. 15),
 #' predicts length at age as:
 #'
@@ -88,10 +108,18 @@ richards <- function(par, data)
   MakeADFun(wrap(richards_objfun, data=data), par, silent=TRUE)
 }
 
+#' @rdname richards
+#'
+#' @export
+
 richards_curve <- function(t, L1, L2, k, b, t1, t2)
 {
   (L1^b + (L2^b-L1^b) * (1-exp(-k*(t-t1))) / (1-exp(-k*(t2-t1))))^(1/b)
 }
+
+#' @rdname richards
+#'
+#' @export
 
 richards_objfun <- function(par, data)
 {

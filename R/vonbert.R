@@ -2,10 +2,22 @@
 #'
 #' Fit a von Bertalanffy growth model to tags and otoliths.
 #'
-#' @param par is a parameter list.
-#' @param data is a data list.
+#' @param par a parameter list.
+#' @param data a data list.
+#' @param t age (vector).
+#' @param L1 predicted length at age \code{t1}.
+#' @param L2 predicted length at age \code{t2}.
+#' @param k growth coefficient.
+#' @param t1 age where predicted length is \code{L1}
+#' @param t2 age where predicted length is \code{L2}
 #'
 #' @details
+#' The main function \code{vonbert} creates a model object, ready for parameter
+#' estimation. The auxiliary functions \code{vonbert_curve} and
+#' \code{vonbert_objfun} are called by the main function to calculate the
+#' regression curve and objective function value. The user can also call the
+#' auxiliary functions directly for plotting and model exploration.
+#'
 #' The \code{par} list contains the following elements:
 #' \itemize{
 #'   \item \code{log_L1}, predicted length at age \code{t1}
@@ -31,10 +43,17 @@
 #' }
 #'
 #' @return
-#' TMB model object, produced by \code{\link[RTMB]{MakeADFun}}.
+#' The \code{vonbert} function returns a TMB model object, produced by
+#' \code{\link[RTMB]{MakeADFun}}.
+#'
+#' The \code{vonbert_curve} function returns a numeric vector of predicted
+#' length at age.
+#'
+#' The \code{vonbert_objfun} function returns the negative log-likelihood as a
+#' single number, describing the goodness of fit of \code{par} to the
+#' \code{data}.
 #'
 #' @note
-#'
 #' The von Bertalanffy (1938) growth model, as parametrized by Schnute and
 #' Fournier (1980), predicts length at age as:
 #'
@@ -87,10 +106,18 @@ vonbert <- function(par, data)
   MakeADFun(wrap(vonbert_objfun, data=data), par, silent=TRUE)
 }
 
+#' @rdname vonbert
+#'
+#' @export
+
 vonbert_curve <- function(t, L1, L2, k, t1, t2)
 {
   L1 + (L2-L1) * (1-exp(-k*(t-t1))) / (1-exp(-k*(t2-t1)))
 }
+
+#' @rdname vonbert
+#'
+#' @export
 
 vonbert_objfun <- function(par, data)
 {
