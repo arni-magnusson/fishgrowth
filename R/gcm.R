@@ -10,6 +10,7 @@
 #' @param k shape parameter that determines how quickly the growth curve reaches
 #'        the asymptotic maximum.
 #' @param t50 shape parameter that determines the logistic function midpoint.
+#' @param \dots passed to \code{MakeADFun}.
 #'
 #' @details
 #' The main function \code{gcm} creates a model object, ready for parameter
@@ -100,10 +101,13 @@
 #'
 #' @export
 
-gcm <- function(par, data)
+gcm <- function(par, data, ...)
 {
-  wrap <- function(objfun, ...) function(par) objfun(par, ...)
-  MakeADFun(wrap(gcm_objfun, data=data), par, silent=TRUE)
+  wrap <- function(objfun, data)
+  {
+    function(par) objfun(par, data)
+  }
+  MakeADFun(wrap(gcm_objfun, data=data), par, ...)
 }
 
 #' @rdname gcm

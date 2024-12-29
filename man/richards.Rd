@@ -6,7 +6,7 @@
 \alias{richards_objfun}
 \title{Richards Growth Model}
 \usage{
-richards(par, data)
+richards(par, data, ...)
 
 richards_curve(t, L1, L2, k, b, t1, t2)
 
@@ -16,6 +16,8 @@ richards_objfun(par, data)
 \item{par}{is a parameter list.}
 
 \item{data}{is a data list.}
+
+\item{\dots}{passed to \code{MakeADFun}.}
 
 \item{t}{age (vector).}
 

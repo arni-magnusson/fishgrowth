@@ -6,7 +6,7 @@
 \alias{schnute3_objfun}
 \title{Schnute Case 3 Model}
 \usage{
-schnute3(par, data)
+schnute3(par, data, ...)
 
 schnute3_curve(t, L1, L2, b, t1, t2)
 
@@ -16,6 +16,8 @@ schnute3_objfun(par, data)
 \item{par}{is a parameter list.}
 
 \item{data}{is a data list.}
+
+\item{\dots}{passed to \code{MakeADFun}.}
 
 \item{t}{age (vector).}
 

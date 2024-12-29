@@ -10,6 +10,7 @@
 #' @param b shape parameter.
 #' @param t1 age where predicted length is \code{L1}.
 #' @param t2 age where predicted length is \code{L2}.
+#' @param \dots passed to \code{MakeADFun}.
 #'
 #' @details
 #' The main function \code{schnute3} creates a model object, ready for parameter
@@ -109,10 +110,13 @@
 #'
 #' @export
 
-schnute3 <- function(par, data)
+schnute3 <- function(par, data, ...)
 {
-  wrap <- function(objfun, ...) function(par) objfun(par, ...)
-  MakeADFun(wrap(schnute3_objfun, data=data), par, silent=TRUE)
+  wrap <- function(objfun, data)
+  {
+    function(par) objfun(par, data)
+  }
+  MakeADFun(wrap(schnute3_objfun, data=data), par, ...)
 }
 
 #' @rdname schnute3
