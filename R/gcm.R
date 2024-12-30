@@ -143,7 +143,7 @@ gcm_objfun <- function(par, data)
   L_short <- data$L_short
   L_long <- data$L_long
 
-  # Calculate sigma coefficients (sigma = a + b*age)
+  # Calculate sigma coefficients (sigma = a + b*L)
   sigma_slope <- (sigma_2 - sigma_1) / (L_long - L_short)
   sigma_intercept <- sigma_1 - L_short * sigma_slope
 
