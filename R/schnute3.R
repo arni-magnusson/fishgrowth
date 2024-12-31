@@ -140,7 +140,7 @@ schnute3_objfun <- function(par, data)
   b <- par$b
   sigma_1 <- exp(par$log_sigma_1)
   sigma_2 <- exp(par$log_sigma_2)
-  age <- exp(par$log_age)
+  age <- tryCatch(exp(par$log_age), error=as.null)
 
   # Extract data
   Lrel <- data$Lrel
@@ -166,9 +166,9 @@ schnute3_objfun <- function(par, data)
   sigma_Loto <- sigma_intercept + sigma_slope * Loto_hat
 
   # Calculate likelihoods
-  nll_Lrel <- -dnorm(Lrel, Lrel_hat, sigma_Lrel, TRUE)
-  nll_Lrec <- -dnorm(Lrec, Lrec_hat, sigma_Lrec, TRUE)
-  nll_Loto <- -dnorm(Loto, Loto_hat, sigma_Loto, TRUE)
+  nll_Lrel <- tryCatch(-dnorm(Lrel, Lrel_hat, sigma_Lrel, TRUE), error=as.null)
+  nll_Lrec <- tryCatch(-dnorm(Lrec, Lrec_hat, sigma_Lrec, TRUE), error=as.null)
+  nll_Loto <- tryCatch(-dnorm(Loto, Loto_hat, sigma_Loto, TRUE), error=as.null)
   nll <- sum(nll_Lrel) + sum(nll_Lrec) + sum(nll_Loto)
 
   # Calculate curve
