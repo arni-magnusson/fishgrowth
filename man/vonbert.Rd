@@ -6,7 +6,7 @@
 \alias{vonbert_objfun}
 \title{Von Bertalanffy Growth Model}
 \usage{
-vonbert(par, data, ...)
+vonbert(par, data, silent = TRUE, ...)
 
 vonbert_curve(t, L1, L2, k, t1, t2)
 
@@ -17,7 +17,9 @@ vonbert_objfun(par, data)
 
 \item{data}{a data list.}
 
-\item{\dots}{passed to \code{MakeADFun}.}
+\item{silent}{passed to \code{\link[RTMB]{MakeADFun}}.}
+
+\item{\dots}{passed to \code{\link[RTMB]{MakeADFun}}.}
 
 \item{t}{age (vector).}
 

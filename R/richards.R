@@ -11,7 +11,8 @@
 #' @param b shape parameter.
 #' @param t1 age where predicted length is \code{L1}.
 #' @param t2 age where predicted length is \code{L2}.
-#' @param \dots passed to \code{MakeADFun}.
+#' @param silent passed to \code{\link[RTMB]{MakeADFun}}.
+#' @param \dots passed to \code{\link[RTMB]{MakeADFun}}.
 #'
 #' @details
 #' The main function \code{richards} creates a model object, ready for parameter
@@ -95,8 +96,6 @@
 #' 1128-1140.
 #' \doi{10.1139/f81-153}.
 #'
-#' @importFrom RTMB ADREPORT dnorm MakeADFun REPORT
-#'
 #' @seealso
 #' \code{\link{gcm}}, \code{richards}, \code{\link{schnute3}}, and
 #' \code{\link{vonbert}} are alternative growth models.
@@ -105,15 +104,17 @@
 #'
 #' \code{\link{tao-package}} gives an overview of the package.
 #'
+#' @importFrom RTMB ADREPORT dnorm MakeADFun REPORT
+#'
 #' @export
 
-richards <- function(par, data, ...)
+richards <- function(par, data, silent=TRUE, ...)
 {
   wrap <- function(objfun, data)
   {
     function(par) objfun(par, data)
   }
-  MakeADFun(wrap(richards_objfun, data=data), par, ...)
+  MakeADFun(wrap(richards_objfun, data=data), par, silent=silent, ...)
 }
 
 #' @rdname richards

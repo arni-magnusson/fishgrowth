@@ -10,7 +10,8 @@
 #' @param k shape parameter that determines how quickly the growth curve reaches
 #'        the asymptotic maximum.
 #' @param t50 shape parameter that determines the logistic function midpoint.
-#' @param \dots passed to \code{MakeADFun}.
+#' @param silent passed to \code{\link[RTMB]{MakeADFun}}.
+#' @param \dots passed to \code{\link[RTMB]{MakeADFun}}.
 #'
 #' @details
 #' The main function \code{gcm} creates a model object, ready for parameter
@@ -89,8 +90,6 @@
 #' \emph{Marine Biology}, \bold{165}, 76.
 #' \doi{10.1007/s00227-018-3336-9}.
 #'
-#' @importFrom RTMB ADREPORT dnorm MakeADFun REPORT
-#'
 #' @seealso
 #' \code{gcm}, \code{\link{richards}}, \code{\link{schnute3}}, and
 #' \code{\link{vonbert}} are alternative growth models.
@@ -99,15 +98,17 @@
 #'
 #' \code{\link{tao-package}} gives an overview of the package.
 #'
+#' @importFrom RTMB ADREPORT dnorm MakeADFun REPORT
+#'
 #' @export
 
-gcm <- function(par, data, ...)
+gcm <- function(par, data, silent=TRUE, ...)
 {
   wrap <- function(objfun, data)
   {
     function(par) objfun(par, data)
   }
-  MakeADFun(wrap(gcm_objfun, data=data), par, ...)
+  MakeADFun(wrap(gcm_objfun, data=data), par, silent=silent, ...)
 }
 
 #' @rdname gcm

@@ -6,7 +6,7 @@
 \alias{gcm_objfun}
 \title{Growth Cessation Model}
 \usage{
-gcm(par, data, ...)
+gcm(par, data, silent = TRUE, ...)
 
 gcm_curve(t, L0, rmax, k, t50)
 
@@ -17,7 +17,9 @@ gcm_objfun(par, data)
 
 \item{data}{is a data list.}
 
-\item{\dots}{passed to \code{MakeADFun}.}
+\item{silent}{passed to \code{\link[RTMB]{MakeADFun}}.}
+
+\item{\dots}{passed to \code{\link[RTMB]{MakeADFun}}.}
 
 \item{t}{age (vector).}
 

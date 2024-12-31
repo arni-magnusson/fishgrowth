@@ -10,7 +10,8 @@
 #' @param k growth coefficient.
 #' @param t1 age where predicted length is \code{L1}.
 #' @param t2 age where predicted length is \code{L2}.
-#' @param \dots passed to \code{MakeADFun}.
+#' @param silent passed to \code{\link[RTMB]{MakeADFun}}.
+#' @param \dots passed to \code{\link[RTMB]{MakeADFun}}.
 #'
 #' @details
 #' The main function \code{vonbert} creates a model object, ready for parameter
@@ -93,8 +94,6 @@
 #' 1337-1351.
 #' \doi{10.1139/f80-172}.
 #'
-#' @importFrom RTMB ADREPORT dnorm MakeADFun REPORT
-#'
 #' @seealso
 #' \code{\link{gcm}}, \code{\link{richards}}, \code{\link{schnute3}}, and
 #' \code{vonbert} are alternative growth models.
@@ -103,15 +102,17 @@
 #'
 #' \code{\link{tao-package}} gives an overview of the package.
 #'
+#' @importFrom RTMB ADREPORT dnorm MakeADFun REPORT
+#'
 #' @export
 
-vonbert <- function(par, data, ...)
+vonbert <- function(par, data, silent=TRUE, ...)
 {
   wrap <- function(objfun, data)
   {
     function(par) objfun(par, data)
   }
-  MakeADFun(wrap(vonbert_objfun, data=data), par, ...)
+  MakeADFun(wrap(vonbert_objfun, data=data), par, silent=silent, ...)
 }
 
 #' @rdname vonbert

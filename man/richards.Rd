@@ -6,7 +6,7 @@
 \alias{richards_objfun}
 \title{Richards Growth Model}
 \usage{
-richards(par, data, ...)
+richards(par, data, silent = TRUE, ...)
 
 richards_curve(t, L1, L2, k, b, t1, t2)
 
@@ -17,7 +17,9 @@ richards_objfun(par, data)
 
 \item{data}{is a data list.}
 
-\item{\dots}{passed to \code{MakeADFun}.}
+\item{silent}{passed to \code{\link[RTMB]{MakeADFun}}.}
+
+\item{\dots}{passed to \code{\link[RTMB]{MakeADFun}}.}
 
 \item{t}{age (vector).}
 
