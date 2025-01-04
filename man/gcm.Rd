@@ -105,8 +105,8 @@ predicted lengths:
 }
 }
 \references{
-Maunder, M.N., Deriso, R.B., Schaefer, K.M., Fuller, D.W., Aires‐da‐Silva,
-A.M., Minte‐Vera, C.V., and Campana, S.E. (2018).
+Maunder, M.N., Deriso, R.B., Schaefer, K.M., Fuller, D.W., Aires-da-Silva,
+A.M., Minte-Vera, C.V., and Campana, S.E. (2018).
 The growth cessation model: a growth model for species showing a near
 cessation in growth with application to bigeye tuna (\emph{Thunnus obesus}).
 \emph{Marine Biology}, \bold{165}, 76.
