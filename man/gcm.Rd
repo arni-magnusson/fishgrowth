@@ -104,6 +104,43 @@ predicted lengths:
   nll <- sum(nll_Lrel) + sum(nll_Lrec) + sum(nll_Loto)
 }
 }
+\examples{
+# Explore initial parameter values
+plot(len~age, otoliths_ex, xlim=c(0,4), ylim=c(0,100))
+x <- seq(0, 4, 0.1)
+points(lenRel~I(lenRel/60), tags_ex, col=4)
+points(lenRec~I(lenRel/60+liberty), tags_ex, col=3)
+lines(x, gcm_curve(x, L0=20, rmax=120, k=2, t50=0), lty=2)
+
+# Prepare parameters and data
+init <- list(L0=20, log_rmax=log(120), log_k=log(2), t50=0,
+             log_sigma_1=log(1), log_sigma_2=log(1),
+             log_age=log(tags_ex$lenRel/60))
+dat <- list(Lrel=tags_ex$lenRel, Lrec=tags_ex$lenRec,
+            liberty=tags_ex$liberty, Aoto=otoliths_ex$age,
+            Loto=otoliths_ex$len, L_short=30, L_long=60)
+gcm_objfun(init, dat)
+
+# Fit model
+model <- gcm(init, dat)
+fit <- nlminb(model$par, model$fn, model$gr,
+              control=list(eval.max=1e4,iter.max=1e4))
+report <- model$report()
+sdreport <- sdreport(model, getReportCovariance=FALSE)
+
+# Plot results
+plot(len~age, otoliths_ex, xlim=c(0,4), ylim=c(0,100))
+points(report$age, tags_ex$lenRel, col=4)
+points(report$age+tags_ex$liberty, tags_ex$lenRec, col=3)
+lines(report$curve~report$age_seq, lwd=2)
+
+# Model summary
+est <- report[c("L0", "rmax", "k", "t50", "sigma_1", "sigma_2")]
+est
+fit[-1]
+head(summary(sdreport), 6)
+
+}
 \references{
 Maunder, M.N., Deriso, R.B., Schaefer, K.M., Fuller, D.W., Aires-da-Silva,
 A.M., Minte-Vera, C.V., and Campana, S.E. (2018).

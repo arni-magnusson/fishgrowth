@@ -107,6 +107,42 @@
 #'
 #' \code{\link{tao-package}} gives an overview of the package.
 #'
+#' @examples
+#' # Explore initial parameter values
+#' plot(len~age, otoliths_ex, xlim=c(0,4), ylim=c(0,100))
+#' x <- seq(0, 4, 0.1)
+#' points(lenRel~I(lenRel/60), tags_ex, col=4)
+#' points(lenRec~I(lenRel/60+liberty), tags_ex, col=3)
+#' lines(x, schnute3_curve(x, L1=25, L2=75, b=3, t1=0, t2=4), lty=2)
+#'
+#' # Prepare parameters and data
+#' init <- list(log_L1=log(25), log_L2=log(75), b=3,
+#'              log_sigma_1=log(1), log_sigma_2=log(1),
+#'              log_age=log(tags_ex$lenRel/60))
+#' dat <- list(Lrel=tags_ex$lenRel, Lrec=tags_ex$lenRec,
+#'             liberty=tags_ex$liberty, Aoto=otoliths_ex$age,
+#'             Loto=otoliths_ex$len, t1=0, t2=4, L_short=30, L_long=60)
+#' schnute3_objfun(init, dat)
+#'
+#' # Fit model
+#' model <- schnute3(init, dat)
+#' fit <- nlminb(model$par, model$fn, model$gr,
+#'               control=list(eval.max=1e4,iter.max=1e4))
+#' report <- model$report()
+#' sdreport <- sdreport(model, getReportCovariance=FALSE)
+#'
+#' # Plot results
+#' plot(len~age, otoliths_ex, xlim=c(0,4), ylim=c(0,100))
+#' points(report$age, tags_ex$lenRel, col=4)
+#' points(report$age+tags_ex$liberty, tags_ex$lenRec, col=3)
+#' lines(report$curve~report$age_seq, lwd=2)
+#'
+#' # Model summary
+#' est <- report[c("L1", "L2", "b", "sigma_1", "sigma_2")]
+#' est
+#' fit[-1]
+#' head(summary(sdreport), 5)
+#'
 #' @importFrom RTMB ADREPORT dnorm MakeADFun REPORT
 #'
 #' @export
