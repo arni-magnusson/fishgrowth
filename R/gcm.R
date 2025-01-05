@@ -126,7 +126,7 @@
 #' plot(len~age, otoliths_ex, xlim=c(0,4), ylim=c(0,100))
 #' points(report$age, tags_ex$lenRel, col=4)
 #' points(report$age+tags_ex$liberty, tags_ex$lenRec, col=3)
-#' lines(report$curve~report$age_seq, lwd=2)
+#' lines(report$age_seq, report$curve, lwd=2)
 #'
 #' # Model summary
 #' est <- report[c("L0", "rmax", "k", "t50", "sigma_1", "sigma_2")]
