@@ -61,7 +61,9 @@ The \code{par} list contains the following elements:
   \item \code{log_k}, growth coefficient
   \item \code{log_sigma_1}, growth variability at length \code{L_short}
   \item \code{log_sigma_2}, growth variability at length \code{L_long}
-  \item \code{log_age} age at release of tagged individuals (vector)
+  \item \code{log_sigma_age}, variability of \code{age_eps} random effects
+  \item \code{age_eps}, age-at-release deviations of tagged individuals from
+        the regression line (vector)
 }
 
 The \code{data} list contains the following elements:
@@ -102,21 +104,24 @@ predicted lengths:
   nll_Lrel <- -dnorm(Lrel, Lrel_hat, sigma_Lrel, TRUE)
   nll_Lrec <- -dnorm(Lrec, Lrec_hat, sigma_Lrec, TRUE)
   nll_Loto <- -dnorm(Loto, Loto_hat, sigma_Loto, TRUE)
-  nll <- sum(nll_Lrel) + sum(nll_Lrec) + sum(nll_Loto)
+  nll_age <- -dnorm(age_eps, 0, sigma_age, TRUE)
+  nll <- sum(nll_Lrel) + sum(nll_Lrec) + sum(nll_Loto) + sum(nll_age)
 }
 }
 \examples{
 # Explore initial parameter values
 plot(len~age, otoliths_ex, xlim=c(0,4), ylim=c(0,100))
 x <- seq(0, 4, 0.1)
-points(lenRel~I(lenRel/60), tags_ex, col=4)
-points(lenRec~I(lenRel/60+liberty), tags_ex, col=3)
 lines(x, vonbert_curve(x, L1=25, L2=75, k=0.8, t1=0, t2=4), lty=2)
+mu <- -1.25 * log(1 - (tags_ex$lenRel-25) * (1-exp(-3.2)) / 50)
+points(lenRel~mu, tags_ex, col=4)
+points(lenRec~I(mu+liberty), tags_ex, col=3)
 
 # Prepare parameters and data
 init <- list(log_L1=log(25), log_L2=log(75), log_k=log(0.8),
              log_sigma_1=log(1), log_sigma_2=log(1),
-             log_age=log(tags_ex$lenRel/60))
+             log_sigma_age=log(0.1),
+             age_eps=rep(0, length(tags_ex$lenRel)))
 dat <- list(Lrel=tags_ex$lenRel, Lrec=tags_ex$lenRec,
             liberty=tags_ex$liberty, Aoto=otoliths_ex$age,
             Loto=otoliths_ex$len, t1=0, t2=4, L_short=30, L_long=60)
@@ -136,10 +141,10 @@ points(report$age+tags_ex$liberty, tags_ex$lenRec, col=3)
 lines(report$curve~report$age_seq, lwd=2)
 
 # Model summary
-est <- report[c("L1", "L2", "k", "sigma_1", "sigma_2")]
+est <- report[c("L1", "L2", "k", "sigma_1", "sigma_2", "sigma_age")]
 est
 fit[-1]
-head(summary(sdreport), 5)
+head(summary(sdreport), 6)
 
 }
 \references{

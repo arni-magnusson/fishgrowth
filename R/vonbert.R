@@ -27,7 +27,9 @@
 #'   \item \code{log_k}, growth coefficient
 #'   \item \code{log_sigma_1}, growth variability at length \code{L_short}
 #'   \item \code{log_sigma_2}, growth variability at length \code{L_long}
-#'   \item \code{log_age} age at release of tagged individuals (vector)
+#'   \item \code{log_sigma_age}, variability of \code{age_eps} random effects
+#'   \item \code{age_eps}, age-at-release deviations of tagged individuals from
+#'         the regression line (vector)
 #' }
 #'
 #' The \code{data} list contains the following elements:
@@ -79,7 +81,8 @@
 #'   nll_Lrel <- -dnorm(Lrel, Lrel_hat, sigma_Lrel, TRUE)
 #'   nll_Lrec <- -dnorm(Lrec, Lrec_hat, sigma_Lrec, TRUE)
 #'   nll_Loto <- -dnorm(Loto, Loto_hat, sigma_Loto, TRUE)
-#'   nll <- sum(nll_Lrel) + sum(nll_Lrec) + sum(nll_Loto)
+#'   nll_age <- -dnorm(age_eps, 0, sigma_age, TRUE)
+#'   nll <- sum(nll_Lrel) + sum(nll_Lrec) + sum(nll_Loto) + sum(nll_age)
 #' }
 #'
 #' @references
@@ -106,14 +109,16 @@
 #' # Explore initial parameter values
 #' plot(len~age, otoliths_ex, xlim=c(0,4), ylim=c(0,100))
 #' x <- seq(0, 4, 0.1)
-#' points(lenRel~I(lenRel/60), tags_ex, col=4)
-#' points(lenRec~I(lenRel/60+liberty), tags_ex, col=3)
 #' lines(x, vonbert_curve(x, L1=25, L2=75, k=0.8, t1=0, t2=4), lty=2)
+#' mu <- -1.25 * log(1 - (tags_ex$lenRel-25) * (1-exp(-3.2)) / 50)
+#' points(lenRel~mu, tags_ex, col=4)
+#' points(lenRec~I(mu+liberty), tags_ex, col=3)
 #'
 #' # Prepare parameters and data
 #' init <- list(log_L1=log(25), log_L2=log(75), log_k=log(0.8),
 #'              log_sigma_1=log(1), log_sigma_2=log(1),
-#'              log_age=log(tags_ex$lenRel/60))
+#'              log_sigma_age=log(0.1),
+#'              age_eps=rep(0, length(tags_ex$lenRel)))
 #' dat <- list(Lrel=tags_ex$lenRel, Lrec=tags_ex$lenRec,
 #'             liberty=tags_ex$liberty, Aoto=otoliths_ex$age,
 #'             Loto=otoliths_ex$len, t1=0, t2=4, L_short=30, L_long=60)
@@ -133,10 +138,10 @@
 #' lines(report$curve~report$age_seq, lwd=2)
 #'
 #' # Model summary
-#' est <- report[c("L1", "L2", "k", "sigma_1", "sigma_2")]
+#' est <- report[c("L1", "L2", "k", "sigma_1", "sigma_2", "sigma_age")]
 #' est
 #' fit[-1]
-#' head(summary(sdreport), 5)
+#' head(summary(sdreport), 6)
 #'
 #' @importFrom RTMB ADREPORT dnorm MakeADFun REPORT
 #'
@@ -148,7 +153,8 @@ vonbert <- function(par, data, silent=TRUE, ...)
   {
     function(par) objfun(par, data)
   }
-  MakeADFun(wrap(vonbert_objfun, data=data), par, silent=silent, ...)
+  MakeADFun(wrap(vonbert_objfun, data=data), par, random="age_eps",
+            silent=silent, ...)
 }
 
 #' @rdname vonbert
@@ -172,7 +178,8 @@ vonbert_objfun <- function(par, data)
   k <- exp(par$log_k)
   sigma_1 <- exp(par$log_sigma_1)
   sigma_2 <- exp(par$log_sigma_2)
-  age <- tryCatch(exp(par$log_age), error=as.null)
+  sigma_age <- tryCatch(exp(par$log_sigma_age), error=as.null)
+  age_eps <- par$age_eps
 
   # Extract data
   Lrel <- data$Lrel
@@ -184,6 +191,10 @@ vonbert_objfun <- function(par, data)
   t2 <- data$t2
   L_short <- data$L_short
   L_long <- data$L_long
+
+  # Calculate age as deviations from the growth curve
+  mu <- t1 - 1/k * log(1 - (Lrel-L1) * (1-exp(-k*(t2-t1))) / (L2-L1))
+  age <- mu + age_eps
 
   # Calculate sigma coefficients (sigma = a + b*L)
   sigma_slope <- (sigma_2 - sigma_1) / (L_long - L_short)
@@ -201,7 +212,8 @@ vonbert_objfun <- function(par, data)
   nll_Lrel <- tryCatch(-dnorm(Lrel, Lrel_hat, sigma_Lrel, TRUE), error=as.null)
   nll_Lrec <- tryCatch(-dnorm(Lrec, Lrec_hat, sigma_Lrec, TRUE), error=as.null)
   nll_Loto <- tryCatch(-dnorm(Loto, Loto_hat, sigma_Loto, TRUE), error=as.null)
-  nll <- sum(nll_Lrel) + sum(nll_Lrec) + sum(nll_Loto)
+  nll_age <- tryCatch(-dnorm(age_eps, 0, sigma_age, TRUE), error=as.null)
+  nll <- sum(nll_Lrel) + sum(nll_Lrec) + sum(nll_Loto) + sum(nll_age)
 
   # Calculate curve
   age_seq = seq(0, 10, 1/365)  # age 0-10 years, day by day
@@ -211,6 +223,7 @@ vonbert_objfun <- function(par, data)
   REPORT(L1)
   REPORT(L2)
   REPORT(k)
+  REPORT(age_eps)
   REPORT(age)
   REPORT(liberty)
   REPORT(Lrel)
@@ -229,6 +242,7 @@ vonbert_objfun <- function(par, data)
   REPORT(sigma_Lrel)
   REPORT(sigma_Lrec)
   REPORT(sigma_Loto)
+  REPORT(sigma_age)
   REPORT(nll_Lrel)
   REPORT(nll_Lrec)
   REPORT(nll_Loto)
