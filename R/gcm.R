@@ -212,7 +212,7 @@ gcm_objfun <- function(par, data)
   t50 <- par$t50
   sigma_1 <- exp(par$log_sigma_1)
   sigma_2 <- exp(par$log_sigma_2)
-  age <- tryCatch(exp(par$log_age), errror=as.null)
+  age <- tryCatch(exp(par$log_age), error=as.null)
 
   # Extract data
   Lrel <- data$Lrel
