@@ -125,7 +125,7 @@ vonbert_objfun(init, dat)
 # Fit model
 model <- vonbert(init, dat)
 fit <- nlminb(model$par, model$fn, model$gr,
-              control=list(eval.max=1e4,iter.max=1e4))
+              control=list(eval.max=1e4, iter.max=1e4))
 report <- model$report()
 sdreport <- sdreport(model, getReportCovariance=FALSE)
 
