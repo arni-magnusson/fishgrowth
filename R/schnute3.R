@@ -27,7 +27,7 @@
 #'   \item \code{b}, shape parameter
 #'   \item \code{log_sigma_1}, growth variability at length \code{L_short}
 #'   \item \code{log_sigma_2}, growth variability at length \code{L_long}
-#'   \item \code{log_age} age at release of tagged individuals (vector)
+#'   \item \code{log_age}, age at release of tagged individuals (vector)
 #' }
 #'
 #' The \code{data} list contains the following elements:
