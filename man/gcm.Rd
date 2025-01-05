@@ -140,6 +140,49 @@ est
 fit[-1]
 head(summary(sdreport), 6)
 
+#############################################################################
+
+# Stepwise estimation procedure, described by Maunder et al. (2018)
+# - estimate L0 and rmax using linear regression on younger fish
+# - estimate k and t0 using GCM and all data, keeping L0 and rmax fixed
+
+# Estimate L0 and rmax
+plot(otoliths_ex, xlim=c(0,4), ylim=c(0,80))
+fm <- lm(len~age, otoliths_ex)
+abline(fm)
+L0 <- coef(fm)[[1]]
+rmax <- coef(fm)[[2]]
+
+# Explore initial parameter values (k, t50, age)
+t <- seq(0, 4, by=0.1)
+points(t, gcm_curve(t, L0, rmax, k=3, t50=2), col="gray")
+points(lenRel~I(lenRel/50), tags_ex, col=4)
+points(lenRec~I(lenRel/50+liberty), tags_ex, col=3)
+
+init2 <- list(L0=L0, log_rmax=log(rmax), log_k=log(3), t50=2,
+              log_sigma_1=log(1), log_sigma_2=log(1),
+              log_age=log(tags_ex$lenRel/50))
+
+# Fit model
+map <- list(L0=factor(NA), log_rmax=factor(NA))  # fix L0 and rmax
+model2 <- gcm(init2, dat, map=map)
+fit2 <- nlminb(model2$par, model2$fn, model2$gr,
+              control=list(eval.max=1e4,iter.max=1e4))
+report2 <- model2$report()
+sdreport2 <- sdreport(model2, getReportCovariance=FALSE)
+
+# Plot results
+plot(len~age, otoliths_ex, xlim=c(0,4), ylim=c(0,100))
+points(report2$age, tags_ex$lenRel, col=4)
+points(report2$age+tags_ex$liberty, tags_ex$lenRec, col=3)
+lines(report2$age_seq, report2$curve, lwd=2)
+
+# Model summary
+est2 <- report2[c("L0", "rmax", "k", "t50", "sigma_1", "sigma_2")]
+est2
+fit2[-1]
+head(summary(sdreport2), 6)
+
 }
 \references{
 Maunder, M.N., Deriso, R.B., Schaefer, K.M., Fuller, D.W., Aires-da-Silva,
