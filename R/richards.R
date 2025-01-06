@@ -200,14 +200,8 @@ richards_objfun <- function(par, data)
   b <- par$b
   sigma_1 <- exp(par$log_sigma_1)
   sigma_2 <- exp(par$log_sigma_2)
-  age <- tryCatch(exp(par$log_age), error=as.null)
 
   # Extract data
-  Lrel <- data$Lrel
-  Lrec <- data$Lrec
-  liberty <- data$liberty
-  Aoto <- data$Aoto
-  Loto <- data$Loto
   t1 <- data$t1
   t2 <- data$t2
   L_short <- data$L_short
@@ -217,19 +211,8 @@ richards_objfun <- function(par, data)
   sigma_slope <- (sigma_2 - sigma_1) / (L_long - L_short)
   sigma_intercept <- sigma_1 - L_short * sigma_slope
 
-  # Calculate Lhat and sigma
-  Lrel_hat <- richards_curve(age, L1, L2, k, b, t1, t2)
-  Lrec_hat <- richards_curve(age+liberty, L1, L2, k, b, t1, t2)
-  Loto_hat <- richards_curve(Aoto, L1, L2, k, b, t1, t2)
-  sigma_Lrel <- sigma_intercept + sigma_slope * Lrel_hat
-  sigma_Lrec <- sigma_intercept + sigma_slope * Lrec_hat
-  sigma_Loto <- sigma_intercept + sigma_slope * Loto_hat
-
-  # Calculate likelihoods
-  nll_Lrel <- tryCatch(-dnorm(Lrel, Lrel_hat, sigma_Lrel, TRUE), error=as.null)
-  nll_Lrec <- tryCatch(-dnorm(Lrec, Lrec_hat, sigma_Lrec, TRUE), error=as.null)
-  nll_Loto <- tryCatch(-dnorm(Loto, Loto_hat, sigma_Loto, TRUE), error=as.null)
-  nll <- sum(nll_Lrel) + sum(nll_Lrec) + sum(nll_Loto)
+  # Initialize likelihood
+  nll <- 0
 
   # Calculate curve
   age_seq = seq(0, 10, 1/365)  # age 0-10 years, day by day
@@ -240,30 +223,69 @@ richards_objfun <- function(par, data)
   REPORT(L2)
   REPORT(k)
   REPORT(b)
-  REPORT(age)
-  REPORT(liberty)
-  REPORT(Lrel)
-  REPORT(Lrec)
-  REPORT(Aoto)
-  REPORT(Loto)
-  REPORT(Lrel_hat)
-  REPORT(Lrec_hat)
-  REPORT(Loto_hat)
   REPORT(t1)
   REPORT(t2)
   REPORT(L_short)
   REPORT(L_long)
   REPORT(sigma_1)
   REPORT(sigma_2)
-  REPORT(sigma_Lrel)
-  REPORT(sigma_Lrec)
-  REPORT(sigma_Loto)
-  REPORT(nll_Lrel)
-  REPORT(nll_Lrec)
-  REPORT(nll_Loto)
   REPORT(age_seq)
   REPORT(curve)
   ADREPORT(curve)
+
+  # Model includes tagging data
+  if(!is.null(par$log_age) && !is.null(data$Lrel) &&
+     !is.null(data$Lrec) && !is.null(data$liberty))
+  {
+    # par
+    age <- exp(par$log_age)
+    # data
+    Lrel <- data$Lrel
+    Lrec <- data$Lrec
+    liberty <- data$liberty
+    # Lhat
+    Lrel_hat <- richards_curve(age, L1, L2, k, b, t1, t2)
+    Lrec_hat <- richards_curve(age+liberty, L1, L2, k, b, t1, t2)
+    # sigma
+    sigma_Lrel <- sigma_intercept + sigma_slope * Lrel_hat
+    sigma_Lrec <- sigma_intercept + sigma_slope * Lrec_hat
+    # nll
+    nll_Lrel <- -dnorm(Lrel, Lrel_hat, sigma_Lrel, TRUE)
+    nll_Lrec <- -dnorm(Lrec, Lrec_hat, sigma_Lrec, TRUE)
+    nll <- nll + sum(nll_Lrel) + sum(nll_Lrec)
+    # report
+    REPORT(age)
+    REPORT(Lrel)
+    REPORT(Lrec)
+    REPORT(liberty)
+    REPORT(Lrel_hat)
+    REPORT(Lrec_hat)
+    REPORT(sigma_Lrel)
+    REPORT(sigma_Lrec)
+    REPORT(nll_Lrel)
+    REPORT(nll_Lrec)
+  }
+
+  # Model includes otolith data
+  if(!is.null(data$Aoto) && !is.null(data$Loto))
+  {
+    # data
+    Aoto <- data$Aoto
+    Loto <- data$Loto
+    # Lhat
+    Loto_hat <- richards_curve(Aoto, L1, L2, k, b, t1, t2)
+    # sigma
+    sigma_Loto <- sigma_intercept + sigma_slope * Loto_hat
+    # nll
+    nll_Loto <- -dnorm(Loto, Loto_hat, sigma_Loto, TRUE)
+    nll <- nll + sum(nll_Loto)
+    # report
+    REPORT(Aoto)
+    REPORT(Loto)
+    REPORT(Loto_hat)
+    REPORT(sigma_Loto)
+    REPORT(nll_Loto)
+  }
 
   nll
 }

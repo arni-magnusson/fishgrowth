@@ -185,27 +185,27 @@
 #' #############################################################################
 #'
 #' # Fit to otoliths only
-#' # init_oto <- list(L0=20, log_rmax=log(120), log_k=log(2), t50=0,
-#' #                  log_sigma_1=log(1), log_sigma_2=log(1))
-#' # dat_oto <- list(Aoto=otoliths_ex$age, Loto=otoliths_ex$len,
-#' #                 L_short=30, L_long=60)
-#' # model_oto <- gcm(init_oto, dat_oto)
-#' # fit_oto <- nlminb(model_oto$par, model_oto$fn, model_oto$gr,
-#' #                   control=list(eval.max=1e4, iter.max=1e4))
-#' # model_oto$report()[c("L0", "rmax", "k", "t50")]
+#' init_oto <- list(L0=20, log_rmax=log(120), log_k=log(2), t50=0,
+#'                  log_sigma_1=log(1), log_sigma_2=log(1))
+#' dat_oto <- list(Aoto=otoliths_ex$age, Loto=otoliths_ex$len,
+#'                 L_short=30, L_long=60)
+#' model_oto <- gcm(init_oto, dat_oto)
+#' fit_oto <- nlminb(model_oto$par, model_oto$fn, model_oto$gr,
+#'                   control=list(eval.max=1e4, iter.max=1e4))
+#' model_oto$report()[c("L0", "rmax", "k", "t50")]
 #'
 #' #############################################################################
 #'
 #' # Fit to tags only
-#' # init_tags <- list(L0=log(20), log_rmax=log(120), log_k=log(2), t50=0,
-#' #                   log_sigma_1=log(1), log_sigma_2=log(1),
-#' #                   log_age=log(tags_ex$lenRel/60))
-#' # dat_tags <- list(Lrel=tags_ex$lenRel, Lrec=tags_ex$lenRec,
-#' #                  liberty=tags_ex$liberty, L_short=30, L_long=60)
-#' # model_tags <- gcm(init_tags, dat_tags)
-#' # fit_tags <- nlminb(model_tags$par, model_tags$fn, model_tags$gr,
-#' #                    control=list(eval.max=1e4, iter.max=1e4))
-#' # model_tags$report()[c("L0", "rmax", "k", "t50")]
+#' init_tags <- list(L0=log(20), log_rmax=log(120), log_k=log(2), t50=0,
+#'                   log_sigma_1=log(1), log_sigma_2=log(1),
+#'                   log_age=log(tags_ex$lenRel/60))
+#' dat_tags <- list(Lrel=tags_ex$lenRel, Lrec=tags_ex$lenRec,
+#'                  liberty=tags_ex$liberty, L_short=30, L_long=60)
+#' model_tags <- gcm(init_tags, dat_tags)
+#' fit_tags <- nlminb(model_tags$par, model_tags$fn, model_tags$gr,
+#'                    control=list(eval.max=1e4, iter.max=1e4))
+#' model_tags$report()[c("L0", "rmax", "k", "t50")]
 #'
 #' @importFrom RTMB ADREPORT dnorm MakeADFun REPORT
 #'
@@ -242,14 +242,8 @@ gcm_objfun <- function(par, data)
   t50 <- par$t50
   sigma_1 <- exp(par$log_sigma_1)
   sigma_2 <- exp(par$log_sigma_2)
-  age <- tryCatch(exp(par$log_age), error=as.null)
 
   # Extract data
-  Lrel <- data$Lrel
-  Lrec <- data$Lrec
-  liberty <- data$liberty
-  Aoto <- data$Aoto
-  Loto <- data$Loto
   L_short <- data$L_short
   L_long <- data$L_long
 
@@ -257,19 +251,8 @@ gcm_objfun <- function(par, data)
   sigma_slope <- (sigma_2 - sigma_1) / (L_long - L_short)
   sigma_intercept <- sigma_1 - L_short * sigma_slope
 
-  # Calculate Lhat and sigma
-  Lrel_hat <- gcm_curve(age, L0, rmax, k, t50)
-  Lrec_hat <- gcm_curve(age+liberty, L0, rmax, k, t50)
-  Loto_hat <- gcm_curve(Aoto, L0, rmax, k, t50)
-  sigma_Lrel <- sigma_intercept + sigma_slope * Lrel_hat
-  sigma_Lrec <- sigma_intercept + sigma_slope * Lrec_hat
-  sigma_Loto <- sigma_intercept + sigma_slope * Loto_hat
-
-  # Calculate likelihoods
-  nll_Lrel <- tryCatch(-dnorm(Lrel, Lrel_hat, sigma_Lrel, TRUE), error=as.null)
-  nll_Lrec <- tryCatch(-dnorm(Lrec, Lrec_hat, sigma_Lrec, TRUE), error=as.null)
-  nll_Loto <- tryCatch(-dnorm(Loto, Loto_hat, sigma_Loto, TRUE), error=as.null)
-  nll <- sum(nll_Lrel) + sum(nll_Lrec) + sum(nll_Loto)
+  # Initialize likelihood
+  nll <- 0
 
   # Calculate curve
   age_seq = seq(0, 10, 1/365)  # age 0-10 years, day by day
@@ -280,28 +263,67 @@ gcm_objfun <- function(par, data)
   REPORT(rmax)
   REPORT(k)
   REPORT(t50)
-  REPORT(age)
-  REPORT(liberty)
-  REPORT(Lrel)
-  REPORT(Lrec)
-  REPORT(Aoto)
-  REPORT(Loto)
-  REPORT(Lrel_hat)
-  REPORT(Lrec_hat)
-  REPORT(Loto_hat)
   REPORT(L_short)
   REPORT(L_long)
   REPORT(sigma_1)
   REPORT(sigma_2)
-  REPORT(sigma_Lrel)
-  REPORT(sigma_Lrec)
-  REPORT(sigma_Loto)
-  REPORT(nll_Lrel)
-  REPORT(nll_Lrec)
-  REPORT(nll_Loto)
   REPORT(age_seq)
   REPORT(curve)
   ADREPORT(curve)
+
+  # Model includes tagging data
+  if(!is.null(par$log_age) && !is.null(data$Lrel) &&
+     !is.null(data$Lrec) && !is.null(data$liberty))
+  {
+    # par
+    age <- exp(par$log_age)
+    # data
+    Lrel <- data$Lrel
+    Lrec <- data$Lrec
+    liberty <- data$liberty
+    # Lhat
+    Lrel_hat <- gcm_curve(age, L0, rmax, k, t50)
+    Lrec_hat <- gcm_curve(age+liberty, L0, rmax, k, t50)
+    # sigma
+    sigma_Lrel <- sigma_intercept + sigma_slope * Lrel_hat
+    sigma_Lrec <- sigma_intercept + sigma_slope * Lrec_hat
+    # nll
+    nll_Lrel <- -dnorm(Lrel, Lrel_hat, sigma_Lrel, TRUE)
+    nll_Lrec <- -dnorm(Lrec, Lrec_hat, sigma_Lrec, TRUE)
+    nll <- nll + sum(nll_Lrel) + sum(nll_Lrec)
+    # report
+    REPORT(age)
+    REPORT(Lrel)
+    REPORT(Lrec)
+    REPORT(liberty)
+    REPORT(Lrel_hat)
+    REPORT(Lrec_hat)
+    REPORT(sigma_Lrel)
+    REPORT(sigma_Lrec)
+    REPORT(nll_Lrel)
+    REPORT(nll_Lrec)
+  }
+
+  # Model includes otolith data
+  if(!is.null(data$Aoto) && !is.null(data$Loto))
+  {
+    # data
+    Aoto <- data$Aoto
+    Loto <- data$Loto
+    # Lhat
+    Loto_hat <- gcm_curve(Aoto, L0, rmax, k, t50)
+    # sigma
+    sigma_Loto <- sigma_intercept + sigma_slope * Loto_hat
+    # nll
+    nll_Loto <- -dnorm(Loto, Loto_hat, sigma_Loto, TRUE)
+    nll <- nll + sum(nll_Loto)
+    # report
+    REPORT(Aoto)
+    REPORT(Loto)
+    REPORT(Loto_hat)
+    REPORT(sigma_Loto)
+    REPORT(nll_Loto)
+  }
 
   nll
 }
