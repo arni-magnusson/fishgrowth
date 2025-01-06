@@ -5,11 +5,11 @@
 #' @title Growth from Tags and Otoliths
 #'
 #' @description
-#' Fit growth models to tagging data and otolith data, using RTMB and maximum
-#' likelihood. The tagging data provide information about the observed length at
+#' Fit growth models to tagging data and/or otolith data, using RTMB and maximum
+#' likelihood. The otoliths provide direct observed coordinates of age and
+#' length. The tagging data provide information about the observed length at
 #' release and length at recapture at a later time, where the age at release is
-#' unknown and estimated as a vector of parameters. The otoliths provide direct
-#' observed coordinates of age and length.
+#' unknown and estimated as a vector of parameters.
 #'
 #' @details
 #' \emph{Growth models:}

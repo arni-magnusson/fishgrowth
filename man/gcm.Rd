@@ -44,7 +44,7 @@ single number, describing the goodness of fit of \code{par} to the
 \code{data}.
 }
 \description{
-Fit a growth cessation model (GCM) to tags and otoliths.
+Fit a growth cessation model (GCM) to tags and/or otoliths.
 }
 \details{
 The main function \code{gcm} creates a model object, ready for parameter
@@ -63,20 +63,27 @@ The \code{par} list contains the following elements:
         midpoint
   \item \code{log_sigma_1}, growth variability at length \code{L_short}
   \item \code{log_sigma_2}, growth variability at length \code{L_long}
-  \item \code{log_age}, age at release of tagged individuals (vector)
+  \item \code{log_age} (*), age at release of tagged individuals (vector)
 }
+
+*: The parameter vector \code{log_age} should be omitted when fitting to
+otoliths only.
 
 The \code{data} list contains the following elements:
 \itemize{
-  \item \code{Lrel}, length at release of tagged individuals (vector)
-  \item \code{Lrec}, length at recapture of tagged individuals (vector)
-  \item \code{liberty}, time at liberty of tagged individuals in years
+  \item \code{Aoto} (*), age from otoliths (vector)
+  \item \code{Loto} (*), length from otoliths (vector)
+  \item \code{Lrel} (*), length at release of tagged individuals (vector)
+  \item \code{Lrec} (*), length at recapture of tagged individuals (vector)
+  \item \code{liberty} (*), time at liberty of tagged individuals in years
         (vector)
-  \item \code{Aoto}, age from otoliths (vector)
-  \item \code{Loto}, length from otoliths (vector)
   \item \code{L_short}, length where sd(length) is \code{sigma_1}
   \item \code{L_long}, length where sd(length) is \code{sigma_2}
 }
+
+*: The data vectors \code{Aoto} and \code{Loto} should be omitted when
+fitting to tagging data only. The data vectors \code{Lrel}, \code{Lrec}, and
+\code{liberty} should be omitted when fitting to otoliths only.
 }
 \note{
 The growth cessation model (Maunder et al. 2018) predicts length at age as:
@@ -98,10 +105,10 @@ where the slope is \eqn{\beta=(\sigma_2-\sigma_1) /
 The negative log-likelihood is calculated by comparing the observed and
 predicted lengths:
 \preformatted{
+  nll_Loto <- -dnorm(Loto, Loto_hat, sigma_Loto, TRUE)
   nll_Lrel <- -dnorm(Lrel, Lrel_hat, sigma_Lrel, TRUE)
   nll_Lrec <- -dnorm(Lrec, Lrec_hat, sigma_Lrec, TRUE)
-  nll_Loto <- -dnorm(Loto, Loto_hat, sigma_Loto, TRUE)
-  nll <- sum(nll_Lrel) + sum(nll_Lrec) + sum(nll_Loto)
+  nll <- sum(nll_Loto) + sum(nll_Lrel) + sum(nll_Lrec)
 }
 }
 \examples{
@@ -120,9 +127,9 @@ lines(x, gcm_curve(x, L0=20, rmax=120, k=2, t50=0), lty=2)
 init <- list(L0=20, log_rmax=log(120), log_k=log(2), t50=0,
              log_sigma_1=log(1), log_sigma_2=log(1),
              log_age=log(tags_ex$lenRel/60))
-dat <- list(Lrel=tags_ex$lenRel, Lrec=tags_ex$lenRec,
-            liberty=tags_ex$liberty, Aoto=otoliths_ex$age,
-            Loto=otoliths_ex$len, L_short=30, L_long=60)
+dat <- list(Aoto=otoliths_ex$age, Loto=otoliths_ex$len,
+            Lrel=tags_ex$lenRel, Lrec=tags_ex$lenRec,
+            liberty=tags_ex$liberty, L_short=30, L_long=60)
 gcm_objfun(init, dat)
 
 # Fit model
