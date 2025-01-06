@@ -151,7 +151,7 @@ head(summary(sdreport), 6)
 # - estimate k and t0 using GCM and all data, keeping L0 and rmax fixed
 
 # Estimate L0 and rmax
-plot(otoliths_ex, xlim=c(0,4), ylim=c(0,80))
+plot(otoliths_ex, xlim=c(0,4), ylim=c(0,100))
 fm <- lm(len~age, otoliths_ex)
 abline(fm)
 L0 <- coef(fm)[[1]]
@@ -163,29 +163,55 @@ points(t, gcm_curve(t, L0, rmax, k=3, t50=2), col="gray")
 points(lenRel~I(lenRel/50), tags_ex, col=4)
 points(lenRec~I(lenRel/50+liberty), tags_ex, col=3)
 
-init2 <- list(L0=L0, log_rmax=log(rmax), log_k=log(3), t50=2,
-              log_sigma_1=log(1), log_sigma_2=log(1),
-              log_age=log(tags_ex$lenRel/50))
+# Prepare parameters
+init_step <- list(L0=L0, log_rmax=log(rmax), log_k=log(3), t50=2,
+                  log_sigma_1=log(1), log_sigma_2=log(1),
+                  log_age=log(tags_ex$lenRel/50))
 
 # Fit model
 map <- list(L0=factor(NA), log_rmax=factor(NA))  # fix L0 and rmax
-model2 <- gcm(init2, dat, map=map)
-fit2 <- nlminb(model2$par, model2$fn, model2$gr,
-              control=list(eval.max=1e4,iter.max=1e4))
-report2 <- model2$report()
-sdreport2 <- sdreport(model2, getReportCovariance=FALSE)
+model_step <- gcm(init_step, dat, map=map)
+fit_step <- nlminb(model_step$par, model_step$fn, model_step$gr,
+                   control=list(eval.max=1e4,iter.max=1e4))
+report_step <- model_step$report()
+sdreport_step <- sdreport(model_step, getReportCovariance=FALSE)
 
 # Plot results
 plot(len~age, otoliths_ex, xlim=c(0,4), ylim=c(0,100))
-points(report2$age, tags_ex$lenRel, col=4)
-points(report2$age+tags_ex$liberty, tags_ex$lenRec, col=3)
-lines(report2$age_seq, report2$curve, lwd=2)
+points(report_step$age, tags_ex$lenRel, col=4)
+points(report_step$age+tags_ex$liberty, tags_ex$lenRec, col=3)
+lines(report_step$age_seq, report_step$curve, lwd=2)
 
 # Model summary
-est2 <- report2[c("L0", "rmax", "k", "t50", "sigma_1", "sigma_2")]
-est2
-fit2[-1]
-head(summary(sdreport2), 6)
+est_step <- report_step[c("L0", "rmax", "k", "t50", "sigma_1", "sigma_2")]
+est_step
+fit_step[-1]
+head(summary(sdreport_step), 6)
+
+#############################################################################
+
+# Fit to otoliths only
+# init_oto <- list(L0=20, log_rmax=log(120), log_k=log(2), t50=0,
+#                  log_sigma_1=log(1), log_sigma_2=log(1))
+# dat_oto <- list(Aoto=otoliths_ex$age, Loto=otoliths_ex$len,
+#                 L_short=30, L_long=60)
+# model_oto <- gcm(init_oto, dat_oto)
+# fit_oto <- nlminb(model_oto$par, model_oto$fn, model_oto$gr,
+#                   control=list(eval.max=1e4, iter.max=1e4))
+# model_oto$report()[c("L0", "rmax", "k", "t50")]
+
+#############################################################################
+
+# Fit to tags only
+# init_tags <- list(L0=log(20), log_rmax=log(120), log_k=log(2), t50=0,
+#                   log_sigma_1=log(1), log_sigma_2=log(1),
+#                   log_age=log(tags_ex$lenRel/60))
+# dat_tags <- list(Lrel=tags_ex$lenRel, Lrec=tags_ex$lenRec,
+#                  liberty=tags_ex$liberty, L_short=30, L_long=60)
+# model_tags <- gcm(init_tags, dat_tags)
+# fit_tags <- nlminb(model_tags$par, model_tags$fn, model_tags$gr,
+#                    control=list(eval.max=1e4, iter.max=1e4))
+# model_tags$report()[c("L0", "rmax", "k", "t50")]
 
 }
 \references{
