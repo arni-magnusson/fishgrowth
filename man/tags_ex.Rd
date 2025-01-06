@@ -40,8 +40,9 @@ tags_ex
 \seealso{
 \code{\link{otoliths_ex}} and \code{tags_ex} are example datasets.
 
-\code{\link{gcm}}, \code{\link{richards}}, \code{\link{schnute3}}, and
-\code{\link{vonbert}} are alternative growth models.
+\code{\link{gcm}}, \code{\link{gompertz}}, \code{\link{richards}},
+\code{\link{schnute3}}, and \code{\link{vonbert}} are alternative growth
+models.
 
 \code{\link{tao-package}} gives an overview of the package.
 }

@@ -15,6 +15,7 @@
 #' \emph{Growth models:}
 #' \tabular{ll}{
 #'   \code{\link{gcm}}      \tab growth cessation\cr
+#'   \code{\link{gompertz}} \tab Gompertz\cr
 #'   \code{\link{richards}} \tab Richards\cr
 #'   \code{\link{schnute3}} \tab Schnute Case 3\cr
 #'   \code{\link{vonbert}}  \tab von Bertalanffy
