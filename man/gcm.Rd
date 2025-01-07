@@ -89,8 +89,8 @@ tagging data only. The data vectors \code{Lrel}, \code{Lrec}, and
 \note{
 The growth cessation model (Maunder et al. 2018) predicts length at age as:
 
-\deqn{\hat L_t ~=~ r_{\max}\!\left[\,\frac{\log\!\left(1+e^{-k\:\!t_{50}}
-      \right) \;-\;\log\!\left(1+e^{k(t-t_{50})}\right)}{k}\;+\;t\:\right]}{
+\deqn{\hat L_t ~=~ r_{\max}\!\left[\,\frac{\log\left(1+e^{-kt_{50}}
+      \right) \;-\;\log\left(1+e^{k(t-t_{50})}\right)}{k}\;+\;t\:\right]}{
       L0 + rmax * ((log(1 + exp(-k*t50)) - log(1 + exp(k*(t-t50)))) / k + t)}
 
 The variability of length at age increases linearly with length,
@@ -234,9 +234,9 @@ cessation in growth with application to bigeye tuna (\emph{Thunnus obesus}).
 \doi{10.1007/s00227-018-3336-9}.
 }
 \seealso{
-\code{gcm}, \code{\link{gompertz}}, \code{\link{richards}},
-\code{\link{schnute3}}, and \code{\link{vonbert}}/\code{\link{vonberto}} are
-alternative growth models.
+\code{gcm}, \code{\link{gompertz}},
+\code{\link{richards}}/\code{\link{richardso}}, \code{\link{schnute3}}, and
+\code{\link{vonbert}}/\code{\link{vonberto}} are alternative growth models.
 
 \code{\link{otoliths_ex}} and \code{\link{tags_ex}} are example datasets.
 

@@ -88,10 +88,10 @@ tagging data only. The data vectors \code{Lrel}, \code{Lrec}, and
 \code{liberty} can be omitted to fit to otoliths only.
 }
 \note{
-The Schnute-Fournier parametrization used in \code{\link{vonbert}} reduces
-parameter correlation and improves convergence reliability compared to the
-traditional parametrization used in \code{\link{vonberto}}. Therefore, the
-\code{vonbert} parametrization can be recommended for general usage, as both
+The Schnute-Fournier parametrization used in \code{vonbert} reduces parameter
+correlation and improves convergence reliability compared to the traditional
+parametrization used in \code{\link{vonberto}}. Therefore, the \code{vonbert}
+parametrization can be recommended for general usage, as both
 parametrizations produce the same growth curve. However, there may be some
 use cases where the traditional parametrization (\code{Linf}, \code{k},
 \code{t0}) is preferred over the Schnute-Fournier parametrization (\code{L1},
@@ -201,9 +201,9 @@ A new approach to length-frequency analysis: Growth structure.
 \doi{10.1139/f80-172}.
 }
 \seealso{
-\code{\link{gcm}}, \code{\link{gompertz}}, \code{\link{richards}},
-\code{\link{schnute3}}, and \code{vonbert}/\code{\link{vonberto}} are
-alternative growth models.
+\code{\link{gcm}}, \code{\link{gompertz}},
+\code{\link{richards}}/\code{\link{richardso}}, \code{\link{schnute3}}, and
+\code{vonbert}/\code{\link{vonberto}} are alternative growth models.
 
 \code{\link{otoliths_ex}} and \code{\link{tags_ex}} are example datasets.
 

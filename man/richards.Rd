@@ -47,7 +47,8 @@ single number, describing the goodness of fit of \code{par} to the
 \code{data}.
 }
 \description{
-Fit a Richards growth model to otoliths and/or tags.
+Fit a Richards growth model to otoliths and/or tags, using the Schnute
+parametrization.
 }
 \details{
 The main function \code{richards} creates a model object, ready for parameter
@@ -90,6 +91,15 @@ tagging data only. The data vectors \code{Lrel}, \code{Lrec}, and
 \code{liberty} can be omitted to fit to otoliths only.
 }
 \note{
+The Schnute parametrization used in \code{richards} reduces parameter
+correlation and improves convergence reliability compared to the traditional
+parametrization used in \code{\link{richardso}}. Therefore, the
+\code{richards} parametrization can be recommended for general usage, as both
+parametrizations produce the same growth curve. However, there may be some
+use cases where the traditional parametrization (\code{Linf}, \code{k},
+\code{tau}, \code{b}) is preferred over the Schnute parametrization
+(\code{L1}, \code{L2}, \code{k}, \code{b}).
+
 The Richards (1959) growth model, as parametrized by Schnute (1981, Eq. 15),
 predicts length at age as:
 
@@ -194,9 +204,9 @@ A versatile growth model with statistically stable parameters.
 \doi{10.1139/f81-153}.
 }
 \seealso{
-\code{\link{gcm}}, \code{\link{gompertz}}, \code{richards},
-\code{\link{schnute3}}, and \code{\link{vonbert}}/\code{\link{vonberto}} are
-alternative growth models.
+\code{\link{gcm}}, \code{\link{gompertz}},
+\code{richards}/\code{\link{richardso}}, \code{\link{schnute3}}, and
+\code{\link{vonbert}}/\code{\link{vonberto}} are alternative growth models.
 
 \code{\link{otoliths_ex}} and \code{\link{tags_ex}} are example datasets.
 

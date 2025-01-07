@@ -6,7 +6,7 @@ Authors@R: c(person("Arni", "Magnusson", role=c("aut","cre"), email="thisisarni@
   person("Mark", "Maunder", role="aut"))
 Depends: RTMB
 LazyData: yes
-Description: Fit growth models to tagging data and/or otolith data, using RTMB
+Description: Fit growth models to otolith data and/or tagging data, using RTMB
   and maximum likelihood. The tagging data provide information about the
   observed length at release and length at recapture at a later time, where the
   age at release is unknown and estimated as a vector of parameters. The

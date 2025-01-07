@@ -84,7 +84,7 @@ tagging data only. The data vectors \code{Lrel}, \code{Lrec}, and
 \note{
 The Schnute-Fournier parametrization used in \code{\link{vonbert}} reduces
 parameter correlation and improves convergence reliability compared to the
-traditional parametrization used in \code{\link{vonberto}}. Therefore, the
+traditional parametrization used in \code{vonberto}. Therefore, the
 \code{vonbert} parametrization can be recommended for general usage, as both
 parametrizations produce the same growth curve. However, there may be some
 use cases where the traditional parametrization (\code{Linf}, \code{k},
@@ -192,9 +192,9 @@ Beverton, R.J.H. and Holt, S.J. (1957).
 London: Her Majesty’s Stationery Office.
 }
 \seealso{
-\code{\link{gcm}}, \code{\link{gompertz}}, \code{\link{richards}},
-\code{\link{schnute3}}, and \code{\link{vonbert}}/\code{vonberto} are
-alternative growth models.
+\code{\link{gcm}}, \code{\link{gompertz}},
+\code{\link{richards}}/\code{\link{richards}}, \code{\link{schnute3}}, and
+\code{\link{vonbert}}/\code{vonberto} are alternative growth models.
 
 \code{\link{otoliths_ex}} and \code{\link{tags_ex}} are example datasets.
 
