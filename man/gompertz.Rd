@@ -96,7 +96,8 @@ The Gompertz (1825) growth model, as parametrized by Schnute (1981, Eq. 16)
 predicts length at age as:
 
 \deqn{L ~=~ L_1\,\times\,\exp\!\left[\,\log(L_2/L_1)\,
-      \frac{1-e^{-k(t-t_1)}}{1-e^{-k(t_2-t_1)}}\,\right]}
+      \frac{1-e^{-k(t-t_1)}}{1-e^{-k(t_2-t_1)}}\,\right]}{
+      L1 * exp(log(L2/L1) * (1-exp(-k*(t-t1))) / (1-exp(-k*(t2-t1))))}
 
 The variability of length at age increases linearly with length,
 
