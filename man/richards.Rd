@@ -63,12 +63,13 @@ The \code{par} list contains the following elements:
   \item \code{log_k}, growth coefficient
   \item \code{b}, shape parameter
   \item \code{log_sigma_1}, growth variability at length \code{L_short}
-  \item \code{log_sigma_2}, growth variability at length \code{L_long}
+  \item \code{log_sigma_2} (*), growth variability at length \code{L_long}
   \item \code{log_age} (*), age at release of tagged individuals (vector)
 }
 
-*: The parameter vector \code{log_age} should be omitted when fitting to
-otoliths only.
+*: The parameter \code{log_sigma_2} can be omitted to estimate growth
+variability that does not vary with length. The parameter vector
+\code{log_age} can be omitted to fit to otoliths only.
 
 The \code{data} list contains the following elements:
 \itemize{
@@ -84,9 +85,9 @@ The \code{data} list contains the following elements:
   \item \code{L_long}, length where sd(length) is \code{sigma_2}
 }
 
-*: The data vectors \code{Aoto} and \code{Loto} should be omitted when
-fitting to tagging data only. The data vectors \code{Lrel}, \code{Lrec}, and
-\code{liberty} should be omitted when fitting to otoliths only.
+*: The data vectors \code{Aoto} and \code{Loto} can be omitted to fit to
+tagging data only. The data vectors \code{Lrel}, \code{Lrec}, and
+\code{liberty} can be omitted to fit to otoliths only.
 }
 \note{
 The Richards (1959) growth model, as parametrized by Schnute (1981, Eq. 15),
@@ -103,8 +104,11 @@ The variability of length at age increases linearly with length,
 
 where the slope is \eqn{\beta=(\sigma_2-\sigma_1) /
 (L_\mathrm{long}-L_\mathrm{short})}{beta = (sigma_2-sigma_1) /
-(L_long-L_short)} and the intercept is \eqn{\alpha=\sigma_1
-- \beta L_\mathrm{short}}{alpha = sigma_1 - beta * L_short}.
+(L_long-L_short)} and the intercept is \eqn{\alpha=\sigma_1 - \beta
+L_\mathrm{short}}{alpha = sigma_1 - beta * L_short}. Alternatively, growth
+variability can be modelled as a constant
+(\eqn{\sigma_L=\sigma_1}{sigma_L=sigma_1}) that does not vary with length,
+see \code{log_sigma_2} above.
 
 The negative log-likelihood is calculated by comparing the observed and
 predicted lengths:
