@@ -62,10 +62,12 @@
 #' @note
 #' The Schnute-Fournier parametrization used in \code{\link{vonbert}} reduces
 #' parameter correlation and improves convergence reliability compared to the
-#' traditional parametrization used in \code{\link{vonberto}}. The two functions
-#' lead to the same growth curve, but there may be some use cases where the
-#' traditional parametrization (\code{Linf}, \code{k}, \code{t0}) is preferred
-#' over the Schnute-Fournier parametrization (\code{L1}, \code{L2}, \code{k}).
+#' traditional parametrization used in \code{\link{vonberto}}. Therefore, the
+#' \code{vonbert} parametrization can be recommended for general usage, as both
+#' parametrizations produce the same growth curve. However, there may be some
+#' use cases where the traditional parametrization (\code{Linf}, \code{k},
+#' \code{t0}) is preferred over the Schnute-Fournier parametrization (\code{L1},
+#' \code{L2}, \code{k}).
 #'
 #' The von Bertalanffy (1938) growth model, as parametrized by Beverton and Holt
 #' (1957), predicts length at age as:
