@@ -1,14 +1,14 @@
-#' Richards Growth Model
+#' Richards Growth Model (Old Style)
 #'
-#' Fit a Richards growth model to otoliths and/or tags, using the Schnute
+#' Fit a Richards growth model to otoliths and/or tags, using a traditional
 #' parametrization.
 #'
 #' @param par is a parameter list.
 #' @param data is a data list.
 #' @param t age (vector).
-#' @param L1 predicted length at age \code{t1}.
-#' @param L2 predicted length at age \code{t2}.
+#' @param Linf predicted length at age \code{t1}.
 #' @param k growth coefficient.
+#' @param tau inflection point parameter.
 #' @param b shape parameter.
 #' @param t1 age where predicted length is \code{L1}.
 #' @param t2 age where predicted length is \code{L2}.
