@@ -1,7 +1,7 @@
-Package: tao
+Package: fishgrowth
 Version: 1.0.0
 Date: 2024-12-18
-Title: Growth from Tags and Otoliths
+Title: Fit Growth Curves to Fish Data
 Authors@R: c(person("Arni", "Magnusson", role=c("aut","cre"), email="thisisarni@gmail.com"),
   person("Mark", "Maunder", role="aut"))
 Depends: RTMB
@@ -12,7 +12,7 @@ Description: Fit growth models to tagging data and/or otolith data, using RTMB
   age at release is unknown and estimated as a vector of parameters. The
   otoliths provide direct observed coordinates of age and length.
 License: GPL-3
-URL: https://github.com/arni-magnusson/tao
+URL: https://github.com/arni-magnusson/fishgrowth
 Encoding: UTF-8
 RoxygenNote: 7.3.2
 Roxygen: list(old_usage=TRUE)

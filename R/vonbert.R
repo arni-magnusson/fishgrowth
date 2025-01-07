@@ -122,7 +122,7 @@
 #'
 #' \code{\link{otoliths_ex}} and \code{\link{tags_ex}} are example datasets.
 #'
-#' \code{\link{tao-package}} gives an overview of the package.
+#' \code{\link{fishgrowth-package}} gives an overview of the package.
 #'
 #' @examples
 #' # Explore initial parameter values

@@ -21,7 +21,7 @@
 #' @details
 #' The simulation code that was used to produce this dataset is included in the
 #' package:
-#' \preformatted{file.show(system.file(package="tao", "sim/simulate.R"))}
+#' \preformatted{file.show(system.file(package="fishgrowth", "sim/simulate.R"))}
 #'
 #' @source
 #' Macdonald, J., Day, J., Magnusson, A., Maunder, M., Aoki, Y., Matsubara, N.,
@@ -40,7 +40,7 @@
 #' \code{\link{schnute3}}, and \code{\link{vonbert}} are alternative growth
 #' models.
 #'
-#' \code{\link{tao-package}} gives an overview of the package.
+#' \code{\link{fishgrowth-package}} gives an overview of the package.
 #'
 #' @examples
 #' otoliths_ex

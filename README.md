@@ -1,2 +1,3 @@
-# tao
-Growth from Tags and Otoliths
+# fishgrowth
+
+Fit Growth Curves to Fish Data

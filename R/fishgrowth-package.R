@@ -1,8 +1,8 @@
-#' @name tao-package
+#' @name fishgrowth-package
 #'
-#' @aliases tao
+#' @aliases fishgrowth
 #'
-#' @title Growth from Tags and Otoliths
+#' @title Fit Growth Curves to Fish Data
 #'
 #' @description
 #' Fit growth models to tagging data and/or otolith data, using RTMB and maximum

@@ -32,7 +32,7 @@ Macdonald et al. (2022).
 \details{
 The simulation code that was used to produce this dataset is included in the
 package:
-\preformatted{file.show(system.file(package="tao", "sim/simulate.R"))}
+\preformatted{file.show(system.file(package="fishgrowth", "sim/simulate.R"))}
 }
 \examples{
 tags_ex
@@ -44,5 +44,5 @@ tags_ex
 \code{\link{schnute3}}, and \code{\link{vonbert}} are alternative growth
 models.
 
-\code{\link{tao-package}} gives an overview of the package.
+\code{\link{fishgrowth-package}} gives an overview of the package.
 }
