@@ -108,7 +108,8 @@
 #'
 #' @seealso
 #' \code{\link{gcm}}, \code{\link{gompertz}}, \code{\link{richards}},
-#' \code{schnute3}, and \code{\link{vonbert}} are alternative growth models.
+#' \code{schnute3}, and \code{\link{vonbert}}/\code{\link{vonberto}} are
+#' alternative growth models.
 #'
 #' \code{\link{otoliths_ex}} and \code{\link{tags_ex}} are example datasets.
 #'

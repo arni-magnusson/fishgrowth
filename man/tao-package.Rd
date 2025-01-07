@@ -15,11 +15,11 @@ unknown and estimated as a vector of parameters.
 \details{
 \emph{Growth models:}
 \tabular{ll}{
-  \code{\link{gcm}}      \tab growth cessation\cr
-  \code{\link{gompertz}} \tab Gompertz\cr
-  \code{\link{richards}} \tab Richards\cr
-  \code{\link{schnute3}} \tab Schnute Case 3\cr
-  \code{\link{vonbert}}  \tab von Bertalanffy
+  \code{\link{gcm}}                               \tab growth cessation\cr
+  \code{\link{gompertz}}                          \tab Gompertz\cr
+  \code{\link{richards}}                          \tab Richards\cr
+  \code{\link{schnute3}}                          \tab Schnute Case 3\cr
+  \code{\link{vonbert}}, \code{\link{vonberto}}   \tab von Bertalanffy
 }
 \emph{Example data:}
 \tabular{ll}{

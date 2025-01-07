@@ -1,31 +1,29 @@
-#' Von Bertalanffy Growth Model
+#' Von Bertalanffy Growth Model (Old Style)
 #'
-#' Fit a von Bertalanffy growth model to tags and/or otoliths, using the
-#' Schnute-Fournier parametrization.
+#' Fit a von Bertalanffy growth model to tags and/or otoliths, using a
+#' traditional parametrization.
 #'
 #' @param par a parameter list.
 #' @param data a data list.
 #' @param t age (vector).
-#' @param L1 predicted length at age \code{t1}.
-#' @param L2 predicted length at age \code{t2}.
+#' @param Linf asymptotic maximum length.
 #' @param k growth coefficient.
-#' @param t1 age where predicted length is \code{L1}.
-#' @param t2 age where predicted length is \code{L2}.
+#' @param t0 age where the predicted length is zero, the x-intercept.
 #' @param silent passed to \code{\link[RTMB]{MakeADFun}}.
 #' @param \dots passed to \code{\link[RTMB]{MakeADFun}}.
 #'
 #' @details
-#' The main function \code{vonbert} creates a model object, ready for parameter
-#' estimation. The auxiliary functions \code{vonbert_curve} and
-#' \code{vonbert_objfun} are called by the main function to calculate the
+#' The main function \code{vonberto} creates a model object, ready for parameter
+#' estimation. The auxiliary functions \code{vonberto_curve} and
+#' \code{vonberto_objfun} are called by the main function to calculate the
 #' regression curve and objective function value. The user can also call the
 #' auxiliary functions directly for plotting and model exploration.
 #'
 #' The \code{par} list contains the following elements:
 #' \itemize{
-#'   \item \code{log_L1}, predicted length at age \code{t1}
-#'   \item \code{log_L2}, predicted length at age \code{t2}
+#'   \item \code{log_Linf}, asymptotic maximum length
 #'   \item \code{log_k}, growth coefficient
+#'   \item \code{to}, age where the predicted length is zero, the x-intercept
 #'   \item \code{log_sigma_1}, growth variability at length \code{L_short}
 #'   \item \code{log_sigma_2}, growth variability at length \code{L_long}
 #'   \item \code{log_age} (*), age at release of tagged individuals (vector)
@@ -42,8 +40,6 @@
 #'   \item \code{Lrec} (*), length at recapture of tagged individuals (vector)
 #'   \item \code{liberty} (*), time at liberty of tagged individuals in years
 #'         (vector)
-#'   \item \code{t1}, age where predicted length is \code{L1}
-#'   \item \code{t2}, age where predicted length is \code{L2}
 #'   \item \code{L_short}, length where sd(length) is \code{sigma_1}
 #'   \item \code{L_long}, length where sd(length) is \code{sigma_2}
 #' }
@@ -53,13 +49,13 @@
 #' \code{liberty} should be omitted when fitting to otoliths only.
 #'
 #' @return
-#' The \code{vonbert} function returns a TMB model object, produced by
+#' The \code{vonberto} function returns a TMB model object, produced by
 #' \code{\link[RTMB]{MakeADFun}}.
 #'
-#' The \code{vonbert_curve} function returns a numeric vector of predicted
+#' The \code{vonberto_curve} function returns a numeric vector of predicted
 #' length at age.
 #'
-#' The \code{vonbert_objfun} function returns the negative log-likelihood as a
+#' The \code{vonberto_objfun} function returns the negative log-likelihood as a
 #' single number, describing the goodness of fit of \code{par} to the
 #' \code{data}.
 #'
@@ -71,12 +67,11 @@
 #' traditional parametrization (\code{Linf}, \code{k}, \code{t0}) is preferred
 #' over the Schnute-Fournier parametrization (\code{L1}, \code{L2}, \code{k}).
 #'
-#' The von Bertalanffy (1938) growth model, as parametrized by Schnute and
-#' Fournier (1980), predicts length at age as:
+#' The von Bertalanffy (1938) growth model, as parametrized by Beverton and Holt
+#' (1957), predicts length at age as:
 #'
-#' \deqn{\hat L_t ~=~ L_1 \;+\; (L_2-L_1)\,
-#'       \frac{1\,-\,e^{-k(t-t_1)}}{\,1\,-\,e^{-k(t_2-t_1)}\,}}{
-#'       L1 + (L2-L1) * (1-exp(-k*(t-t1))) / (1-exp(-k*(t2-t1)))}
+#' \deqn{\hat L_t ~=~ L_\infty\left(1\,-\,e^{-k(t-t_0)}\right)}{
+#'       Linf * (1 - exp(-k*(t-t0)))}
 #'
 #' The variability of length at age increases linearly with length,
 #'
@@ -103,15 +98,13 @@
 #' \emph{Human Biology}, \bold{10}, 181-213.
 #' \url{https://www.jstor.org/stable/41447359}.
 #'
-#' Schnute, J. and Fournier, D. (1980).
-#' A new approach to length-frequency analysis: Growth structure.
-#' \emph{Canadian Journal of Fisheries and Aquatic Science}, \bold{37},
-#' 1337-1351.
-#' \doi{10.1139/f80-172}.
+#' Beverton, R.J.H. and Holt, S.J. (1957).
+#' \emph{On the dynamics of exploited fish populations}.
+#' London: Her Majesty’s Stationery Office.
 #'
 #' @seealso
 #' \code{\link{gcm}}, \code{\link{gompertz}}, \code{\link{richards}},
-#' \code{\link{schnute3}}, and \code{vonbert}/\code{\link{vonberto}} are
+#' \code{\link{schnute3}}, and \code{\link{vonbert}}/\code{vonberto} are
 #' alternative growth models.
 #'
 #' \code{\link{otoliths_ex}} and \code{\link{tags_ex}} are example datasets.
@@ -124,19 +117,19 @@
 #' x <- seq(0, 4, 0.1)
 #' points(lenRel~I(lenRel/60), tags_ex, col=4)
 #' points(lenRec~I(lenRel/60+liberty), tags_ex, col=3)
-#' lines(x, vonbert_curve(x, L1=25, L2=75, k=0.8, t1=0, t2=4), lty=2)
+#' lines(x, vonberto_curve(x, Linf=80, k=0.8, t0=-0.5), lty=2)
 #'
 #' # Prepare parameters and data
-#' init <- list(log_L1=log(25), log_L2=log(75), log_k=log(0.8),
+#' init <- list(log_Linf=log(80), log_k=log(0.8), t0=-0.5,
 #'              log_sigma_1=log(1), log_sigma_2=log(1),
 #'              log_age=log(tags_ex$lenRel/60))
 #' dat <- list(Aoto=otoliths_ex$age, Loto=otoliths_ex$len,
 #'             Lrel=tags_ex$lenRel, Lrec=tags_ex$lenRec,
-#'             liberty=tags_ex$liberty, t1=0, t2=4, L_short=30, L_long=60)
-#' vonbert_objfun(init, dat)
+#'             liberty=tags_ex$liberty, L_short=30, L_long=60)
+#' vonberto_objfun(init, dat)
 #'
 #' # Fit model
-#' model <- vonbert(init, dat)
+#' model <- vonberto(init, dat)
 #' fit <- nlminb(model$par, model$fn, model$gr,
 #'               control=list(eval.max=1e4, iter.max=1e4))
 #' report <- model$report()
@@ -149,7 +142,7 @@
 #' lines(report$age_seq, report$curve, lwd=2)
 #'
 #' # Model summary
-#' est <- report[c("L1", "L2", "k", "sigma_1", "sigma_2")]
+#' est <- report[c("Linf", "k", "t0", "sigma_1", "sigma_2")]
 #' est
 #' fit[-1]
 #' head(summary(sdreport), 5)
@@ -157,66 +150,64 @@
 #' #############################################################################
 #'
 #' # Fit to otoliths only
-#' init_oto <- list(log_L1=log(25), log_L2=log(75), log_k=log(0.8),
+#' init_oto <- list(log_Linf=log(80), log_k=log(0.8), t0=-0.5,
 #'                  log_sigma_1=log(1), log_sigma_2=log(1))
-#' dat_oto <- list(Aoto=otoliths_ex$age, Loto=otoliths_ex$len, t1=0, t2=4,
+#' dat_oto <- list(Aoto=otoliths_ex$age, Loto=otoliths_ex$len,
 #'                 L_short=30, L_long=60)
-#' model_oto <- vonbert(init_oto, dat_oto)
+#' model_oto <- vonberto(init_oto, dat_oto)
 #' fit_oto <- nlminb(model_oto$par, model_oto$fn, model_oto$gr,
 #'                   control=list(eval.max=1e4, iter.max=1e4))
-#' model_oto$report()[c("L1", "L2", "k")]
+#' model_oto$report()[c("Linf", "k", "t0")]
 #'
 #' #############################################################################
 #'
 #' # Fit to tags only
-#' init_tags <- list(log_L1=log(25), log_L2=log(75), log_k=log(0.8),
+#' init_tags <- list(log_Linf=log(80), log_k=log(0.8), t0=-0.5,
 #'                   log_sigma_1=log(1), log_sigma_2=log(1),
 #'                   log_age=log(tags_ex$lenRel/60))
 #' dat_tags <- list(Lrel=tags_ex$lenRel, Lrec=tags_ex$lenRec,
-#'                  liberty=tags_ex$liberty, t1=0, t2=4, L_short=30, L_long=60)
-#' model_tags <- vonbert(init_tags, dat_tags)
+#'                  liberty=tags_ex$liberty, L_short=30, L_long=60)
+#' model_tags <- vonberto(init_tags, dat_tags)
 #' fit_tags <- nlminb(model_tags$par, model_tags$fn, model_tags$gr,
 #'                    control=list(eval.max=1e4, iter.max=1e4))
-#' model_tags$report()[c("L1", "L2", "k")]
+#' model_tags$report()[c("Linf", "k", "t0")]
 #'
 #' @importFrom RTMB ADREPORT dnorm MakeADFun REPORT
 #'
 #' @export
 
-vonbert <- function(par, data, silent=TRUE, ...)
+vonberto <- function(par, data, silent=TRUE, ...)
 {
   wrap <- function(objfun, data)
   {
     function(par) objfun(par, data)
   }
-  MakeADFun(wrap(vonbert_objfun, data=data), par, silent=silent, ...)
+  MakeADFun(wrap(vonberto_objfun, data=data), par, silent=silent, ...)
 }
 
-#' @rdname vonbert
+#' @rdname vonberto
 #'
 #' @export
 
-vonbert_curve <- function(t, L1, L2, k, t1, t2)
+vonberto_curve <- function(t, Linf, k, t0)
 {
-  L1 + (L2-L1) * (1-exp(-k*(t-t1))) / (1-exp(-k*(t2-t1)))
+  Linf * (1 - exp(-k*(t-t0)))
 }
 
-#' @rdname vonbert
+#' @rdname vonberto
 #'
 #' @export
 
-vonbert_objfun <- function(par, data)
+vonberto_objfun <- function(par, data)
 {
   # Extract parameters
-  L1 <- exp(par$log_L1)
-  L2 <- exp(par$log_L2)
+  Linf <- exp(par$log_Linf)
   k <- exp(par$log_k)
+  t0 <- par$t0
   sigma_1 <- exp(par$log_sigma_1)
   sigma_2 <- exp(par$log_sigma_2)
 
   # Extract data
-  t1 <- data$t1
-  t2 <- data$t2
   L_short <- data$L_short
   L_long <- data$L_long
 
@@ -229,14 +220,12 @@ vonbert_objfun <- function(par, data)
 
   # Calculate curve
   age_seq = seq(0, 10, 1/365)  # age 0-10 years, day by day
-  curve <- vonbert_curve(age_seq, L1, L2, k, t1, t2)
+  curve <- vonberto_curve(age_seq, Linf, k, t0)
 
   # Report quantities of interest
-  REPORT(L1)
-  REPORT(L2)
+  REPORT(Linf)
   REPORT(k)
-  REPORT(t1)
-  REPORT(t2)
+  REPORT(t0)
   REPORT(L_short)
   REPORT(L_long)
   REPORT(sigma_1)
@@ -252,7 +241,7 @@ vonbert_objfun <- function(par, data)
     Aoto <- data$Aoto
     Loto <- data$Loto
     # Lhat
-    Loto_hat <- vonbert_curve(Aoto, L1, L2, k, t1, t2)
+    Loto_hat <- vonberto_curve(Aoto, Linf, k, t0)
     # sigma
     sigma_Loto <- sigma_intercept + sigma_slope * Loto_hat
     # nll
@@ -277,8 +266,8 @@ vonbert_objfun <- function(par, data)
     Lrec <- data$Lrec
     liberty <- data$liberty
     # Lhat
-    Lrel_hat <- vonbert_curve(age, L1, L2, k, t1, t2)
-    Lrec_hat <- vonbert_curve(age+liberty, L1, L2, k, t1, t2)
+    Lrel_hat <- vonberto_curve(age, Linf, k, t0)
+    Lrec_hat <- vonberto_curve(age+liberty, Linf, k, t0)
     # sigma
     sigma_Lrel <- sigma_intercept + sigma_slope * Lrel_hat
     sigma_Lrec <- sigma_intercept + sigma_slope * Lrec_hat
