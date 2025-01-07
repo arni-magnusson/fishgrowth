@@ -1,6 +1,6 @@
 #' Growth Cessation Model
 #'
-#' Fit a growth cessation model (GCM) to tags and/or otoliths.
+#' Fit a growth cessation model (GCM) to otoliths and/or tags.
 #'
 #' @param par is a parameter list.
 #' @param data is a data list.

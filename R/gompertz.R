@@ -1,6 +1,6 @@
 #' Gompertz Growth Model
 #'
-#' Fit a Gompertz growth model to tags and/or otoliths.
+#' Fit a Gompertz growth model to otoliths and/or tags.
 #'
 #' @param par is a parameter list.
 #' @param data is a data list.

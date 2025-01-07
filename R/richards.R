@@ -1,6 +1,6 @@
 #' Richards Growth Model
 #'
-#' Fit a Richards growth model to tags and/or otoliths.
+#' Fit a Richards growth model to otoliths and/or tags.
 #'
 #' @param par is a parameter list.
 #' @param data is a data list.

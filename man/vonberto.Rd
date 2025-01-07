@@ -41,7 +41,7 @@ single number, describing the goodness of fit of \code{par} to the
 \code{data}.
 }
 \description{
-Fit a von Bertalanffy growth model to tags and/or otoliths, using a
+Fit a von Bertalanffy growth model to otoliths and/or tags, using a
 traditional parametrization.
 }
 \details{

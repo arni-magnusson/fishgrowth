@@ -45,7 +45,7 @@ single number, describing the goodness of fit of \code{par} to the
 \code{data}.
 }
 \description{
-Fit a Schnute Case 3 model to tags and/or otoliths.
+Fit a Schnute Case 3 model to otoliths and/or tags.
 }
 \details{
 The main function \code{schnute3} creates a model object, ready for parameter

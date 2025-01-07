@@ -1,6 +1,6 @@
 #' Von Bertalanffy Growth Model (Old Style)
 #'
-#' Fit a von Bertalanffy growth model to tags and/or otoliths, using a
+#' Fit a von Bertalanffy growth model to otoliths and/or tags, using a
 #' traditional parametrization.
 #'
 #' @param par a parameter list.

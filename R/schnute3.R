@@ -1,6 +1,6 @@
 #' Schnute Case 3 Model
 #'
-#' Fit a Schnute Case 3 model to tags and/or otoliths.
+#' Fit a Schnute Case 3 model to otoliths and/or tags.
 #'
 #' @param par is a parameter list.
 #' @param data is a data list.

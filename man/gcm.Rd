@@ -44,7 +44,7 @@ single number, describing the goodness of fit of \code{par} to the
 \code{data}.
 }
 \description{
-Fit a growth cessation model (GCM) to tags and/or otoliths.
+Fit a growth cessation model (GCM) to otoliths and/or tags.
 }
 \details{
 The main function \code{gcm} creates a model object, ready for parameter

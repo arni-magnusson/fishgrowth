@@ -1,6 +1,6 @@
 #' Von Bertalanffy Growth Model
 #'
-#' Fit a von Bertalanffy growth model to tags and/or otoliths, using the
+#' Fit a von Bertalanffy growth model to otoliths and/or tags, using the
 #' Schnute-Fournier parametrization.
 #'
 #' @param par a parameter list.

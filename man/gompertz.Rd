@@ -45,7 +45,7 @@ single number, describing the goodness of fit of \code{par} to the
 \code{data}.
 }
 \description{
-Fit a Gompertz growth model to tags and/or otoliths.
+Fit a Gompertz growth model to otoliths and/or tags.
 }
 \details{
 The main function \code{gompertz} creates a model object, ready for parameter
