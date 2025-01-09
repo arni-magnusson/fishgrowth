@@ -65,7 +65,7 @@
 #' parameter correlation and improves convergence reliability compared to the
 #' traditional parametrization used in \code{vonberto}. Therefore, the
 #' \code{vonbert} parametrization can be recommended for general usage, as both
-#' parametrizations produce the same growth curve. However, there may be some
+#' parametrizations produce the same growth curve. However, there can be some
 #' use cases where the traditional parametrization (\code{Linf}, \code{k},
 #' \code{t0}) is preferred over the Schnute-Fournier parametrization (\code{L1},
 #' \code{L2}, \code{k}).
