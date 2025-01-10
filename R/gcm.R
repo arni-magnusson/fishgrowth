@@ -140,9 +140,10 @@
 #'
 #' # Plot results
 #' plot(len~age, otoliths_ex, xlim=c(0,4), ylim=c(0,100))
-#' points(report$age, tags_ex$lenRel, col=4)
-#' points(report$age+tags_ex$liberty, tags_ex$lenRec, col=3)
-#' lines(report$age_seq, report$curve, lwd=2)
+#' points(report$age, report$Lrel, col=4)
+#' points(report$age+report$liberty, report$Lrec, col=3)
+#' Lhat <- with(report, gcm_curve(x, L0, rmax, k, t50))
+#' lines(x, Lhat, lwd=2)
 #'
 #' # Model summary
 #' est <- report[c("L0", "rmax", "k", "t50", "sigma_1", "sigma_2")]
@@ -184,9 +185,10 @@
 #'
 #' # Plot results
 #' plot(len~age, otoliths_ex, xlim=c(0,4), ylim=c(0,100))
-#' points(report_step$age, tags_ex$lenRel, col=4)
-#' points(report_step$age+tags_ex$liberty, tags_ex$lenRec, col=3)
-#' lines(report_step$age_seq, report_step$curve, lwd=2)
+#' points(report_step$age, report_step$Lrel, col=4)
+#' points(report_step$age+report_step$liberty, report_step$Lrec, col=3)
+#' Lhat_step <- with(report_step, gcm_curve(x, L0, rmax, k, t50))
+#' lines(x, Lhat_step, lwd=2)
 #'
 #' # Model summary
 #' est_step <- report_step[c("L0", "rmax", "k", "t50", "sigma_1", "sigma_2")]

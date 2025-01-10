@@ -143,9 +143,10 @@
 #'
 #' # Plot results
 #' plot(len~age, otoliths_ex, xlim=c(0,4), ylim=c(0,100))
-#' points(report$age, tags_ex$lenRel, col=4)
-#' points(report$age+tags_ex$liberty, tags_ex$lenRec, col=3)
-#' lines(report$age_seq, report$curve, lwd=2)
+#' points(report$age, report$Lrel, col=4)
+#' points(report$age+report$liberty, report$Lrec, col=3)
+#' Lhat <- with(report, vonberto_curve(x, Linf, k, t0))
+#' lines(x, Lhat, lwd=2)
 #'
 #' # Model summary
 #' est <- report[c("Linf", "k", "t0", "sigma_1", "sigma_2")]
