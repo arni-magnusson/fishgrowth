@@ -24,8 +24,8 @@
 #'   \item \code{log_Linf}, asymptotic maximum length
 #'   \item \code{log_k}, growth coefficient
 #'   \item \code{tau}, location parameter
-#'   \item \code{log_sigma_1}, growth variability at length \code{L_short}
-#'   \item \code{log_sigma_2} (*), growth variability at length \code{L_long}
+#'   \item \code{log_sigma_1}, growth variability at length \code{Lshort}
+#'   \item \code{log_sigma_2} (*), growth variability at length \code{Llong}
 #'   \item \code{log_age} (*), age at release of tagged individuals (vector)
 #' }
 #'
@@ -41,8 +41,8 @@
 #'   \item \code{Lrec} (*), length at recapture of tagged individuals (vector)
 #'   \item \code{liberty} (*), time at liberty of tagged individuals in years
 #'         (vector)
-#'   \item \code{L_short}, length where sd(length) is \code{sigma_1}
-#'   \item \code{L_long}, length where sd(length) is \code{sigma_2}
+#'   \item \code{Lshort}, length where sd(length) is \code{sigma_1}
+#'   \item \code{Llong}, length where sd(length) is \code{sigma_2}
 #' }
 #'
 #' *: The data vectors \code{Aoto} and \code{Loto} can be omitted to fit to
@@ -89,8 +89,8 @@
 #'
 #' where the slope is \eqn{\beta=(\sigma_2-\sigma_1) /
 #' (L_\mathrm{long}-L_\mathrm{short})}{beta = (sigma_2-sigma_1) /
-#' (L_long-L_short)} and the intercept is \eqn{\alpha=\sigma_1 - \beta
-#' L_\mathrm{short}}{alpha = sigma_1 - beta * L_short}. Alternatively, growth
+#' (Llong-Lshort)} and the intercept is \eqn{\alpha=\sigma_1 - \beta
+#' L_\mathrm{short}}{alpha = sigma_1 - beta * Lshort}. Alternatively, growth
 #' variability can be modelled as a constant
 #' (\eqn{\sigma_L=\sigma_1}{sigma_L=sigma_1}) that does not vary with length,
 #' see \code{log_sigma_2} above.
@@ -139,7 +139,7 @@
 #'              log_age=log(tags_ex$lenRel/60))
 #' dat <- list(Aoto=otoliths_ex$age, Loto=otoliths_ex$len,
 #'             Lrel=tags_ex$lenRel, Lrec=tags_ex$lenRec,
-#'             liberty=tags_ex$liberty, L_short=30, L_long=60)
+#'             liberty=tags_ex$liberty, Lshort=30, Llong=60)
 #' gompertzo_objfun(init, dat)
 #'
 #' # Fit model
@@ -168,7 +168,7 @@
 #' init_oto <- list(log_Linf=log(75), log_k=log(1), tau=0,
 #'                  log_sigma_1=log(1), log_sigma_2=log(1))
 #' dat_oto <- list(Aoto=otoliths_ex$age, Loto=otoliths_ex$len,
-#'                 L_short=30, L_long=60)
+#'                 Lshort=30, Llong=60)
 #' model_oto <- gompertzo(init_oto, dat_oto)
 #' fit_oto <- nlminb(model_oto$par, model_oto$fn, model_oto$gr,
 #'                   control=list(eval.max=1e4, iter.max=1e4))
@@ -181,7 +181,7 @@
 #'                   log_sigma_1=log(1), log_sigma_2=log(1),
 #'                   log_age=log(tags_ex$lenRel/60))
 #' dat_tags <- list(Lrel=tags_ex$lenRel, Lrec=tags_ex$lenRec,
-#'                  liberty=tags_ex$liberty, L_short=30, L_long=60)
+#'                  liberty=tags_ex$liberty, Lshort=30, Llong=60)
 #' model_tags <- gompertzo(init_tags, dat_tags)
 #' fit_tags <- nlminb(model_tags$par, model_tags$fn, model_tags$gr,
 #'                    control=list(eval.max=1e4, iter.max=1e4))
@@ -223,8 +223,8 @@ gompertzo_objfun <- function(par, data)
   sigma_2 <- if(is.null(par$log_sigma_2)) NULL else exp(par$log_sigma_2)
 
   # Extract data
-  L_short <- data$L_short
-  L_long <- data$L_long
+  Lshort <- data$Lshort
+  Llong <- data$Llong
 
   # Calculate sigma coefficients (sigma = a + b*L)
   if(is.null(sigma_2))
@@ -234,8 +234,8 @@ gompertzo_objfun <- function(par, data)
   }
   else
   {
-    sigma_slope <- (sigma_2 - sigma_1) / (L_long - L_short)
-    sigma_intercept <- sigma_1 - L_short * sigma_slope
+    sigma_slope <- (sigma_2 - sigma_1) / (Llong - Lshort)
+    sigma_intercept <- sigma_1 - Lshort * sigma_slope
   }
 
   # Initialize likelihood
@@ -245,8 +245,8 @@ gompertzo_objfun <- function(par, data)
   REPORT(Linf)
   REPORT(k)
   REPORT(tau)
-  REPORT(L_short)
-  REPORT(L_long)
+  REPORT(Lshort)
+  REPORT(Llong)
   REPORT(sigma_1)
   REPORT(sigma_2)
 
