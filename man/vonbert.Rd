@@ -79,13 +79,16 @@ The \code{data} list contains the following elements:
         (vector)
   \item \code{t1}, age where predicted length is \code{L1}
   \item \code{t2}, age where predicted length is \code{L2}
-  \item \code{Lshort}, length where sd(length) is \code{sigma_1}
-  \item \code{Llong}, length where sd(length) is \code{sigma_2}
+  \item \code{Lshort} (*), length where sd(length) is \code{sigma_1}
+  \item \code{Llong} (*), length where sd(length) is \code{sigma_2}
 }
 
 *: The data vectors \code{Aoto} and \code{Loto} can be omitted to fit to
 tagging data only. The data vectors \code{Lrel}, \code{Lrec}, and
-\code{liberty} can be omitted to fit to otoliths only.
+\code{liberty} can be omitted to fit to otoliths only. The reference lengths
+\code{Lshort} and \code{Llong} are only required when estimating growth
+variability that varies with length, i.e., when the \code{log_sigma_2}
+parameter is specified.
 }
 \note{
 The Schnute-Fournier parametrization used in \code{vonbert} reduces parameter
