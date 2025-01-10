@@ -102,7 +102,7 @@
 #' \doi{10.1007/s00227-018-3336-9}.
 #'
 #' @seealso
-#' \code{gcm}, \code{\link{gompertz}},
+#' \code{gcm}, \code{\link{gompertz}}\code{\link{gompertzo}},
 #' \code{\link{richards}}/\code{\link{richardso}}, \code{\link{schnute3}}, and
 #' \code{\link{vonbert}}/\code{\link{vonberto}} are alternative growth models.
 #'

@@ -201,7 +201,7 @@ A new approach to length-frequency analysis: Growth structure.
 \doi{10.1139/f80-172}.
 }
 \seealso{
-\code{\link{gcm}}, \code{\link{gompertz}},
+\code{\link{gcm}}, \code{\link{gompertz}}/\code{\link{gompertzo}},
 \code{\link{richards}}/\code{\link{richardso}}, \code{\link{schnute3}}, and
 \code{vonbert}/\code{\link{vonberto}} are alternative growth models.
 

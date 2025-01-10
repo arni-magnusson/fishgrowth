@@ -16,6 +16,7 @@
 #' \tabular{ll}{
 #'   \code{\link{gcm}}       \tab growth cessation\cr
 #'   \code{\link{gompertz}}  \tab Gompertz\cr
+#'   \code{\link{gompertzo}} \tab Gompertz (old style)\cr
 #'   \code{\link{richards}}  \tab Richards\cr
 #'   \code{\link{richardso}} \tab Richards (old style)\cr
 #'   \code{\link{schnute3}}  \tab Schnute Case 3\cr

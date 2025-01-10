@@ -109,7 +109,7 @@
 #' London: Her Majesty’s Stationery Office.
 #'
 #' @seealso
-#' \code{\link{gcm}}, \code{\link{gompertz}},
+#' \code{\link{gcm}}, \code{\link{gompertz}}/\code{\link{gompertzo}},
 #' \code{\link{richards}}/\code{\link{richards}}, \code{\link{schnute3}}, and
 #' \code{\link{vonbert}}/\code{vonberto} are alternative growth models.
 #'

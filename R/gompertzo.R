@@ -1,30 +1,29 @@
-#' Schnute Case 3 Model
+#' Gompertz Growth Model (Old Style)
 #'
-#' Fit a Schnute Case 3 model to otoliths and/or tags.
+#' Fit a Gompertz growth model to otoliths and/or tags, using a traditional
+#' parametrization.
 #'
 #' @param par is a parameter list.
 #' @param data is a data list.
 #' @param t age (vector).
-#' @param L1 predicted length at age \code{t1}.
-#' @param L2 predicted length at age \code{t2}.
-#' @param b shape parameter.
-#' @param t1 age where predicted length is \code{L1}.
-#' @param t2 age where predicted length is \code{L2}.
+#' @param Linf asymptotic maximum length.
+#' @param k growth coefficient.
+#' @param tau location parameter.
 #' @param silent passed to \code{\link[RTMB]{MakeADFun}}.
 #' @param \dots passed to \code{\link[RTMB]{MakeADFun}}.
 #'
 #' @details
-#' The main function \code{schnute3} creates a model object, ready for parameter
-#' estimation. The auxiliary functions \code{schnute3_curve} and
-#' \code{schnute3_objfun} are called by the main function to calculate the
+#' The main function \code{gompertzo} creates a model object, ready for parameter
+#' estimation. The auxiliary functions \code{gompertzo_curve} and
+#' \code{gompertzo_objfun} are called by the main function to calculate the
 #' regression curve and objective function value. The user can also call the
 #' auxiliary functions directly for plotting and model exploration.
 #'
 #' The \code{par} list contains the following elements:
 #' \itemize{
-#'   \item \code{log_L1}, predicted length at age \code{t1}
-#'   \item \code{log_L2}, predicted length at age \code{t2}
-#'   \item \code{b}, shape parameter
+#'   \item \code{log_Linf}, asymptotic maximum length
+#'   \item \code{log_k}, growth coefficient
+#'   \item \code{tau}, location parameter
 #'   \item \code{log_sigma_1}, growth variability at length \code{L_short}
 #'   \item \code{log_sigma_2} (*), growth variability at length \code{L_long}
 #'   \item \code{log_age} (*), age at release of tagged individuals (vector)
@@ -42,8 +41,6 @@
 #'   \item \code{Lrec} (*), length at recapture of tagged individuals (vector)
 #'   \item \code{liberty} (*), time at liberty of tagged individuals in years
 #'         (vector)
-#'   \item \code{t1}, age where predicted length is \code{L1}
-#'   \item \code{t2}, age where predicted length is \code{L2}
 #'   \item \code{L_short}, length where sd(length) is \code{sigma_1}
 #'   \item \code{L_long}, length where sd(length) is \code{sigma_2}
 #' }
@@ -53,28 +50,37 @@
 #' \code{liberty} can be omitted to fit to otoliths only.
 #'
 #' @return
-#' The \code{schnute3} function returns a TMB model object, produced by
+#' The \code{gompertzo} function returns a TMB model object, produced by
 #' \code{\link[RTMB]{MakeADFun}}.
 #'
-#' The \code{schnute3_curve} function returns a numeric vector of predicted
+#' The \code{gompertzo_curve} function returns a numeric vector of predicted
 #' length at age.
 #'
-#' The \code{schnute3_objfun} function returns the negative log-likelihood as a
+#' The \code{gompertzo_objfun} function returns the negative log-likelihood as a
 #' single number, describing the goodness of fit of \code{par} to the
 #' \code{data}.
 #'
 #' @note
-#' The Schnute Case 3 model is a special case of the Richards (1959) model,
-#' where \eqn{k=0}. If the best model fit of a \code{\link{richards}} model to a
-#' particular dataset involves a very small estimated value of \eqn{k}, then the
-#' \code{schnute3} model offers a preferable parametrization, as it produces the
-#' same curve using fewer parameters.
+#' The Schnute parametrization used in \code{\link{gompertz}} reduces parameter
+#' correlation and improves convergence reliability compared to the traditional
+#' parametrization used in \code{gompertzo}. Therefore, the \code{gompertz}
+#' parametrization can be recommended for general usage, as both
+#' parametrizations produce the same growth curve. However, there can be some
+#' use cases where the traditional parametrization (\code{Linf}, \code{k},
+#' \code{tau}) is preferred over the Schnute parametrization (\code{L1},
+#' \code{L2}, \code{k}).
 #'
-#' The Schnute Case 3 model (Schnute 1981, Eq. 17) predicts length at age as:
+#' Gompertz is a special case of the Richards (1959) model, where \eqn{b=0}. If
+#' the best model fit of a \code{\link{richards}} model to a particular dataset
+#' involves a very small estimated value of \eqn{b}, then the \code{gompertz}
+#' model offers a preferable parametrization, as it produces the same curve
+#' using fewer parameters.
 #'
-#' \deqn{L ~=~ \left[\;L_1^b\;+\;(L_2^b-L_1^b)\,
-#'       \frac{t-t_1}{t_2-t_1}\,\right]^{1/b}}{
-#'       (L1^b + (L2^b-L1^b) * (t-t1) / (t2-t1))^(1/b)}
+#' The Gompertz (1825) growth model, as parametrized by Ricker (1979, Eq. 23)
+#' predicts length at age as:
+#'
+#' \deqn{L ~=~ L_\infty\exp\!\big(\!\!-\!e^{-k(t-\tau)}\big)}{
+#'       Linf * exp(-exp(-k * (t-tau)))}
 #'
 #' The variability of length at age increases linearly with length,
 #'
@@ -99,20 +105,20 @@
 #' }
 #'
 #' @references
-#' Richards, F.J. (1959).
-#' A flexible growth function for empirical use.
-#' \emph{Journal of Experimental Botany}, \bold{10}, 290-300.
-#' \url{https://www.jstor.org/stable/23686557}.
+#' Gompertz, B. (1825).
+#' On the nature of the function expressive of the law of human mortality, and
+#' on a new mode of determining the value of life contingencies.
+#' \emph{Philosophical Transactions of the Royal Society}, \bold{115}, 513-583.
+# \doi{10.1098/rstl.1825.0026}.
 #'
-#' Schnute, J. (1981).
-#' A versatile growth model with statistically stable parameters.
-#' \emph{Canadian Journal of Fisheries and Aquatic Science}, \bold{38},
-#' 1128-1140.
-#' \doi{10.1139/f81-153}.
+#' Ricker, W.E. (1979).
+#' Growth rates and models.
+#' In: W.S. Hoar et al. (eds.) \emph{Fish physiology 8: Bioenergetics and
+#' growth}. New York: Academic Press, pp. 677-743.
 #'
 #' @seealso
-#' \code{\link{gcm}}, \code{\link{gompertz}}/\code{\link{gompertzo}},
-#' \code{\link{richards}}/\code{\link{richardso}}, \code{schnute3}, and
+#' \code{\link{gcm}}, \code{\link{gompertz}}/\code{gompertzo},
+#' \code{\link{richards}}/\code{\link{richards}}, \code{\link{schnute3}}, and
 #' \code{\link{vonbert}}/\code{\link{vonberto}} are alternative growth models.
 #'
 #' \code{\link{otoliths_ex}} and \code{\link{tags_ex}} are example datasets.
@@ -125,19 +131,19 @@
 #' x <- seq(0, 4, 0.1)
 #' points(lenRel~I(lenRel/60), tags_ex, col=4)
 #' points(lenRec~I(lenRel/60+liberty), tags_ex, col=3)
-#' lines(x, schnute3_curve(x, L1=25, L2=75, b=3, t1=0, t2=4), lty=2)
+#' lines(x, gompertzo_curve(x, Linf=75, k=1, tau=0), lty=2)
 #'
 #' # Prepare parameters and data
-#' init <- list(log_L1=log(25), log_L2=log(75), b=3,
+#' init <- list(log_Linf=log(75), log_k=log(1), tau=0,
 #'              log_sigma_1=log(1), log_sigma_2=log(1),
 #'              log_age=log(tags_ex$lenRel/60))
 #' dat <- list(Aoto=otoliths_ex$age, Loto=otoliths_ex$len,
 #'             Lrel=tags_ex$lenRel, Lrec=tags_ex$lenRec,
-#'             liberty=tags_ex$liberty, t1=0, t2=4, L_short=30, L_long=60)
-#' schnute3_objfun(init, dat)
+#'             liberty=tags_ex$liberty, L_short=30, L_long=60)
+#' gompertzo_objfun(init, dat)
 #'
 #' # Fit model
-#' model <- schnute3(init, dat)
+#' model <- gompertzo(init, dat)
 #' fit <- nlminb(model$par, model$fn, model$gr,
 #'               control=list(eval.max=1e4, iter.max=1e4))
 #' report <- model$report()
@@ -150,7 +156,7 @@
 #' lines(report$age_seq, report$curve, lwd=2)
 #'
 #' # Model summary
-#' est <- report[c("L1", "L2", "b", "sigma_1", "sigma_2")]
+#' est <- report[c("Linf", "k", "tau", "sigma_1", "sigma_2")]
 #' est
 #' fit[-1]
 #' head(summary(sdreport), 5)
@@ -158,66 +164,64 @@
 #' #############################################################################
 #'
 #' # Fit to otoliths only
-#' init_oto <- list(log_L1=log(25), log_L2=log(75), b=3,
+#' init_oto <- list(log_Linf=log(75), log_k=log(1), tau=0,
 #'                  log_sigma_1=log(1), log_sigma_2=log(1))
-#' dat_oto <- list(Aoto=otoliths_ex$age, Loto=otoliths_ex$len, t1=0, t2=4,
+#' dat_oto <- list(Aoto=otoliths_ex$age, Loto=otoliths_ex$len,
 #'                 L_short=30, L_long=60)
-#' model_oto <- schnute3(init_oto, dat_oto)
+#' model_oto <- gompertzo(init_oto, dat_oto)
 #' fit_oto <- nlminb(model_oto$par, model_oto$fn, model_oto$gr,
 #'                   control=list(eval.max=1e4, iter.max=1e4))
-#' model_oto$report()[c("L1", "L2", "b")]
+#' model_oto$report()[c("Linf", "k", "tau")]
 #'
 #' #############################################################################
 #'
 #' # Fit to tags only
-#' init_tags <- list(log_L1=log(25), log_L2=log(75), b=3,
+#' init_tags <- list(log_Linf=log(75), log_k=log(1), tau=0,
 #'                   log_sigma_1=log(1), log_sigma_2=log(1),
 #'                   log_age=log(tags_ex$lenRel/60))
 #' dat_tags <- list(Lrel=tags_ex$lenRel, Lrec=tags_ex$lenRec,
-#'                  liberty=tags_ex$liberty, t1=0, t2=4, L_short=30, L_long=60)
-#' model_tags <- schnute3(init_tags, dat_tags)
+#'                  liberty=tags_ex$liberty, L_short=30, L_long=60)
+#' model_tags <- gompertzo(init_tags, dat_tags)
 #' fit_tags <- nlminb(model_tags$par, model_tags$fn, model_tags$gr,
 #'                    control=list(eval.max=1e4, iter.max=1e4))
-#' model_tags$report()[c("L1", "L2", "b")]
+#' model_tags$report()[c("Linf", "k", "tau")]
 #'
 #' @importFrom RTMB ADREPORT dnorm MakeADFun REPORT
 #'
 #' @export
 
-schnute3 <- function(par, data, silent=TRUE, ...)
+gompertzo <- function(par, data, silent=TRUE, ...)
 {
   wrap <- function(objfun, data)
   {
     function(par) objfun(par, data)
   }
-  MakeADFun(wrap(schnute3_objfun, data=data), par, silent=silent, ...)
+  MakeADFun(wrap(gompertzo_objfun, data=data), par, silent=silent, ...)
 }
 
-#' @rdname schnute3
+#' @rdname gompertzo
 #'
 #' @export
 
-schnute3_curve <- function(t, L1, L2, b, t1, t2)
+gompertzo_curve <- function(t, Linf, k, tau)
 {
-  (L1^b + (L2^b-L1^b) * (t-t1) / (t2-t1))^(1/b)
+  Linf * exp(-exp(-k * (t-tau)))
 }
 
-#' @rdname schnute3
+#' @rdname gompertzo
 #'
 #' @export
 
-schnute3_objfun <- function(par, data)
+gompertzo_objfun <- function(par, data)
 {
   # Extract parameters
-  L1 <- exp(par$log_L1)
-  L2 <- exp(par$log_L2)
-  b <- par$b
+  Linf <- exp(par$log_Linf)
+  k <- exp(par$log_k)
+  tau <- par$tau
   sigma_1 <- exp(par$log_sigma_1)
   sigma_2 <- if(is.null(par$log_sigma_2)) NULL else exp(par$log_sigma_2)
 
   # Extract data
-  t1 <- data$t1
-  t2 <- data$t2
   L_short <- data$L_short
   L_long <- data$L_long
 
@@ -238,14 +242,12 @@ schnute3_objfun <- function(par, data)
 
   # Calculate curve
   age_seq = seq(0, 10, 1/365)  # age 0-10 years, day by day
-  curve <- schnute3_curve(age_seq, L1, L2, b, t1, t2)
+  curve <- gompertzo_curve(age_seq, Linf, k, tau)
 
   # Report quantities of interest
-  REPORT(L1)
-  REPORT(L2)
-  REPORT(b)
-  REPORT(t1)
-  REPORT(t2)
+  REPORT(Linf)
+  REPORT(k)
+  REPORT(tau)
   REPORT(L_short)
   REPORT(L_long)
   REPORT(sigma_1)
@@ -261,7 +263,7 @@ schnute3_objfun <- function(par, data)
     Aoto <- data$Aoto
     Loto <- data$Loto
     # Lhat
-    Loto_hat <- schnute3_curve(Aoto, L1, L2, b, t1, t2)
+    Loto_hat <- gompertzo_curve(Aoto, Linf, k, tau)
     # sigma
     sigma_Loto <- sigma_intercept + sigma_slope * Loto_hat
     # nll
@@ -286,8 +288,8 @@ schnute3_objfun <- function(par, data)
     Lrec <- data$Lrec
     liberty <- data$liberty
     # Lhat
-    Lrel_hat <- schnute3_curve(age, L1, L2, b, t1, t2)
-    Lrec_hat <- schnute3_curve(age+liberty, L1, L2, b, t1, t2)
+    Lrel_hat <- gompertzo_curve(age, Linf, k, tau)
+    Lrec_hat <- gompertzo_curve(age+liberty, Linf, k, tau)
     # sigma
     sigma_Lrel <- sigma_intercept + sigma_slope * Lrel_hat
     sigma_Lrec <- sigma_intercept + sigma_slope * Lrec_hat

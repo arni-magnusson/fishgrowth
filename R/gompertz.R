@@ -1,6 +1,7 @@
 #' Gompertz Growth Model
 #'
-#' Fit a Gompertz growth model to otoliths and/or tags.
+#' Fit a Gompertz growth model to otoliths and/or tags, using the Schnute
+#' parametrization.
 #'
 #' @param par is a parameter list.
 #' @param data is a data list.
@@ -64,6 +65,15 @@
 #' \code{data}.
 #'
 #' @note
+#' The Schnute parametrization used in \code{gompertz} reduces parameter
+#' correlation and improves convergence reliability compared to the traditional
+#' parametrization used in \code{\link{gompertzo}}. Therefore, the
+#' \code{gompertz} parametrization can be recommended for general usage, as both
+#' parametrizations produce the same growth curve. However, there can be some
+#' use cases where the traditional parametrization (\code{Linf}, \code{k},
+#' \code{tau}) is preferred over the Schnute parametrization (\code{L1},
+#' \code{L2}, \code{k}).
+#'
 #' Gompertz is a special case of the Richards (1959) model, where \eqn{b=0}. If
 #' the best model fit of a \code{\link{richards}} model to a particular dataset
 #' involves a very small estimated value of \eqn{b}, then the \code{gompertz}
@@ -73,7 +83,7 @@
 #' The Gompertz (1825) growth model, as parametrized by Schnute (1981, Eq. 16)
 #' predicts length at age as:
 #'
-#' \deqn{L ~=~ L_1\,\times\,\exp\!\left[\,\log(L_2/L_1)\,
+#' \deqn{L ~=~ L_1\exp\!\left[\,\log(L_2/L_1)\,
 #'       \frac{1-e^{-k(t-t_1)}}{1-e^{-k(t_2-t_1)}}\,\right]}{
 #'       L1 * exp(log(L2/L1) * (1-exp(-k*(t-t1))) / (1-exp(-k*(t2-t1))))}
 #'
@@ -113,7 +123,7 @@
 #' \doi{10.1139/f81-153}.
 #'
 #' @seealso
-#' \code{\link{gcm}}, \code{gompertz},
+#' \code{\link{gcm}}, \code{gompertz}/\code{\link{gompertzo}},
 #' \code{\link{richards}}/\code{\link{richards}}, \code{\link{schnute3}}, and
 #' \code{\link{vonbert}}/\code{\link{vonberto}} are alternative growth models.
 #'

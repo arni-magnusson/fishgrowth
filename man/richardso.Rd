@@ -196,7 +196,7 @@ Why we need only two model forms.
 \emph{Journal of Theoretical Biology}, \bold{267}, 417-425.
 }
 \seealso{
-\code{\link{gcm}}, \code{\link{gompertz}},
+\code{\link{gcm}}, \code{\link{gompertz}}/\code{\link{gompertzo}},
 \code{\link{richards}}/\code{richardso}, \code{\link{schnute3}}, and
 \code{\link{vonbert}}/\code{\link{vonberto}} are alternative growth models.
 

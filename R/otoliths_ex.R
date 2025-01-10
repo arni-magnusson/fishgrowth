@@ -36,9 +36,9 @@
 #' @seealso
 #' \code{otoliths_ex} and \code{\link{tags_ex}} are example datasets.
 #'
-#' \code{\link{gcm}}, \code{\link{gompertz}}, \code{\link{richards}},
-#' \code{\link{schnute3}}, and \code{\link{vonbert}} are alternative growth
-#' models.
+#' \code{\link{gcm}}, \code{\link{gompertz}}\code{\link{gompertzo}},
+#' \code{\link{richards}}/\code{\link{richardso}}, \code{\link{schnute3}}, and
+#' \code{\link{vonbert}}/\code{\link{vonberto}} are alternative growth models.
 #'
 #' \code{\link{fishgrowth-package}} gives an overview of the package.
 #'
