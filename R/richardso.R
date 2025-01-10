@@ -182,7 +182,7 @@
 #'                    control=list(eval.max=1e4, iter.max=1e4))
 #' model_tags$report()[c("Linf", "k", "tau", "b")]
 #'
-#' @importFrom RTMB ADREPORT dnorm MakeADFun REPORT
+#' @importFrom RTMB dnorm MakeADFun REPORT
 #'
 #' @export
 
@@ -237,10 +237,6 @@ richardso_objfun <- function(par, data)
   # Initialize likelihood
   nll <- 0
 
-  # Calculate curve
-  age_seq = seq(0, 10, 1/365)  # age 0-10 years, day by day
-  curve <- richardso_curve(age_seq, Linf, k, tau, b)
-
   # Report quantities of interest
   REPORT(Linf)
   REPORT(k)
@@ -250,9 +246,6 @@ richardso_objfun <- function(par, data)
   REPORT(L_long)
   REPORT(sigma_1)
   REPORT(sigma_2)
-  REPORT(age_seq)
-  REPORT(curve)
-  ADREPORT(curve)
 
   # Model includes otolith data
   if(!is.null(data$Aoto) && !is.null(data$Loto))

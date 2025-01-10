@@ -186,7 +186,7 @@
 #'                    control=list(eval.max=1e4, iter.max=1e4))
 #' model_tags$report()[c("L1", "L2", "k")]
 #'
-#' @importFrom RTMB ADREPORT dnorm MakeADFun REPORT
+#' @importFrom RTMB dnorm MakeADFun REPORT
 #'
 #' @export
 
@@ -242,10 +242,6 @@ vonbert_objfun <- function(par, data)
   # Initialize likelihood
   nll <- 0
 
-  # Calculate curve
-  age_seq = seq(0, 10, 1/365)  # age 0-10 years, day by day
-  curve <- vonbert_curve(age_seq, L1, L2, k, t1, t2)
-
   # Report quantities of interest
   REPORT(L1)
   REPORT(L2)
@@ -256,9 +252,6 @@ vonbert_objfun <- function(par, data)
   REPORT(L_long)
   REPORT(sigma_1)
   REPORT(sigma_2)
-  REPORT(age_seq)
-  REPORT(curve)
-  ADREPORT(curve)
 
   # Model includes otolith data
   if(!is.null(data$Aoto) && !is.null(data$Loto))
