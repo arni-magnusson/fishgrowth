@@ -234,6 +234,15 @@ gcm <- function(par, data, silent=TRUE, ...)
   {
     function(par) objfun(par, data)
   }
+  if(is.null(par$log_sigma_1))
+    stop("'par' list must include 'log_sigma_1'")
+  if(!is.null(par$log_sigma_2))
+  {
+    if(is.null(data$Lshort))
+      stop("'data' list must include 'Lshort' when 'log_sigma_2' is specified")
+    if(is.null(data$Llong))
+      stop("'data' list must include 'Llong' when 'log_sigma_2' is specified")
+  }
   MakeADFun(wrap(gcm_objfun, data=data), par, silent=silent, ...)
 }
 
