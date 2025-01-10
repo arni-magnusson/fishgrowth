@@ -61,8 +61,18 @@ The \code{par} list contains the following elements:
   \item \code{log_L2}, predicted length at age \code{t2}
   \item \code{log_k}, growth coefficient
   \item \code{log_sigma_1}, growth variability at length \code{L_short}
+<<<<<<< Updated upstream
   \item \code{log_sigma_2} (*), growth variability at length \code{L_long}
   \item \code{log_age} (*), age at release of tagged individuals (vector)
+=======
+  \item \code{log_sigma_2}, growth variability at length \code{L_long}
+  \item \code{log_sigma_age}, variability of \code{Arel_dev} and
+        \code{Arec_dev} random effects
+  \item \code{Arel_dev}, age-at-release deviations of tagged individuals from
+        the regression line (vector)
+  \item \code{Arec_dev}, age-at-recapture deviations of tagged individuals
+        from the regression line (vector)
+>>>>>>> Stashed changes
 }
 
 *: The parameter \code{log_sigma_2} can be omitted to estimate growth
@@ -123,7 +133,15 @@ predicted lengths:
   nll_Loto <- -dnorm(Loto, Loto_hat, sigma_Loto, TRUE)
   nll_Lrel <- -dnorm(Lrel, Lrel_hat, sigma_Lrel, TRUE)
   nll_Lrec <- -dnorm(Lrec, Lrec_hat, sigma_Lrec, TRUE)
+<<<<<<< Updated upstream
   nll <- sum(nll_Loto) + sum(nll_Lrel) + sum(nll_Lrec)
+=======
+  nll_Loto <- -dnorm(Loto, Loto_hat, sigma_Loto, TRUE)
+  nll_Arel <- -dnorm(Arel, 0, sigma_age, TRUE)
+  nll_Arec <- -dnorm(Arec, 0, sigma_age, TRUE)
+  nll <- sum(nll_Lrel) + sum(nll_Lrec) + sum(nll_Loto) + sum(nll_Arel) +
+         sum(nll_Arec)
+>>>>>>> Stashed changes
 }
 }
 \examples{
@@ -137,10 +155,19 @@ lines(x, vonbert_curve(x, L1=25, L2=75, k=0.8, t1=0, t2=4), lty=2)
 # Prepare parameters and data
 init <- list(log_L1=log(25), log_L2=log(75), log_k=log(0.8),
              log_sigma_1=log(1), log_sigma_2=log(1),
+<<<<<<< Updated upstream
              log_age=log(tags_ex$lenRel/60))
 dat <- list(Aoto=otoliths_ex$age, Loto=otoliths_ex$len,
             Lrel=tags_ex$lenRel, Lrec=tags_ex$lenRec,
             liberty=tags_ex$liberty, t1=0, t2=4, L_short=30, L_long=60)
+=======
+             log_sigma_age=log(0.1),
+             Arel_dev=rep(0, length(tags_ex$lenRel)),
+             Arec_dev=rep(0, length(tags_ex$lenRec)))
+dat <- list(Lrel=tags_ex$lenRel, Lrec=tags_ex$lenRec,
+            liberty=tags_ex$liberty, Aoto=otoliths_ex$age,
+            Loto=otoliths_ex$len, t1=0, t2=4, L_short=30, L_long=60)
+>>>>>>> Stashed changes
 vonbert_objfun(init, dat)
 
 # Fit model
@@ -152,9 +179,15 @@ sdreport <- sdreport(model, getReportCovariance=FALSE)
 
 # Plot results
 plot(len~age, otoliths_ex, xlim=c(0,4), ylim=c(0,100))
+<<<<<<< Updated upstream
 points(report$age, tags_ex$lenRel, col=4)
 points(report$age+tags_ex$liberty, tags_ex$lenRec, col=3)
 lines(report$age_seq, report$curve, lwd=2)
+=======
+points(report$Arel, tags_ex$lenRel, col=4)
+points(report$Arec, tags_ex$lenRec, col=3)
+lines(report$curve~report$age_seq, lwd=2)
+>>>>>>> Stashed changes
 
 # Model summary
 est <- report[c("L1", "L2", "k", "sigma_1", "sigma_2")]

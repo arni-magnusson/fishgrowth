@@ -27,8 +27,18 @@
 #'   \item \code{log_L2}, predicted length at age \code{t2}
 #'   \item \code{log_k}, growth coefficient
 #'   \item \code{log_sigma_1}, growth variability at length \code{L_short}
+<<<<<<< Updated upstream
 #'   \item \code{log_sigma_2} (*), growth variability at length \code{L_long}
 #'   \item \code{log_age} (*), age at release of tagged individuals (vector)
+=======
+#'   \item \code{log_sigma_2}, growth variability at length \code{L_long}
+#'   \item \code{log_sigma_age}, variability of \code{Arel_dev} and
+#'         \code{Arec_dev} random effects
+#'   \item \code{Arel_dev}, age-at-release deviations of tagged individuals from
+#'         the regression line (vector)
+#'   \item \code{Arec_dev}, age-at-recapture deviations of tagged individuals
+#'         from the regression line (vector)
+>>>>>>> Stashed changes
 #' }
 #'
 #' *: The parameter \code{log_sigma_2} can be omitted to estimate growth
@@ -100,7 +110,15 @@
 #'   nll_Loto <- -dnorm(Loto, Loto_hat, sigma_Loto, TRUE)
 #'   nll_Lrel <- -dnorm(Lrel, Lrel_hat, sigma_Lrel, TRUE)
 #'   nll_Lrec <- -dnorm(Lrec, Lrec_hat, sigma_Lrec, TRUE)
+<<<<<<< Updated upstream
 #'   nll <- sum(nll_Loto) + sum(nll_Lrel) + sum(nll_Lrec)
+=======
+#'   nll_Loto <- -dnorm(Loto, Loto_hat, sigma_Loto, TRUE)
+#'   nll_Arel <- -dnorm(Arel, 0, sigma_age, TRUE)
+#'   nll_Arec <- -dnorm(Arec, 0, sigma_age, TRUE)
+#'   nll <- sum(nll_Lrel) + sum(nll_Lrec) + sum(nll_Loto) + sum(nll_Arel) +
+#'          sum(nll_Arec)
+>>>>>>> Stashed changes
 #' }
 #'
 #' @references
@@ -135,10 +153,19 @@
 #' # Prepare parameters and data
 #' init <- list(log_L1=log(25), log_L2=log(75), log_k=log(0.8),
 #'              log_sigma_1=log(1), log_sigma_2=log(1),
+<<<<<<< Updated upstream
 #'              log_age=log(tags_ex$lenRel/60))
 #' dat <- list(Aoto=otoliths_ex$age, Loto=otoliths_ex$len,
 #'             Lrel=tags_ex$lenRel, Lrec=tags_ex$lenRec,
 #'             liberty=tags_ex$liberty, t1=0, t2=4, L_short=30, L_long=60)
+=======
+#'              log_sigma_age=log(0.1),
+#'              Arel_dev=rep(0, length(tags_ex$lenRel)),
+#'              Arec_dev=rep(0, length(tags_ex$lenRec)))
+#' dat <- list(Lrel=tags_ex$lenRel, Lrec=tags_ex$lenRec,
+#'             liberty=tags_ex$liberty, Aoto=otoliths_ex$age,
+#'             Loto=otoliths_ex$len, t1=0, t2=4, L_short=30, L_long=60)
+>>>>>>> Stashed changes
 #' vonbert_objfun(init, dat)
 #'
 #' # Fit model
@@ -150,9 +177,15 @@
 #'
 #' # Plot results
 #' plot(len~age, otoliths_ex, xlim=c(0,4), ylim=c(0,100))
+<<<<<<< Updated upstream
 #' points(report$age, tags_ex$lenRel, col=4)
 #' points(report$age+tags_ex$liberty, tags_ex$lenRec, col=3)
 #' lines(report$age_seq, report$curve, lwd=2)
+=======
+#' points(report$Arel, tags_ex$lenRel, col=4)
+#' points(report$Arec, tags_ex$lenRec, col=3)
+#' lines(report$curve~report$age_seq, lwd=2)
+>>>>>>> Stashed changes
 #'
 #' # Model summary
 #' est <- report[c("L1", "L2", "k", "sigma_1", "sigma_2")]
@@ -195,7 +228,12 @@ vonbert <- function(par, data, silent=TRUE, ...)
   {
     function(par) objfun(par, data)
   }
+<<<<<<< Updated upstream
   MakeADFun(wrap(vonbert_objfun, data=data), par, silent=silent, ...)
+=======
+  MakeADFun(wrap(vonbert_objfun, data=data), par,
+            random=c("Arel_dev", "Arec_dev"), silent=silent, ...)
+>>>>>>> Stashed changes
 }
 
 #' @rdname vonbert
@@ -218,7 +256,14 @@ vonbert_objfun <- function(par, data)
   L2 <- exp(par$log_L2)
   k <- exp(par$log_k)
   sigma_1 <- exp(par$log_sigma_1)
+<<<<<<< Updated upstream
   sigma_2 <- if(is.null(par$log_sigma_2)) NULL else exp(par$log_sigma_2)
+=======
+  sigma_2 <- exp(par$log_sigma_2)
+  sigma_age <- tryCatch(exp(par$log_sigma_age), error=as.null)
+  Arel_dev <- par$Arel_dev
+  Arec_dev <- par$Arec_dev
+>>>>>>> Stashed changes
 
   # Extract data
   t1 <- data$t1
@@ -226,6 +271,14 @@ vonbert_objfun <- function(par, data)
   L_short <- data$L_short
   L_long <- data$L_long
 
+<<<<<<< Updated upstream
+=======
+  # Calculate age as deviations from the growth curve
+  mu <- t1 - 1/k * log(1 - (Lrel-L1) * (1-exp(-k*(t2-t1))) / (L2-L1))
+  Arel <- mu + Arel_dev
+  Arec <- Arel + liberty + Arec_dev
+
+>>>>>>> Stashed changes
   # Calculate sigma coefficients (sigma = a + b*L)
   if(is.null(sigma_2))
   {
@@ -238,8 +291,27 @@ vonbert_objfun <- function(par, data)
     sigma_intercept <- sigma_1 - L_short * sigma_slope
   }
 
+<<<<<<< Updated upstream
   # Initialize likelihood
   nll <- 0
+=======
+  # Calculate Lhat and sigma
+  Lrel_hat <- vonbert_curve(Lrel, L1, L2, k, t1, t2)
+  Lrec_hat <- vonbert_curve(Lrec, L1, L2, k, t1, t2)
+  Loto_hat <- vonbert_curve(Aoto, L1, L2, k, t1, t2)
+  sigma_Lrel <- sigma_intercept + sigma_slope * Lrel_hat
+  sigma_Lrec <- sigma_intercept + sigma_slope * Lrec_hat
+  sigma_Loto <- sigma_intercept + sigma_slope * Loto_hat
+
+  # Calculate likelihoods
+  nll_Lrel <- tryCatch(-dnorm(Lrel, Lrel_hat, sigma_Lrel, TRUE), error=as.null)
+  nll_Lrec <- tryCatch(-dnorm(Lrec, Lrec_hat, sigma_Lrec, TRUE), error=as.null)
+  nll_Loto <- tryCatch(-dnorm(Loto, Loto_hat, sigma_Loto, TRUE), error=as.null)
+  nll_Arel <- tryCatch(-dnorm(Arel_dev, 0, sigma_age, TRUE), error=as.null)
+  nll_Arec <- tryCatch(-dnorm(Arec_dev, 0, sigma_age, TRUE), error=as.null)
+  nll <- sum(nll_Lrel) + sum(nll_Lrec) + sum(nll_Loto) + sum(nll_Arel) +
+    sum(nll_Arec)
+>>>>>>> Stashed changes
 
   # Calculate curve
   age_seq = seq(0, 10, 1/365)  # age 0-10 years, day by day
@@ -249,6 +321,21 @@ vonbert_objfun <- function(par, data)
   REPORT(L1)
   REPORT(L2)
   REPORT(k)
+<<<<<<< Updated upstream
+=======
+  REPORT(Arel_dev)
+  REPORT(Arec_dev)
+  REPORT(Arel)
+  REPORT(Arec)
+  REPORT(liberty)
+  REPORT(Lrel)
+  REPORT(Lrec)
+  REPORT(Aoto)
+  REPORT(Loto)
+  REPORT(Lrel_hat)
+  REPORT(Lrec_hat)
+  REPORT(Loto_hat)
+>>>>>>> Stashed changes
   REPORT(t1)
   REPORT(t2)
   REPORT(L_short)
