@@ -214,7 +214,17 @@ dat_oto <- list(Aoto=otoliths_ex$age, Loto=otoliths_ex$len,
 model_oto <- gcm(init_oto, dat_oto)
 fit_oto <- nlminb(model_oto$par, model_oto$fn, model_oto$gr,
                   control=list(eval.max=1e4, iter.max=1e4))
-model_oto$report()[c("L0", "rmax", "k", "t50")]
+model_oto$report()[c("L0", "rmax", "k", "t50", "sigma_1", "sigma_2")]
+
+# Same, but now estimating constant sigma instead of sigma varying by length
+# We do this by omitting log_sigma_2, Lshort, Llong
+init_oto <- list(L0=20, log_rmax=log(120), log_k=log(2), t50=0,
+                 log_sigma_1=log(1))
+dat_oto <- list(Aoto=otoliths_ex$age, Loto=otoliths_ex$len)
+model_oto <- gcm(init_oto, dat_oto)
+fit_oto <- nlminb(model_oto$par, model_oto$fn, model_oto$gr,
+                  control=list(eval.max=1e4, iter.max=1e4))
+model_oto$report()[c("L0", "rmax", "k", "t50", "sigma_1")]
 
 #############################################################################
 

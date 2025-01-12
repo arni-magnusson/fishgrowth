@@ -172,7 +172,17 @@ dat_oto <- list(Aoto=otoliths_ex$age, Loto=otoliths_ex$len,
 model_oto <- richardso(init_oto, dat_oto)
 fit_oto <- nlminb(model_oto$par, model_oto$fn, model_oto$gr,
                   control=list(eval.max=1e4, iter.max=1e4))
-model_oto$report()[c("Linf", "k", "tau", "b")]
+model_oto$report()[c("Linf", "k", "tau", "b", "sigma_1", "sigma_2")]
+
+# Same, but now estimating constant sigma instead of sigma varying by length
+# We do this by omitting log_sigma_2, Lshort, Llong
+init_oto_c <- list(log_Linf=log(80), log_k=log(0.8), tau=-0.5, b=1,
+                   log_sigma_1=log(1))
+dat_oto_c <- list(Aoto=otoliths_ex$age, Loto=otoliths_ex$len)
+model_oto_c <- richardso(init_oto_c, dat_oto_c)
+fit_oto_c <- nlminb(model_oto_c$par, model_oto_c$fn, model_oto_c$gr,
+                    control=list(eval.max=1e4, iter.max=1e4))
+model_oto_c$report()[c("Linf", "k", "tau", "b", "sigma_1")]
 
 #############################################################################
 
