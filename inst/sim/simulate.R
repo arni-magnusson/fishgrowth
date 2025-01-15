@@ -51,6 +51,6 @@ tags <- subset(tags, liberty >= 30/365      &  # min 1 month at liberty
                      lenRel >= 30)             # min 30 cm at release
 tags <- tags[1:Ntag,]
 
-write.table(otoliths, "otoliths_ex.tab", quote=FALSE, sep="\t",
+write.table(otoliths, "otoliths_sim.tab", quote=FALSE, sep="\t",
             row.names=FALSE)
-write.table(tags, "tags_ex.tab", quote=FALSE, sep="\t", row.names=FALSE)
+write.table(tags, "tags_sim.tab", quote=FALSE, sep="\t", row.names=FALSE)

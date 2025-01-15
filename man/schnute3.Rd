@@ -126,19 +126,19 @@ predicted lengths:
 }
 \examples{
 # Explore initial parameter values
-plot(len~age, otoliths_ex, xlim=c(0,4), ylim=c(0,100))
+plot(len~age, otoliths_skj, xlim=c(0,4), ylim=c(0,100))
 x <- seq(0, 4, 0.1)
-points(lenRel~I(lenRel/60), tags_ex, col=4)
-points(lenRec~I(lenRel/60+liberty), tags_ex, col=3)
+points(lenRel~I(lenRel/60), tags_skj, col=4)
+points(lenRec~I(lenRel/60+liberty), tags_skj, col=3)
 lines(x, schnute3_curve(x, L1=25, L2=75, b=3, t1=0, t2=4), lty=2)
 
 # Prepare parameters and data
 init <- list(log_L1=log(25), log_L2=log(75), b=3,
              log_sigma_1=log(1), log_sigma_2=log(1),
-             log_age=log(tags_ex$lenRel/60))
-dat <- list(Aoto=otoliths_ex$age, Loto=otoliths_ex$len,
-            Lrel=tags_ex$lenRel, Lrec=tags_ex$lenRec,
-            liberty=tags_ex$liberty, t1=0, t2=4, Lshort=30, Llong=60)
+             log_age=log(tags_skj$lenRel/60))
+dat <- list(Aoto=otoliths_skj$age, Loto=otoliths_skj$len,
+            Lrel=tags_skj$lenRel, Lrec=tags_skj$lenRec,
+            liberty=tags_skj$liberty, t1=0, t2=4, Lshort=30, Llong=60)
 schnute3_objfun(init, dat)
 
 # Fit model
@@ -149,7 +149,7 @@ report <- model$report()
 sdreport <- sdreport(model, getReportCovariance=FALSE)
 
 # Plot results
-plot(len~age, otoliths_ex, xlim=c(0,4), ylim=c(0,100))
+plot(len~age, otoliths_skj, xlim=c(0,4), ylim=c(0,100))
 points(report$age, report$Lrel, col=4)
 points(report$age+report$liberty, report$Lrec, col=3)
 Lhat <- with(report, schnute3_curve(x, L1, L2, b, t1, t2))
@@ -166,7 +166,7 @@ head(summary(sdreport), 5)
 # Fit to otoliths only
 init_oto <- list(log_L1=log(25), log_L2=log(75), b=3,
                  log_sigma_1=log(1), log_sigma_2=log(1))
-dat_oto <- list(Aoto=otoliths_ex$age, Loto=otoliths_ex$len, t1=0, t2=4,
+dat_oto <- list(Aoto=otoliths_skj$age, Loto=otoliths_skj$len, t1=0, t2=4,
                 Lshort=30, Llong=60)
 model_oto <- schnute3(init_oto, dat_oto)
 fit_oto <- nlminb(model_oto$par, model_oto$fn, model_oto$gr,
@@ -177,7 +177,7 @@ model_oto$report()[c("L1", "L2", "b", "sigma_1", "sigma_2")]
 # We do this by omitting log_sigma_2, Lshort, Llong
 init_oto_c <- list(log_L1=log(25), log_L2=log(75), b=3,
                    log_sigma_1=log(1))
-dat_oto_c <- list(Aoto=otoliths_ex$age, Loto=otoliths_ex$len, t1=0, t2=4)
+dat_oto_c <- list(Aoto=otoliths_skj$age, Loto=otoliths_skj$len, t1=0, t2=4)
 model_oto_c <- schnute3(init_oto_c, dat_oto_c)
 fit_oto_c <- nlminb(model_oto_c$par, model_oto_c$fn, model_oto_c$gr,
                     control=list(eval.max=1e4, iter.max=1e4))
@@ -188,9 +188,9 @@ model_oto_c$report()[c("L1", "L2", "b", "sigma_1")]
 # Fit to tags only
 init_tags <- list(log_L1=log(25), log_L2=log(75), b=3,
                   log_sigma_1=log(1), log_sigma_2=log(1),
-                  log_age=log(tags_ex$lenRel/60))
-dat_tags <- list(Lrel=tags_ex$lenRel, Lrec=tags_ex$lenRec,
-                 liberty=tags_ex$liberty, t1=0, t2=4, Lshort=30, Llong=60)
+                  log_age=log(tags_skj$lenRel/60))
+dat_tags <- list(Lrel=tags_skj$lenRel, Lrec=tags_skj$lenRec,
+                 liberty=tags_skj$liberty, t1=0, t2=4, Lshort=30, Llong=60)
 model_tags <- schnute3(init_tags, dat_tags)
 fit_tags <- nlminb(model_tags$par, model_tags$fn, model_tags$gr,
                    control=list(eval.max=1e4, iter.max=1e4))
@@ -214,7 +214,7 @@ A versatile growth model with statistically stable parameters.
 \code{\link{richards}}/\code{\link{richardso}}, \code{schnute3}, and
 \code{\link{vonbert}}/\code{\link{vonberto}} are alternative growth models.
 
-\code{\link{otoliths_ex}} and \code{\link{tags_ex}} are example datasets.
+\code{\link{otoliths_skj}} and \code{\link{tags_skj}} are example datasets.
 
 \code{\link{fishgrowth-package}} gives an overview of the package.
 }

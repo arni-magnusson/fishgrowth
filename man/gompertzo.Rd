@@ -45,8 +45,8 @@ Fit a Gompertz growth model to otoliths and/or tags, using a traditional
 parametrization.
 }
 \details{
-The main function \code{gompertzo} creates a model object, ready for parameter
-estimation. The auxiliary functions \code{gompertzo_curve} and
+The main function \code{gompertzo} creates a model object, ready for
+parameter estimation. The auxiliary functions \code{gompertzo_curve} and
 \code{gompertzo_objfun} are called by the main function to calculate the
 regression curve and objective function value. The user can also call the
 auxiliary functions directly for plotting and model exploration.
@@ -130,19 +130,19 @@ predicted lengths:
 }
 \examples{
 # Explore initial parameter values
-plot(len~age, otoliths_ex, xlim=c(0,4), ylim=c(0,100))
+plot(len~age, otoliths_skj, xlim=c(0,4), ylim=c(0,100))
 x <- seq(0, 4, 0.1)
-points(lenRel~I(lenRel/60), tags_ex, col=4)
-points(lenRec~I(lenRel/60+liberty), tags_ex, col=3)
+points(lenRel~I(lenRel/60), tags_skj, col=4)
+points(lenRec~I(lenRel/60+liberty), tags_skj, col=3)
 lines(x, gompertzo_curve(x, Linf=75, k=1, tau=0), lty=2)
 
 # Prepare parameters and data
 init <- list(log_Linf=log(75), log_k=log(1), tau=0,
              log_sigma_1=log(1), log_sigma_2=log(1),
-             log_age=log(tags_ex$lenRel/60))
-dat <- list(Aoto=otoliths_ex$age, Loto=otoliths_ex$len,
-            Lrel=tags_ex$lenRel, Lrec=tags_ex$lenRec,
-            liberty=tags_ex$liberty, Lshort=30, Llong=60)
+             log_age=log(tags_skj$lenRel/60))
+dat <- list(Aoto=otoliths_skj$age, Loto=otoliths_skj$len,
+            Lrel=tags_skj$lenRel, Lrec=tags_skj$lenRec,
+            liberty=tags_skj$liberty, Lshort=30, Llong=60)
 gompertzo_objfun(init, dat)
 
 # Fit model
@@ -153,7 +153,7 @@ report <- model$report()
 sdreport <- sdreport(model, getReportCovariance=FALSE)
 
 # Plot results
-plot(len~age, otoliths_ex, xlim=c(0,4), ylim=c(0,100))
+plot(len~age, otoliths_skj, xlim=c(0,4), ylim=c(0,100))
 points(report$age, report$Lrel, col=4)
 points(report$age+report$liberty, report$Lrec, col=3)
 Lhat <- with(report, gompertzo_curve(x, Linf, k, tau))
@@ -170,7 +170,7 @@ head(summary(sdreport), 5)
 # Fit to otoliths only
 init_oto <- list(log_Linf=log(75), log_k=log(1), tau=0,
                  log_sigma_1=log(1), log_sigma_2=log(1))
-dat_oto <- list(Aoto=otoliths_ex$age, Loto=otoliths_ex$len,
+dat_oto <- list(Aoto=otoliths_skj$age, Loto=otoliths_skj$len,
                 Lshort=30, Llong=60)
 model_oto <- gompertzo(init_oto, dat_oto)
 fit_oto <- nlminb(model_oto$par, model_oto$fn, model_oto$gr,
@@ -181,7 +181,7 @@ model_oto$report()[c("Linf", "k", "tau", "sigma_1", "sigma_2")]
 # We do this by omitting log_sigma_2, Lshort, Llong
 init_oto_c <- list(log_Linf=log(75), log_k=log(1), tau=0,
                    log_sigma_1=log(1))
-dat_oto_c <- list(Aoto=otoliths_ex$age, Loto=otoliths_ex$len)
+dat_oto_c <- list(Aoto=otoliths_skj$age, Loto=otoliths_skj$len)
 model_oto_c <- gompertzo(init_oto_c, dat_oto_c)
 fit_oto_c <- nlminb(model_oto_c$par, model_oto_c$fn, model_oto_c$gr,
                     control=list(eval.max=1e4, iter.max=1e4))
@@ -192,9 +192,9 @@ model_oto_c$report()[c("Linf", "k", "tau", "sigma_1")]
 # Fit to tags only
 init_tags <- list(log_Linf=log(75), log_k=log(1), tau=0,
                   log_sigma_1=log(1), log_sigma_2=log(1),
-                  log_age=log(tags_ex$lenRel/60))
-dat_tags <- list(Lrel=tags_ex$lenRel, Lrec=tags_ex$lenRec,
-                 liberty=tags_ex$liberty, Lshort=30, Llong=60)
+                  log_age=log(tags_skj$lenRel/60))
+dat_tags <- list(Lrel=tags_skj$lenRel, Lrec=tags_skj$lenRec,
+                 liberty=tags_skj$liberty, Lshort=30, Llong=60)
 model_tags <- gompertzo(init_tags, dat_tags)
 fit_tags <- nlminb(model_tags$par, model_tags$fn, model_tags$gr,
                    control=list(eval.max=1e4, iter.max=1e4))
@@ -217,7 +217,7 @@ growth}. New York: Academic Press, pp. 677-743.
 \code{\link{richards}}/\code{\link{richards}}, \code{\link{schnute3}}, and
 \code{\link{vonbert}}/\code{\link{vonberto}} are alternative growth models.
 
-\code{\link{otoliths_ex}} and \code{\link{tags_ex}} are example datasets.
+\code{\link{otoliths_skj}} and \code{\link{tags_skj}} are example datasets.
 
 \code{\link{fishgrowth-package}} gives an overview of the package.
 }

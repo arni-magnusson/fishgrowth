@@ -1,6 +1,6 @@
 #' @docType data
 #'
-#' @name tags_ex
+#' @name tags_skj
 #'
 #' @title Tagging Data
 #'
@@ -9,7 +9,7 @@
 #' Macdonald et al. (2022).
 #'
 #' @usage
-#' tags_ex
+#' tags_skj
 #'
 #' @format
 #' Data frame containing three columns:
@@ -35,7 +35,7 @@
 #' \url{https://meetings.wcpfc.int/node/16254}.
 #'
 #' @seealso
-#' \code{\link{otoliths_ex}} and \code{tags_ex} are example datasets.
+#' \code{\link{otoliths_skj}} and \code{tags_skj} are example datasets.
 #'
 #' \code{\link{gcm}}, \code{\link{gompertz}}\code{\link{gompertzo}},
 #' \code{\link{richards}}/\code{\link{richardso}}, \code{\link{schnute3}}, and
@@ -44,6 +44,6 @@
 #' \code{\link{fishgrowth-package}} gives an overview of the package.
 #'
 #' @examples
-#' tags_ex
+#' tags_skj
 
 NA

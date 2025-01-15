@@ -26,8 +26,8 @@ unknown and estimated as a vector of parameters.
 }
 \emph{Example data:}
 \tabular{ll}{
-  \code{\link{otoliths_ex}} \tab otoliths\cr
-  \code{\link{tags_ex}}     \tab tags
+  \code{\link{otoliths_skj}} \tab otoliths\cr
+  \code{\link{tags_skj}}     \tab tags
 }
 }
 \seealso{

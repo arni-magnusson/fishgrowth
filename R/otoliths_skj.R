@@ -1,6 +1,6 @@
 #' @docType data
 #'
-#' @name otoliths_ex
+#' @name otoliths_skj
 #'
 #' @title Otolith Data
 #'
@@ -9,7 +9,7 @@
 #' Macdonald et al. (2022).
 #'
 #' @usage
-#' otoliths_ex
+#' otoliths_skj
 #'
 #' @format
 #' Data frame containing two columns:
@@ -34,7 +34,7 @@
 #' \url{https://meetings.wcpfc.int/node/16254}.
 #'
 #' @seealso
-#' \code{otoliths_ex} and \code{\link{tags_ex}} are example datasets.
+#' \code{otoliths_skj} and \code{\link{tags_skj}} are example datasets.
 #'
 #' \code{\link{gcm}}, \code{\link{gompertz}}\code{\link{gompertzo}},
 #' \code{\link{richards}}/\code{\link{richardso}}, \code{\link{schnute3}}, and
@@ -43,6 +43,6 @@
 #' \code{\link{fishgrowth-package}} gives an overview of the package.
 #'
 #' @examples
-#' otoliths_ex
+#' otoliths_skj
 
 NA
