@@ -6,9 +6,9 @@
 \alias{fishgrowth}
 \title{Fit Growth Curves to Fish Data}
 \description{
-Fit growth models to otolith data and/or tagging data data, using RTMB and
-maximum likelihood. The otoliths provide direct observed coordinates of age
-and length. The tagging data provide information about the observed length at
+Fit growth models to otolith data and/or tagging data, using RTMB and maximum
+likelihood. The otoliths provide direct observed coordinates of age and
+length. The tagging data provide information about the observed length at
 release and length at recapture at a later time, where the age at release is
 unknown and estimated as a vector of parameters.
 }
