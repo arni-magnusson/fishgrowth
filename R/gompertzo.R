@@ -130,6 +130,8 @@
 #' \code{\link{fishgrowth-package}} gives an overview of the package.
 #'
 #' @examples
+#' # Model 1: Fit to skipjack otoliths and tags
+#'
 #' # Explore initial parameter values
 #' plot(len~age, otoliths_skj, xlim=c(0,4), ylim=c(0,100))
 #' x <- seq(0, 4, 0.1)
@@ -168,38 +170,44 @@
 #'
 #' #############################################################################
 #'
-#' # Fit to otoliths only
-#' init_oto <- list(log_Linf=log(75), log_k=log(1), tau=0,
-#'                  log_sigma_1=log(1), log_sigma_2=log(1))
-#' dat_oto <- list(Aoto=otoliths_skj$age, Loto=otoliths_skj$len,
-#'                 Lshort=30, Llong=60)
-#' model_oto <- gompertzo(init_oto, dat_oto)
-#' fit_oto <- nlminb(model_oto$par, model_oto$fn, model_oto$gr,
-#'                   control=list(eval.max=1e4, iter.max=1e4))
-#' model_oto$report()[c("Linf", "k", "tau", "sigma_1", "sigma_2")]
+#' # Model 2: Fit to skipjack otoliths only
 #'
-#' # Same, but now estimating constant sigma instead of sigma varying by length
-#' # We do this by omitting log_sigma_2, Lshort, Llong
-#' init_oto_c <- list(log_Linf=log(75), log_k=log(1), tau=0,
-#'                    log_sigma_1=log(1))
-#' dat_oto_c <- list(Aoto=otoliths_skj$age, Loto=otoliths_skj$len)
-#' model_oto_c <- gompertzo(init_oto_c, dat_oto_c)
-#' fit_oto_c <- nlminb(model_oto_c$par, model_oto_c$fn, model_oto_c$gr,
-#'                     control=list(eval.max=1e4, iter.max=1e4))
-#' model_oto_c$report()[c("Linf", "k", "tau", "sigma_1")]
+#' init <- list(log_Linf=log(75), log_k=log(1), tau=0,
+#'              log_sigma_1=log(1), log_sigma_2=log(1))
+#' dat <- list(Aoto=otoliths_skj$age, Loto=otoliths_skj$len,
+#'             Lshort=30, Llong=60)
+#' model <- gompertzo(init, dat)
+#' fit <- nlminb(model$par, model$fn, model$gr,
+#'                   control=list(eval.max=1e4, iter.max=1e4))
+#' model$report()[c("Linf", "k", "tau", "sigma_1", "sigma_2")]
 #'
 #' #############################################################################
 #'
-#' # Fit to tags only
-#' init_tags <- list(log_Linf=log(75), log_k=log(1), tau=0,
-#'                   log_sigma_1=log(1), log_sigma_2=log(1),
-#'                   log_age=log(tags_skj$lenRel/60))
-#' dat_tags <- list(Lrel=tags_skj$lenRel, Lrec=tags_skj$lenRec,
-#'                  liberty=tags_skj$liberty, Lshort=30, Llong=60)
-#' model_tags <- gompertzo(init_tags, dat_tags)
-#' fit_tags <- nlminb(model_tags$par, model_tags$fn, model_tags$gr,
-#'                    control=list(eval.max=1e4, iter.max=1e4))
-#' model_tags$report()[c("Linf", "k", "tau")]
+#' # Model 3: Fit to skipjack otoliths only,
+#' # but now estimating constant sigma instead of sigma varying by length
+#'
+#' # We do this by omitting log_sigma_2, Lshort, Llong
+#' init <- list(log_Linf=log(75), log_k=log(1), tau=0,
+#'              log_sigma_1=log(1))
+#' dat <- list(Aoto=otoliths_skj$age, Loto=otoliths_skj$len)
+#' model <- gompertzo(init, dat)
+#' fit <- nlminb(model$par, model$fn, model$gr,
+#'               control=list(eval.max=1e4, iter.max=1e4))
+#' model$report()[c("Linf", "k", "tau", "sigma_1")]
+#'
+#' #############################################################################
+#'
+#' # Model 4: Fit to skipjack tags only
+#'
+#' init <- list(log_Linf=log(75), log_k=log(1), tau=0,
+#'              log_sigma_1=log(1), log_sigma_2=log(1),
+#'              log_age=log(tags_skj$lenRel/60))
+#' dat <- list(Lrel=tags_skj$lenRel, Lrec=tags_skj$lenRec,
+#'             liberty=tags_skj$liberty, Lshort=30, Llong=60)
+#' model <- gompertzo(init, dat)
+#' fit <- nlminb(model$par, model$fn, model$gr,
+#'               control=list(eval.max=1e4, iter.max=1e4))
+#' model$report()[c("Linf", "k", "tau")]
 #'
 #' @importFrom RTMB dnorm MakeADFun REPORT
 #'

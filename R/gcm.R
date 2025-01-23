@@ -115,6 +115,8 @@
 #' \code{\link{fishgrowth-package}} gives an overview of the package.
 #'
 #' @examples
+#' # Model 1: Fit to skipjack otoliths and tags
+#'
 #' # Explore initial parameter values
 #' plot(len~age, otoliths_skj, xlim=c(0,4), ylim=c(0,100))
 #' x <- seq(0, 4, 0.1)
@@ -153,7 +155,7 @@
 #'
 #' #############################################################################
 #'
-#' # Stepwise estimation procedure, described by Maunder et al. (2018)
+#' Model 2: Stepwise estimation procedure, described by Maunder et al. (2018)
 #' # - estimate L0 and rmax using linear regression on younger fish
 #' # - estimate k and t0 using GCM and all data, keeping L0 and rmax fixed
 #'
@@ -171,65 +173,30 @@
 #' points(lenRec~I(lenRel/50+liberty), tags_skj, col=3)
 #'
 #' # Prepare parameters
-#' init_step <- list(L0=L0, log_rmax=log(rmax), log_k=log(3), t50=2,
-#'                   log_sigma_1=log(1), log_sigma_2=log(1),
-#'                   log_age=log(tags_skj$lenRel/50))
+#' init <- list(L0=L0, log_rmax=log(rmax), log_k=log(3), t50=2,
+#'              log_sigma_1=log(1), log_sigma_2=log(1),
+#'              log_age=log(tags_skj$lenRel/50))
 #'
 #' # Fit model
 #' map <- list(L0=factor(NA), log_rmax=factor(NA))  # fix L0 and rmax
-#' model_step <- gcm(init_step, dat, map=map)
-#' fit_step <- nlminb(model_step$par, model_step$fn, model_step$gr,
-#'                    control=list(eval.max=1e4,iter.max=1e4))
-#' report_step <- model_step$report()
-#' sdreport_step <- sdreport(model_step)
+#' model <- gcm(init, dat, map=map)
+#' fit <- nlminb(model$par, model$fn, model$gr,
+#'               control=list(eval.max=1e4,iter.max=1e4))
+#' report <- model$report()
+#' sdreport <- sdreport(model)
 #'
 #' # Plot results
 #' plot(len~age, otoliths_skj, xlim=c(0,4), ylim=c(0,100))
-#' points(report_step$age, report_step$Lrel, col=4)
-#' points(report_step$age+report_step$liberty, report_step$Lrec, col=3)
-#' Lhat_step <- with(report_step, gcm_curve(x, L0, rmax, k, t50))
-#' lines(x, Lhat_step, lwd=2)
+#' points(report$age, report$Lrel, col=4)
+#' points(report$age+report$liberty, report$Lrec, col=3)
+#' Lhat <- with(report, gcm_curve(x, L0, rmax, k, t50))
+#' lines(x, Lhat, lwd=2)
 #'
 #' # Model summary
-#' est_step <- report_step[c("L0", "rmax", "k", "t50", "sigma_1", "sigma_2")]
-#' est_step
-#' fit_step[-1]
-#' head(summary(sdreport_step), 6)
-#'
-#' #############################################################################
-#'
-#' # Fit to otoliths only
-#' init_oto <- list(L0=20, log_rmax=log(120), log_k=log(2), t50=0,
-#'                  log_sigma_1=log(1), log_sigma_2=log(1))
-#' dat_oto <- list(Aoto=otoliths_skj$age, Loto=otoliths_skj$len,
-#'                 Lshort=30, Llong=60)
-#' model_oto <- gcm(init_oto, dat_oto)
-#' fit_oto <- nlminb(model_oto$par, model_oto$fn, model_oto$gr,
-#'                   control=list(eval.max=1e4, iter.max=1e4))
-#' model_oto$report()[c("L0", "rmax", "k", "t50", "sigma_1", "sigma_2")]
-#'
-#' # Same, but now estimating constant sigma instead of sigma varying by length
-#' # We do this by omitting log_sigma_2, Lshort, Llong
-#' init_oto <- list(L0=20, log_rmax=log(120), log_k=log(2), t50=0,
-#'                  log_sigma_1=log(1))
-#' dat_oto <- list(Aoto=otoliths_skj$age, Loto=otoliths_skj$len)
-#' model_oto <- gcm(init_oto, dat_oto)
-#' fit_oto <- nlminb(model_oto$par, model_oto$fn, model_oto$gr,
-#'                   control=list(eval.max=1e4, iter.max=1e4))
-#' model_oto$report()[c("L0", "rmax", "k", "t50", "sigma_1")]
-#'
-#' #############################################################################
-#'
-#' # Fit to tags only
-#' init_tags <- list(L0=log(20), log_rmax=log(120), log_k=log(2), t50=0,
-#'                   log_sigma_1=log(1), log_sigma_2=log(1),
-#'                   log_age=log(tags_skj$lenRel/60))
-#' dat_tags <- list(Lrel=tags_skj$lenRel, Lrec=tags_skj$lenRec,
-#'                  liberty=tags_skj$liberty, Lshort=30, Llong=60)
-#' model_tags <- gcm(init_tags, dat_tags)
-#' fit_tags <- nlminb(model_tags$par, model_tags$fn, model_tags$gr,
-#'                    control=list(eval.max=1e4, iter.max=1e4))
-#' model_tags$report()[c("L0", "rmax", "k", "t50")]
+#' est <- report[c("L0", "rmax", "k", "t50", "sigma_1", "sigma_2")]
+#' est
+#' fit[-1]
+#' head(summary(sdreport), 6)
 #'
 #' @importFrom RTMB dnorm MakeADFun REPORT
 #'
