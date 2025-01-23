@@ -3,7 +3,7 @@
 \docType{data}
 \name{otoliths_skj}
 \alias{otoliths_skj}
-\title{Otolith Data}
+\title{Otolith Data (Skipjack)}
 \format{
 Data frame containing two columns:
 \tabular{ll}{
@@ -37,11 +37,11 @@ package:
 otoliths_skj
 }
 \seealso{
-\code{otoliths_skj} and \code{\link{tags_skj}} are example datasets.
-
 \code{\link{gcm}}, \code{\link{gompertz}}\code{\link{gompertzo}},
 \code{\link{richards}}/\code{\link{richardso}}, \code{\link{schnute3}}, and
 \code{\link{vonbert}}/\code{\link{vonberto}} are alternative growth models.
+
+\code{otoliths_skj} and \code{\link{tags_skj}} are example datasets.
 
 \code{\link{fishgrowth-package}} gives an overview of the package.
 }

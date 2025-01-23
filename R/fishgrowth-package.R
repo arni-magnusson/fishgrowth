@@ -25,8 +25,8 @@
 #' }
 #' \emph{Example data:}
 #' \tabular{ll}{
-#'   \code{\link{otoliths_skj}} \tab otoliths\cr
-#'   \code{\link{tags_skj}}     \tab tags
+#'   \code{\link{otoliths_skj}} \tab otoliths (skipjack)\cr
+#'   \code{\link{tags_skj}}     \tab tags (skipjack)
 #' }
 #'
 #' @author Arni Magnusson and Mark Maunder.

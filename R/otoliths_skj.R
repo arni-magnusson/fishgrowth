@@ -2,7 +2,7 @@
 #'
 #' @name otoliths_skj
 #'
-#' @title Otolith Data
+#' @title Otolith Data (Skipjack)
 #'
 #' @description
 #' Simulated otolith data, loosely based on a skipjack tuna dataset analyzed by
@@ -34,11 +34,11 @@
 #' \url{https://meetings.wcpfc.int/node/16254}.
 #'
 #' @seealso
-#' \code{otoliths_skj} and \code{\link{tags_skj}} are example datasets.
-#'
 #' \code{\link{gcm}}, \code{\link{gompertz}}\code{\link{gompertzo}},
 #' \code{\link{richards}}/\code{\link{richardso}}, \code{\link{schnute3}}, and
 #' \code{\link{vonbert}}/\code{\link{vonberto}} are alternative growth models.
+#'
+#' \code{otoliths_skj} and \code{\link{tags_skj}} are example datasets.
 #'
 #' \code{\link{fishgrowth-package}} gives an overview of the package.
 #'
