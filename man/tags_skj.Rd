@@ -35,7 +35,7 @@ package:
 \preformatted{file.show(system.file(package="fishgrowth", "sim/simulate.R"))}
 }
 \examples{
-tags_skj
+head(tags_skj)
 }
 \seealso{
 \code{\link{otoliths_skj}} and \code{tags_skj} are example datasets.

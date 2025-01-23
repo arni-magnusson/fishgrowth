@@ -44,6 +44,6 @@
 #' \code{\link{fishgrowth-package}} gives an overview of the package.
 #'
 #' @examples
-#' tags_skj
+#' head(tags_skj)
 
 NA
