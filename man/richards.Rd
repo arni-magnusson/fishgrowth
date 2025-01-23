@@ -154,7 +154,7 @@ model <- richards(init, dat)
 fit <- nlminb(model$par, model$fn, model$gr,
               control=list(eval.max=1e4, iter.max=1e4))
 report <- model$report()
-sdreport <- sdreport(model, getReportCovariance=FALSE)
+sdreport <- sdreport(model)
 
 # Plot results
 plot(len~age, otoliths_skj, xlim=c(0,4), ylim=c(0,100))

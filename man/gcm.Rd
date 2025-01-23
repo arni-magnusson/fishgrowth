@@ -140,7 +140,7 @@ model <- gcm(init, dat)
 fit <- nlminb(model$par, model$fn, model$gr,
               control=list(eval.max=1e4, iter.max=1e4))
 report <- model$report()
-sdreport <- sdreport(model, getReportCovariance=FALSE)
+sdreport <- sdreport(model)
 
 # Plot results
 plot(len~age, otoliths_skj, xlim=c(0,4), ylim=c(0,100))
@@ -185,7 +185,7 @@ model_step <- gcm(init_step, dat, map=map)
 fit_step <- nlminb(model_step$par, model_step$fn, model_step$gr,
                    control=list(eval.max=1e4,iter.max=1e4))
 report_step <- model_step$report()
-sdreport_step <- sdreport(model_step, getReportCovariance=FALSE)
+sdreport_step <- sdreport(model_step)
 
 # Plot results
 plot(len~age, otoliths_skj, xlim=c(0,4), ylim=c(0,100))
