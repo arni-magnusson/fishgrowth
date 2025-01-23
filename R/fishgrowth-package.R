@@ -25,6 +25,7 @@
 #' }
 #' \emph{Example data:}
 #' \tabular{ll}{
+#'   \code{\link{otoliths_had}} \tab otoliths (haddock)\cr
 #'   \code{\link{otoliths_skj}} \tab otoliths (skipjack)\cr
 #'   \code{\link{tags_skj}}     \tab tags (skipjack)
 #' }

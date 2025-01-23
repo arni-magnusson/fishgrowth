@@ -116,7 +116,8 @@
 #' \code{\link{richards}}/\code{\link{richards}}, \code{\link{schnute3}}, and
 #' \code{\link{vonbert}}/\code{vonberto} are alternative growth models.
 #'
-#' \code{\link{otoliths_skj}} and \code{\link{tags_skj}} are example datasets.
+#' \code{\link{otoliths_had}}, \code{\link{otoliths_skj}}, and
+#' \code{\link{tags_skj}} are example datasets.
 #'
 #' \code{\link{fishgrowth-package}} gives an overview of the package.
 #'
