@@ -155,7 +155,7 @@
 #'
 #' #############################################################################
 #'
-#' Model 2: Stepwise estimation procedure, described by Maunder et al. (2018)
+#' # Model 2: Stepwise estimation procedure, described by Maunder et al. (2018)
 #' # - estimate L0 and rmax using linear regression on younger fish
 #' # - estimate k and t0 using GCM and all data, keeping L0 and rmax fixed
 #'
