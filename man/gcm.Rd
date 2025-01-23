@@ -119,10 +119,6 @@ predicted lengths:
 }
 }
 \examples{
-# Demonstrate GCM curve shapes
-plot(0:10, gcm_curve(0:10, L0=0, rmax=20, k=2, t50=2))
-plot(0:10, gcm_curve(0:10, L0=0, rmax=100, k=2, t50=2))
-
 # Explore initial parameter values
 plot(len~age, otoliths_skj, xlim=c(0,4), ylim=c(0,100))
 x <- seq(0, 4, 0.1)
