@@ -6,7 +6,7 @@
 #'
 #' @description
 #' Otolith data for Icelandic haddock from the Icelandic spring bottom trawl
-#' survey 2010-2020.
+#' survey 2011-2020.
 #'
 #' @usage
 #' otoliths_had
