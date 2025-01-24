@@ -133,7 +133,7 @@ lines(x, vonberto_curve(x, Linf=100, k=0.1, t0=-1), lty=3)
 
 # Prepare parameters and data
 init <- list(log_Linf=log(100), log_k=log(0.1), t0=-1,
-             log_sigma_1=log(5), log_sigma_2=log(5))
+             log_sigma_1=log(3), log_sigma_2=log(3))
 dat <- list(Aoto=otoliths_had$age, Loto=otoliths_had$len,
             Lshort=20, Llong=60)
 vonberto_objfun(init, dat)
