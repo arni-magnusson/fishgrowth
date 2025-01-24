@@ -139,7 +139,7 @@
 #'
 #' # Prepare parameters and data
 #' init <- list(log_L1=log(20), log_L2=log(70), log_k=log(0.1),
-#'              log_sigma_1=log(5), log_sigma_2=log(5))
+#'              log_sigma_1=log(3), log_sigma_2=log(3))
 #' dat <- list(Aoto=otoliths_had$age, Loto=otoliths_had$len,
 #'             t1=1, t2=10, Lshort=20, Llong=60)
 #' vonbert_objfun(init, dat)
