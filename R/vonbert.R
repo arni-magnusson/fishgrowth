@@ -135,10 +135,10 @@
 #' plot(len~age, otoliths_had, xlim=c(0,20), ylim=c(0,100), pch=16,
 #'      col="#0080a010")
 #' x <- seq(0, 20, 0.1)
-#' lines(x, vonbert_curve(x, L1=15, L2=70, k=0.2, t1=1, t2=10), lty=3)
+#' lines(x, vonbert_curve(x, L1=20, L2=70, k=0.1, t1=1, t2=10), lty=3)
 #'
 #' # Prepare parameters and data
-#' init <- list(log_L1=log(15), log_L2=log(70), log_k=log(0.2),
+#' init <- list(log_L1=log(20), log_L2=log(70), log_k=log(0.1),
 #'              log_sigma_1=log(5), log_sigma_2=log(5))
 #' dat <- list(Aoto=otoliths_had$age, Loto=otoliths_had$len,
 #'             t1=1, t2=10, Lshort=20, Llong=60)
@@ -152,8 +152,6 @@
 #' sdreport <- sdreport(model)
 #'
 #' # Plot results
-#' plot(len~age, otoliths_had, xlim=c(0,20), ylim=c(0,100), pch=16,
-#'      col="#0080a010")
 #' Lhat <- with(report, vonbert_curve(x, L1, L2, k, t1, t2))
 #' lines(x, Lhat, lwd=2, col=2)
 #'

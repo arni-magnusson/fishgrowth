@@ -130,7 +130,41 @@ predicted lengths:
 }
 }
 \examples{
-# Model 1: Fit to skipjack otoliths and tags
+# Model 1: Fit to haddock otoliths
+
+# Explore initial parameter values
+plot(len~age, otoliths_had, xlim=c(0,20), ylim=c(0,100), pch=16,
+     col="#0080a010")
+x <- seq(0, 20, 0.1)
+lines(x, vonbert_curve(x, L1=20, L2=70, k=0.1, t1=1, t2=10), lty=3)
+
+# Prepare parameters and data
+init <- list(log_L1=log(20), log_L2=log(70), log_k=log(0.1),
+             log_sigma_1=log(5), log_sigma_2=log(5))
+dat <- list(Aoto=otoliths_had$age, Loto=otoliths_had$len,
+            t1=1, t2=10, Lshort=20, Llong=60)
+vonbert_objfun(init, dat)
+
+# Fit model
+model <- vonbert(init, dat)
+fit <- nlminb(model$par, model$fn, model$gr,
+              control=list(eval.max=1e4, iter.max=1e4))
+report <- model$report()
+sdreport <- sdreport(model)
+
+# Plot results
+Lhat <- with(report, vonbert_curve(x, L1, L2, k, t1, t2))
+lines(x, Lhat, lwd=2, col=2)
+
+# Model summary
+est <- report[c("L1", "L2", "k", "sigma_1", "sigma_2")]
+est
+fit[-1]
+summary(sdreport)
+
+#############################################################################
+
+# Model 2: Fit to skipjack otoliths and tags
 
 # Explore initial parameter values
 plot(len~age, otoliths_skj, xlim=c(0,4), ylim=c(0,100))
@@ -170,7 +204,7 @@ head(summary(sdreport), 5)
 
 #############################################################################
 
-# Model 2: Fit to skipjack otoliths only
+# Model 3: Fit to skipjack otoliths only
 
 init <- list(log_L1=log(25), log_L2=log(75), log_k=log(0.8),
              log_sigma_1=log(1), log_sigma_2=log(1))
@@ -183,7 +217,7 @@ model$report()[c("L1", "L2", "k", "sigma_1", "sigma_2")]
 
 #############################################################################
 
-# Model 3: Fit to skipjack otoliths only,
+# Model 4: Fit to skipjack otoliths only,
 # but now estimating constant sigma instead of sigma varying by length
 
 # We do this by omitting log_sigma_2, Lshort, Llong
@@ -197,7 +231,7 @@ model$report()[c("L1", "L2", "k", "sigma_1")]
 
 #############################################################################
 
-# Model 4: Fit to skipjack tags only
+# Model 5: Fit to skipjack tags only
 
 init <- list(log_L1=log(25), log_L2=log(75), log_k=log(0.8),
              log_sigma_1=log(1), log_sigma_2=log(1),
