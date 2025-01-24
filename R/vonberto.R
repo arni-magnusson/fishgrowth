@@ -122,7 +122,41 @@
 #' \code{\link{fishgrowth-package}} gives an overview of the package.
 #'
 #' @examples
-#' # Model 1: Fit to skipjack otoliths and tags
+#' # Model 1: Fit to haddock otoliths
+#'
+#' # Explore initial parameter values
+#' plot(len~age, otoliths_had, xlim=c(0,20), ylim=c(0,100), pch=16,
+#'      col="#0080a010")
+#' x <- seq(0, 20, 0.1)
+#' lines(x, vonberto_curve(x, Linf=100, k=0.1, t0=-1), lty=3)
+#'
+#' # Prepare parameters and data
+#' init <- list(log_Linf=log(100), log_k=log(0.1), t0=-1,
+#'              log_sigma_1=log(5), log_sigma_2=log(5))
+#' dat <- list(Aoto=otoliths_had$age, Loto=otoliths_had$len,
+#'             Lshort=20, Llong=60)
+#' vonberto_objfun(init, dat)
+#'
+#' # Fit model
+#' model <- vonberto(init, dat)
+#' fit <- nlminb(model$par, model$fn, model$gr,
+#'               control=list(eval.max=1e4, iter.max=1e4, trace=1))
+#' report <- model$report()
+#' sdreport <- sdreport(model)
+#'
+#' # Plot results
+#' Lhat <- with(report, vonberto_curve(x, Linf, k, t0))
+#' lines(x, Lhat, lwd=2, col=2)
+#'
+#' # Model summary
+#' est <- report[c("Linf", "k", "t0", "sigma_1", "sigma_2")]
+#' est
+#' fit[-1]
+#' summary(sdreport)
+#'
+#' #############################################################################
+#'
+#' # Model 2: Fit to skipjack otoliths and tags
 #'
 #' # Explore initial parameter values
 #' plot(len~age, otoliths_skj, xlim=c(0,4), ylim=c(0,100))
@@ -162,7 +196,7 @@
 #'
 #' #############################################################################
 #'
-#' # Model 2: Fit to skipjack otoliths only
+#' # Model 3: Fit to skipjack otoliths only
 #'
 #' init <- list(log_Linf=log(80), log_k=log(0.8), t0=-0.5,
 #'              log_sigma_1=log(1), log_sigma_2=log(1))
@@ -175,7 +209,7 @@
 #'
 #' #############################################################################
 #'
-#' # Model 3: Fit to skipjack otoliths only,
+#' # Model 4: Fit to skipjack otoliths only,
 #' # but now estimating constant sigma instead of sigma varying by length
 #'
 #' # We do this by omitting log_sigma_2, Lshort, Llong
@@ -189,7 +223,7 @@
 #'
 #' #############################################################################
 #'
-#' # Model 4: Fit to skipjack tags only
+#' # Model 5: Fit to skipjack tags only
 #'
 #' init <- list(log_Linf=log(80), log_k=log(0.8), t0=-0.5,
 #'              log_sigma_1=log(1), log_sigma_2=log(1),
