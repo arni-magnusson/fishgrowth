@@ -140,7 +140,7 @@
 #' # Fit model
 #' model <- vonberto(init, dat)
 #' fit <- nlminb(model$par, model$fn, model$gr,
-#'               control=list(eval.max=1e4, iter.max=1e4, trace=1))
+#'               control=list(eval.max=1e4, iter.max=1e4))
 #' report <- model$report()
 #' sdreport <- sdreport(model)
 #'
