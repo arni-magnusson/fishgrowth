@@ -133,7 +133,7 @@
 #'
 #' # Prepare parameters and data
 #' init <- list(log_L1=log(25), log_L2=log(75), b=3,
-#'              log_sigma_min=log(1), log_sigma_max=log(1),
+#'              log_sigma_min=log(5), log_sigma_max=log(5),
 #'              log_age=log(tags_skj$lenRel/60))
 #' dat <- list(Aoto=otoliths_skj$age, Loto=otoliths_skj$len,
 #'             Lrel=tags_skj$lenRel, Lrec=tags_skj$lenRec,
@@ -165,7 +165,7 @@
 #' # Model 2: Fit to skipjack otoliths only
 #'
 #' init <- list(log_L1=log(25), log_L2=log(75), b=3,
-#'              log_sigma_min=log(1), log_sigma_max=log(1))
+#'              log_sigma_min=log(5), log_sigma_max=log(5))
 #' dat <- list(Aoto=otoliths_skj$age, Loto=otoliths_skj$len, t1=0, t2=4)
 #' model <- schnute3(init, dat)
 #' fit <- nlminb(model$par, model$fn, model$gr,
@@ -179,7 +179,7 @@
 #'
 #' # We do this by omitting log_sigma_max
 #' init <- list(log_L1=log(25), log_L2=log(75), b=3,
-#'              log_sigma_min=log(1))
+#'              log_sigma_min=log(5))
 #' dat <- list(Aoto=otoliths_skj$age, Loto=otoliths_skj$len, t1=0, t2=4)
 #' model <- schnute3(init, dat)
 #' fit <- nlminb(model$par, model$fn, model$gr,
@@ -191,7 +191,7 @@
 #' # Model 4: Fit to skipjack tags only
 #'
 #' init <- list(log_L1=log(25), log_L2=log(75), b=3,
-#'              log_sigma_min=log(1), log_sigma_max=log(1),
+#'              log_sigma_min=log(5), log_sigma_max=log(5),
 #'              log_age=log(tags_skj$lenRel/60))
 #' dat <- list(Lrel=tags_skj$lenRel, Lrec=tags_skj$lenRec,
 #'             liberty=tags_skj$liberty, t1=0, t2=4)

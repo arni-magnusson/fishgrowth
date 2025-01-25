@@ -127,8 +127,8 @@ points(lenRec~I(lenRel/60+liberty), tags_skj, col=3)
 lines(x, gcm_curve(x, L0=20, rmax=120, k=2, t50=0), lty=2)
 
 # Prepare parameters and data
-init <- list(L0=20, log_rmax=log(120), log_k=log(2), t50=0,
-             log_sigma_min=log(1), log_sigma_max=log(1),
+init <- list(L0=20, log_rmax=log(120), log_k=log(4), t50=0,
+             log_sigma_min=log(5), log_sigma_max=log(5),
              log_age=log(tags_skj$lenRel/60))
 dat <- list(Aoto=otoliths_skj$age, Loto=otoliths_skj$len,
             Lrel=tags_skj$lenRel, Lrec=tags_skj$lenRec,
@@ -176,7 +176,7 @@ points(lenRec~I(lenRel/50+liberty), tags_skj, col=3)
 
 # Prepare parameters
 init <- list(L0=L0, log_rmax=log(rmax), log_k=log(3), t50=2,
-             log_sigma_min=log(1), log_sigma_max=log(1),
+             log_sigma_min=log(5), log_sigma_max=log(5),
              log_age=log(tags_skj$lenRel/50))
 
 # Fit model

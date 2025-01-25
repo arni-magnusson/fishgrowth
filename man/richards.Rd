@@ -142,7 +142,7 @@ lines(x, richards_curve(x, L1=25, L2=75, k=0.8, b=1, t1=0, t2=4), lty=2)
 
 # Prepare parameters and data
 init <- list(log_L1=log(25), log_L2=log(75), log_k=log(0.8), b=1,
-             log_sigma_min=log(1), log_sigma_max=log(1),
+             log_sigma_min=log(5), log_sigma_max=log(5),
              log_age=log(tags_skj$lenRel/60))
 dat <- list(Aoto=otoliths_skj$age, Loto=otoliths_skj$len,
             Lrel=tags_skj$lenRel, Lrec=tags_skj$lenRec,
@@ -174,7 +174,7 @@ head(summary(sdreport), 6)
 # Model 2: Fit to skipjack otoliths only
 
 init <- list(log_L1=log(25), log_L2=log(75), log_k=log(0.8), b=1,
-             log_sigma_min=log(1), log_sigma_max=log(1))
+             log_sigma_min=log(5), log_sigma_max=log(5))
 dat <- list(Aoto=otoliths_skj$age, Loto=otoliths_skj$len, t1=0, t2=4)
 model <- richards(init, dat)
 fit <- nlminb(model$par, model$fn, model$gr,
@@ -188,7 +188,7 @@ model$report()[c("L1", "L2", "k", "b", "sigma_min", "sigma_max")]
 
 # We do this by omitting log_sigma_max
 init <- list(log_L1=log(25), log_L2=log(75), log_k=log(0.8), b=1,
-             log_sigma_min=log(1))
+             log_sigma_min=log(5))
 dat <- list(Aoto=otoliths_skj$age, Loto=otoliths_skj$len, t1=0, t2=4)
 model <- richards(init, dat)
 fit <- nlminb(model$par, model$fn, model$gr,
@@ -200,7 +200,7 @@ model$report()[c("L1", "L2", "k", "b", "sigma_min")]
 # Model 4: Fit to skipjack tags only
 
 init <- list(log_L1=log(25), log_L2=log(75), log_k=log(0.8), b=1,
-             log_sigma_min=log(1), log_sigma_max=log(1),
+             log_sigma_min=log(5), log_sigma_max=log(5),
              log_age=log(tags_skj$lenRel/60))
 dat <- list(Lrel=tags_skj$lenRel, Lrec=tags_skj$lenRec,
             liberty=tags_skj$liberty, t1=0, t2=4)
