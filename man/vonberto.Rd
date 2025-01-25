@@ -56,12 +56,14 @@ The \code{par} list contains the following elements:
   \item \code{log_Linf}, asymptotic maximum length
   \item \code{log_k}, growth coefficient
   \item \code{to}, age where the predicted length is zero, the x-intercept
-  \item \code{log_sigma_1}, growth variability at length \code{Lshort}
-  \item \code{log_sigma_2} (*), growth variability at length \code{Llong}
+  \item \code{log_sigma_min}, growth variability at the shortest observed
+        length in the data
+  \item \code{log_sigma_max} (*), growth variability at the longest observed
+        length in the data
   \item \code{log_age} (*), age at release of tagged individuals (vector)
 }
 
-*: The parameter \code{log_sigma_2} can be omitted to estimate growth
+*: The parameter \code{log_sigma_max} can be omitted to estimate growth
 variability that does not vary with length. The parameter vector
 \code{log_age} can be omitted to fit to otoliths only.
 
@@ -73,16 +75,11 @@ The \code{data} list contains the following elements:
   \item \code{Lrec} (*), length at recapture of tagged individuals (vector)
   \item \code{liberty} (*), time at liberty of tagged individuals in years
         (vector)
-  \item \code{Lshort} (*), length where sd(length) is \code{sigma_1}
-  \item \code{Llong} (*), length where sd(length) is \code{sigma_2}
 }
 
 *: The data vectors \code{Aoto} and \code{Loto} can be omitted to fit to
 tagging data only. The data vectors \code{Lrel}, \code{Lrec}, and
-\code{liberty} can be omitted to fit to otoliths only. The reference lengths
-\code{Lshort} and \code{Llong} are only required when estimating growth
-variability that varies with length, i.e., when the \code{log_sigma_2}
-parameter is specified.
+\code{liberty} can be omitted to fit to otoliths only.
 }
 \note{
 The Schnute-Fournier parametrization used in \code{\link{vonbert}} reduces
@@ -105,13 +102,14 @@ The variability of length at age increases linearly with length,
 \deqn{\sigma_L ~=~ \alpha \,+\, \beta \hat L}{
       sigma_L = alpha + beta * Lhat}
 
-where the slope is \eqn{\beta=(\sigma_2-\sigma_1) /
-(L_\mathrm{long}-L_\mathrm{short})}{beta = (sigma_2-sigma_1) /
-(Llong-Lshort)} and the intercept is \eqn{\alpha=\sigma_1 - \beta
-L_\mathrm{short}}{alpha = sigma_1 - beta * Lshort}. Alternatively, growth
+where the slope is \eqn{\beta=(\sigma_{\max}-\sigma_{\min}) /
+(L_{\max}-L_{\min})}{beta = (sigma_max-sigma_min) / (L_max-L_min)}, the
+intercept is \eqn{\alpha=\sigma_{\min} - \beta L_{\min}}{alpha = sigma_min -
+beta * L_min}, and \eqn{L_{\min}}{L_min} and \eqn{L_{\max}}{L_max} are the
+shortest and longest observed lengths in the data. Alternatively, growth
 variability can be modelled as a constant
-(\eqn{\sigma_L=\sigma_1}{sigma_L=sigma_1}) that does not vary with length,
-see \code{log_sigma_2} above.
+\eqn{\sigma_L=\sigma_{\min}}{sigma_L=sigma_min} that does not vary with
+length, by omitting \code{log_sigma_max} from the parameter list (see above).
 
 The negative log-likelihood is calculated by comparing the observed and
 predicted lengths:
@@ -133,9 +131,8 @@ lines(x, vonberto_curve(x, Linf=100, k=0.1, t0=-1), lty=3)
 
 # Prepare parameters and data
 init <- list(log_Linf=log(100), log_k=log(0.1), t0=-1,
-             log_sigma_1=log(3), log_sigma_2=log(3))
-dat <- list(Aoto=otoliths_had$age, Loto=otoliths_had$len,
-            Lshort=20, Llong=60)
+             log_sigma_min=log(3), log_sigma_max=log(3))
+dat <- list(Aoto=otoliths_had$age, Loto=otoliths_had$len)
 vonberto_objfun(init, dat)
 
 # Fit model
@@ -150,7 +147,7 @@ Lhat <- with(report, vonberto_curve(x, Linf, k, t0))
 lines(x, Lhat, lwd=2, col=2)
 
 # Model summary
-est <- report[c("Linf", "k", "t0", "sigma_1", "sigma_2")]
+est <- report[c("Linf", "k", "t0", "sigma_min", "sigma_max")]
 est
 fit[-1]
 summary(sdreport)
@@ -168,11 +165,11 @@ lines(x, vonberto_curve(x, Linf=80, k=0.8, t0=-0.5), lty=2)
 
 # Prepare parameters and data
 init <- list(log_Linf=log(80), log_k=log(0.8), t0=-0.5,
-             log_sigma_1=log(1), log_sigma_2=log(1),
+             log_sigma_min=log(1), log_sigma_max=log(1),
              log_age=log(tags_skj$lenRel/60))
 dat <- list(Aoto=otoliths_skj$age, Loto=otoliths_skj$len,
             Lrel=tags_skj$lenRel, Lrec=tags_skj$lenRec,
-            liberty=tags_skj$liberty, Lshort=30, Llong=60)
+            liberty=tags_skj$liberty)
 vonberto_objfun(init, dat)
 
 # Fit model
@@ -190,7 +187,7 @@ Lhat <- with(report, vonberto_curve(x, Linf, k, t0))
 lines(x, Lhat, lwd=2)
 
 # Model summary
-est <- report[c("Linf", "k", "t0", "sigma_1", "sigma_2")]
+est <- report[c("Linf", "k", "t0", "sigma_min", "sigma_max")]
 est
 fit[-1]
 head(summary(sdreport), 5)
@@ -200,37 +197,36 @@ head(summary(sdreport), 5)
 # Model 3: Fit to skipjack otoliths only
 
 init <- list(log_Linf=log(80), log_k=log(0.8), t0=-0.5,
-             log_sigma_1=log(1), log_sigma_2=log(1))
-dat <- list(Aoto=otoliths_skj$age, Loto=otoliths_skj$len,
-            Lshort=30, Llong=60)
+             log_sigma_min=log(1), log_sigma_max=log(1))
+dat <- list(Aoto=otoliths_skj$age, Loto=otoliths_skj$len)
 model <- vonberto(init, dat)
 fit <- nlminb(model$par, model$fn, model$gr,
               control=list(eval.max=1e4, iter.max=1e4))
-model$report()[c("Linf", "k", "t0", "sigma_1", "sigma_2")]
+model$report()[c("Linf", "k", "t0", "sigma_min", "sigma_max")]
 
 #############################################################################
 
 # Model 4: Fit to skipjack otoliths only,
 # but now estimating constant sigma instead of sigma varying by length
 
-# We do this by omitting log_sigma_2, Lshort, Llong
+# We do this by omitting log_sigma_max
 init <- list(log_Linf=log(80), log_k=log(0.8), t0=-0.5,
-             log_sigma_1=log(1))
+             log_sigma_min=log(1))
 dat <- list(Aoto=otoliths_skj$age, Loto=otoliths_skj$len)
 model <- vonberto(init, dat)
 fit <- nlminb(model$par, model$fn, model$gr,
               control=list(eval.max=1e4, iter.max=1e4))
-model$report()[c("Linf", "k", "t0", "sigma_1")]
+model$report()[c("Linf", "k", "t0", "sigma_min")]
 
 #############################################################################
 
 # Model 5: Fit to skipjack tags only
 
 init <- list(log_Linf=log(80), log_k=log(0.8), t0=-0.5,
-             log_sigma_1=log(1), log_sigma_2=log(1),
+             log_sigma_min=log(1), log_sigma_max=log(1),
              log_age=log(tags_skj$lenRel/60))
 dat <- list(Lrel=tags_skj$lenRel, Lrec=tags_skj$lenRec,
-            liberty=tags_skj$liberty, Lshort=30, Llong=60)
+            liberty=tags_skj$liberty)
 model <- vonberto(init, dat)
 fit <- nlminb(model$par, model$fn, model$gr,
               control=list(eval.max=1e4, iter.max=1e4))

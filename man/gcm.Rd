@@ -13,9 +13,9 @@ gcm_curve(t, L0, rmax, k, t50)
 gcm_objfun(par, data)
 }
 \arguments{
-\item{par}{is a parameter list.}
+\item{par}{a parameter list.}
 
-\item{data}{is a data list.}
+\item{data}{a data list.}
 
 \item{silent}{passed to \code{\link[RTMB]{MakeADFun}}.}
 
@@ -61,12 +61,14 @@ The \code{par} list contains the following elements:
         curve reaches the asymptotic maximum
   \item \code{t50}, shape parameter that determines the logistic function
         midpoint
-  \item \code{log_sigma_1}, growth variability at length \code{Lshort}
-  \item \code{log_sigma_2} (*), growth variability at length \code{Llong}
+  \item \code{log_sigma_min}, growth variability at the shortest observed
+        length in the data
+  \item \code{log_sigma_max} (*), growth variability at the longest observed
+        length in the data
   \item \code{log_age} (*), age at release of tagged individuals (vector)
 }
 
-*: The parameter \code{log_sigma_2} can be omitted to estimate growth
+*: The parameter \code{log_sigma_max} can be omitted to estimate growth
 variability that does not vary with length. The parameter vector
 \code{log_age} can be omitted to fit to otoliths only.
 
@@ -78,16 +80,11 @@ The \code{data} list contains the following elements:
   \item \code{Lrec} (*), length at recapture of tagged individuals (vector)
   \item \code{liberty} (*), time at liberty of tagged individuals in years
         (vector)
-  \item \code{Lshort} (*), length where sd(length) is \code{sigma_1}
-  \item \code{Llong} (*), length where sd(length) is \code{sigma_2}
 }
 
 *: The data vectors \code{Aoto} and \code{Loto} can be omitted to fit to
 tagging data only. The data vectors \code{Lrel}, \code{Lrec}, and
-\code{liberty} can be omitted to fit to otoliths only. The reference lengths
-\code{Lshort} and \code{Llong} are only required when estimating growth
-variability that varies with length, i.e., when the \code{log_sigma_2}
-parameter is specified.
+\code{liberty} can be omitted to fit to otoliths only.
 }
 \note{
 The growth cessation model (Maunder et al. 2018) predicts length at age as:
@@ -101,13 +98,14 @@ The variability of length at age increases linearly with length,
 \deqn{\sigma_L ~=~ \alpha \,+\, \beta \hat L}{
       sigma_L = alpha + beta * Lhat}
 
-where the slope is \eqn{\beta=(\sigma_2-\sigma_1) /
-(L_\mathrm{long}-L_\mathrm{short})}{beta = (sigma_2-sigma_1) /
-(Llong-Lshort)} and the intercept is \eqn{\alpha=\sigma_1 - \beta
-L_\mathrm{short}}{alpha = sigma_1 - beta * Lshort}. Alternatively, growth
+where the slope is \eqn{\beta=(\sigma_{\max}-\sigma_{\min}) /
+(L_{\max}-L_{\min})}{beta = (sigma_max-sigma_min) / (L_max-L_min)}, the
+intercept is \eqn{\alpha=\sigma_{\min} - \beta L_{\min}}{alpha = sigma_min -
+beta * L_min}, and \eqn{L_{\min}}{L_min} and \eqn{L_{\max}}{L_max} are the
+shortest and longest observed lengths in the data. Alternatively, growth
 variability can be modelled as a constant
-(\eqn{\sigma_L=\sigma_1}{sigma_L=sigma_1}) that does not vary with length,
-see \code{log_sigma_2} above.
+\eqn{\sigma_L=\sigma_{\min}}{sigma_L=sigma_min} that does not vary with
+length, by omitting \code{log_sigma_max} from the parameter list (see above).
 
 The negative log-likelihood is calculated by comparing the observed and
 predicted lengths:
@@ -130,11 +128,11 @@ lines(x, gcm_curve(x, L0=20, rmax=120, k=2, t50=0), lty=2)
 
 # Prepare parameters and data
 init <- list(L0=20, log_rmax=log(120), log_k=log(2), t50=0,
-             log_sigma_1=log(1), log_sigma_2=log(1),
+             log_sigma_min=log(1), log_sigma_max=log(1),
              log_age=log(tags_skj$lenRel/60))
 dat <- list(Aoto=otoliths_skj$age, Loto=otoliths_skj$len,
             Lrel=tags_skj$lenRel, Lrec=tags_skj$lenRec,
-            liberty=tags_skj$liberty, Lshort=30, Llong=60)
+            liberty=tags_skj$liberty)
 gcm_objfun(init, dat)
 
 # Fit model
@@ -152,7 +150,7 @@ Lhat <- with(report, gcm_curve(x, L0, rmax, k, t50))
 lines(x, Lhat, lwd=2)
 
 # Model summary
-est <- report[c("L0", "rmax", "k", "t50", "sigma_1", "sigma_2")]
+est <- report[c("L0", "rmax", "k", "t50", "sigma_min", "sigma_max")]
 est
 fit[-1]
 head(summary(sdreport), 6)
@@ -178,7 +176,7 @@ points(lenRec~I(lenRel/50+liberty), tags_skj, col=3)
 
 # Prepare parameters
 init <- list(L0=L0, log_rmax=log(rmax), log_k=log(3), t50=2,
-             log_sigma_1=log(1), log_sigma_2=log(1),
+             log_sigma_min=log(1), log_sigma_max=log(1),
              log_age=log(tags_skj$lenRel/50))
 
 # Fit model
@@ -197,7 +195,7 @@ Lhat <- with(report, gcm_curve(x, L0, rmax, k, t50))
 lines(x, Lhat, lwd=2)
 
 # Model summary
-est <- report[c("L0", "rmax", "k", "t50", "sigma_1", "sigma_2")]
+est <- report[c("L0", "rmax", "k", "t50", "sigma_min", "sigma_max")]
 est
 fit[-1]
 head(summary(sdreport), 6)
@@ -212,7 +210,7 @@ cessation in growth with application to bigeye tuna (\emph{Thunnus obesus}).
 \doi{10.1007/s00227-018-3336-9}.
 }
 \seealso{
-\code{gcm}, \code{\link{gompertz}}\code{\link{gompertzo}},
+\code{gcm}, \code{\link{gompertz}}/\code{\link{gompertzo}},
 \code{\link{richards}}/\code{\link{richardso}}, \code{\link{schnute3}}, and
 \code{\link{vonbert}}/\code{\link{vonberto}} are alternative growth models.
 

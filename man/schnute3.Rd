@@ -13,9 +13,9 @@ schnute3_curve(t, L1, L2, b, t1, t2)
 schnute3_objfun(par, data)
 }
 \arguments{
-\item{par}{is a parameter list.}
+\item{par}{a parameter list.}
 
-\item{data}{is a data list.}
+\item{data}{a data list.}
 
 \item{silent}{passed to \code{\link[RTMB]{MakeADFun}}.}
 
@@ -59,12 +59,14 @@ The \code{par} list contains the following elements:
   \item \code{log_L1}, predicted length at age \code{t1}
   \item \code{log_L2}, predicted length at age \code{t2}
   \item \code{b}, shape parameter
-  \item \code{log_sigma_1}, growth variability at length \code{Lshort}
-  \item \code{log_sigma_2} (*), growth variability at length \code{Llong}
+  \item \code{log_sigma_min}, growth variability at the shortest observed
+        length in the data
+  \item \code{log_sigma_max} (*), growth variability at the longest observed
+        length in the data
   \item \code{log_age} (*), age at release of tagged individuals (vector)
 }
 
-*: The parameter \code{log_sigma_2} can be omitted to estimate growth
+*: The parameter \code{log_sigma_max} can be omitted to estimate growth
 variability that does not vary with length. The parameter vector
 \code{log_age} can be omitted to fit to otoliths only.
 
@@ -78,16 +80,11 @@ The \code{data} list contains the following elements:
         (vector)
   \item \code{t1}, age where predicted length is \code{L1}
   \item \code{t2}, age where predicted length is \code{L2}
-  \item \code{Lshort} (*), length where sd(length) is \code{sigma_1}
-  \item \code{Llong} (*), length where sd(length) is \code{sigma_2}
 }
 
 *: The data vectors \code{Aoto} and \code{Loto} can be omitted to fit to
 tagging data only. The data vectors \code{Lrel}, \code{Lrec}, and
-\code{liberty} can be omitted to fit to otoliths only. The reference lengths
-\code{Lshort} and \code{Llong} are only required when estimating growth
-variability that varies with length, i.e., when the \code{log_sigma_2}
-parameter is specified.
+\code{liberty} can be omitted to fit to otoliths only.
 }
 \note{
 The Schnute Case 3 model is a special case of the Richards (1959) model,
@@ -107,13 +104,14 @@ The variability of length at age increases linearly with length,
 \deqn{\sigma_L ~=~ \alpha \,+\, \beta \hat L}{
       sigma_L = alpha + beta * Lhat}
 
-where the slope is \eqn{\beta=(\sigma_2-\sigma_1) /
-(L_\mathrm{long}-L_\mathrm{short})}{beta = (sigma_2-sigma_1) /
-(Llong-Lshort)} and the intercept is \eqn{\alpha=\sigma_1 - \beta
-L_\mathrm{short}}{alpha = sigma_1 - beta * Lshort}. Alternatively, growth
+where the slope is \eqn{\beta=(\sigma_{\max}-\sigma_{\min}) /
+(L_{\max}-L_{\min})}{beta = (sigma_max-sigma_min) / (L_max-L_min)}, the
+intercept is \eqn{\alpha=\sigma_{\min} - \beta L_{\min}}{alpha = sigma_min -
+beta * L_min}, and \eqn{L_{\min}}{L_min} and \eqn{L_{\max}}{L_max} are the
+shortest and longest observed lengths in the data. Alternatively, growth
 variability can be modelled as a constant
-(\eqn{\sigma_L=\sigma_1}{sigma_L=sigma_1}) that does not vary with length,
-see \code{log_sigma_2} above.
+\eqn{\sigma_L=\sigma_{\min}}{sigma_L=sigma_min} that does not vary with
+length, by omitting \code{log_sigma_max} from the parameter list (see above).
 
 The negative log-likelihood is calculated by comparing the observed and
 predicted lengths:
@@ -136,11 +134,11 @@ lines(x, schnute3_curve(x, L1=25, L2=75, b=3, t1=0, t2=4), lty=2)
 
 # Prepare parameters and data
 init <- list(log_L1=log(25), log_L2=log(75), b=3,
-             log_sigma_1=log(1), log_sigma_2=log(1),
+             log_sigma_min=log(1), log_sigma_max=log(1),
              log_age=log(tags_skj$lenRel/60))
 dat <- list(Aoto=otoliths_skj$age, Loto=otoliths_skj$len,
             Lrel=tags_skj$lenRel, Lrec=tags_skj$lenRec,
-            liberty=tags_skj$liberty, t1=0, t2=4, Lshort=30, Llong=60)
+            liberty=tags_skj$liberty, t1=0, t2=4)
 schnute3_objfun(init, dat)
 
 # Fit model
@@ -158,7 +156,7 @@ Lhat <- with(report, schnute3_curve(x, L1, L2, b, t1, t2))
 lines(x, Lhat, lwd=2)
 
 # Model summary
-est <- report[c("L1", "L2", "b", "sigma_1", "sigma_2")]
+est <- report[c("L1", "L2", "b", "sigma_min", "sigma_max")]
 est
 fit[-1]
 head(summary(sdreport), 5)
@@ -168,37 +166,36 @@ head(summary(sdreport), 5)
 # Model 2: Fit to skipjack otoliths only
 
 init <- list(log_L1=log(25), log_L2=log(75), b=3,
-             log_sigma_1=log(1), log_sigma_2=log(1))
-dat <- list(Aoto=otoliths_skj$age, Loto=otoliths_skj$len, t1=0, t2=4,
-            Lshort=30, Llong=60)
+             log_sigma_min=log(1), log_sigma_max=log(1))
+dat <- list(Aoto=otoliths_skj$age, Loto=otoliths_skj$len, t1=0, t2=4)
 model <- schnute3(init, dat)
 fit <- nlminb(model$par, model$fn, model$gr,
               control=list(eval.max=1e4, iter.max=1e4))
-model$report()[c("L1", "L2", "b", "sigma_1", "sigma_2")]
+model$report()[c("L1", "L2", "b", "sigma_min", "sigma_max")]
 
 #############################################################################
 
 # Model 3: Fit to skipjack otoliths only,
 # but now estimating constant sigma instead of sigma varying by length
 
-# We do this by omitting log_sigma_2, Lshort, Llong
+# We do this by omitting log_sigma_max
 init <- list(log_L1=log(25), log_L2=log(75), b=3,
-             log_sigma_1=log(1))
+             log_sigma_min=log(1))
 dat <- list(Aoto=otoliths_skj$age, Loto=otoliths_skj$len, t1=0, t2=4)
 model <- schnute3(init, dat)
 fit <- nlminb(model$par, model$fn, model$gr,
-             control=list(eval.max=1e4, iter.max=1e4))
-model$report()[c("L1", "L2", "b", "sigma_1")]
+              control=list(eval.max=1e4, iter.max=1e4))
+model$report()[c("L1", "L2", "b", "sigma_min")]
 
 #############################################################################
 
 # Model 4: Fit to skipjack tags only
 
 init <- list(log_L1=log(25), log_L2=log(75), b=3,
-             log_sigma_1=log(1), log_sigma_2=log(1),
+             log_sigma_min=log(1), log_sigma_max=log(1),
              log_age=log(tags_skj$lenRel/60))
 dat <- list(Lrel=tags_skj$lenRel, Lrec=tags_skj$lenRec,
-            liberty=tags_skj$liberty, t1=0, t2=4, Lshort=30, Llong=60)
+            liberty=tags_skj$liberty, t1=0, t2=4)
 model <- schnute3(init, dat)
 fit <- nlminb(model$par, model$fn, model$gr,
               control=list(eval.max=1e4, iter.max=1e4))
