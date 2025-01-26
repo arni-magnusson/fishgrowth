@@ -31,22 +31,32 @@
 #' fit <- nlminb(model$par, model$fn, model$gr,
 #'               control=list(eval.max=1e4, iter.max=1e4))
 #'
-#' # Calculate prediction band
+#' # Calculate 95% prediction band
 #' x <- seq(1, 18, 0.5)
-#' pred_band(x, model)
+#' band <- pred_band(x, model)
+#'
+#' # Plot 95% prediction band
+#' areaplot::confplot(cbind(lower,upper)~age, band, xlim=c(0,20), ylim=c(0,100),
+#'          ylab="len", col="mistyrose")
+#' points(len~age, otoliths_had, xlim=c(0,20), ylim=c(0,100),
+#'        pch=16, col="#0080a010")
+#' lines(Lhat~age, band, lwd=2, col=2)
+#' lines(lower~age, band, lty=1, lwd=0.5, col=2)
+#' lines(upper~age, band, lty=1, lwd=0.5, col=2)
 #'
 #' @importFrom stats qnorm
 #'
 #' @export
 
-pred_band <- function(age, model, level)
+pred_band <- function(age, model, level=0.95)
 {
   report <- model$report()
   report$t <- age
   Lhat <- with(report, eval(body(report$curve)))
   sigma <- with(report, sigma_intercept + sigma_slope * Lhat)
   sigma[sigma < 0] <- NA
-  lower <- Lhat - qnorm(0.025) * sigma
-  upper <- Lhat + qnorm(0.025) * sigma
+  p <- 1 - (1-level)/2
+  lower <- Lhat - qnorm(p) * sigma
+  upper <- Lhat + qnorm(p) * sigma
   data.frame(age, Lhat, sigma, lower, upper)
 }

@@ -5,6 +5,7 @@ Title: Fit Growth Curves to Fish Data
 Authors@R: c(person("Arni", "Magnusson", role=c("aut","cre"), email="thisisarni@gmail.com"),
              person("Mark", "Maunder", role="aut"))
 Depends: RTMB
+Suggests: areaplot
 LazyData: yes
 Description: Fit growth models to otoliths and/or tagging data, using RTMB and
   maximum likelihood. The tagging data provide information about the observed

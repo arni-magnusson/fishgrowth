@@ -4,7 +4,7 @@
 \alias{pred_band}
 \title{Prediction Band}
 \usage{
-pred_band(age, model, level)
+pred_band(age, model, level = 0.95)
 }
 \arguments{
 \item{age}{a vector of ages to calculate the prediction band.}
@@ -33,9 +33,18 @@ model <- vonbert(init, dat)
 fit <- nlminb(model$par, model$fn, model$gr,
               control=list(eval.max=1e4, iter.max=1e4))
 
-# Calculate prediction band
+# Calculate 95\% prediction band
 x <- seq(1, 18, 0.5)
-pred_band(x, model)
+band <- pred_band(x, model)
+
+# Plot 95\% prediction band
+areaplot::confplot(cbind(lower,upper)~age, band, xlim=c(0,20), ylim=c(0,100),
+         ylab="len", col="mistyrose")
+points(len~age, otoliths_had, xlim=c(0,20), ylim=c(0,100),
+       pch=16, col="#0080a010")
+lines(Lhat~age, band, lwd=2, col=2)
+lines(lower~age, band, lty=1, lwd=0.5, col=2)
+lines(upper~age, band, lty=1, lwd=0.5, col=2)
 
 }
 \seealso{
