@@ -117,7 +117,52 @@ predicted lengths:
 }
 }
 \examples{
-# Model 1: Fit to skipjack otoliths and tags
+# Model 1: Fit to haddock otoliths
+
+# Explore initial parameter values
+plot(len~age, otoliths_had, xlim=c(0,20), ylim=c(0,100), pch=16,
+     col="#0080a010")
+x <- seq(1, 18, 0.1)
+lines(x, gcm_curve(x, L0=5, rmax=20, k=0.15, t50=0), lty=3)
+
+# Prepare parameters and data
+init <- list(L0=5, log_rmax=log(20), log_k=log(0.15), t50=-1,
+             log_sigma_min=log(3), log_sigma_max=log(3))
+dat <- list(Aoto=otoliths_had$age, Loto=otoliths_had$len)
+gcm_objfun(init, dat)
+
+# Fit model
+model <- gcm(init, dat)
+fit <- nlminb(model$par, model$fn, model$gr,
+              control=list(eval.max=1e4, iter.max=1e4))
+report <- model$report()
+sdreport <- sdreport(model)
+
+# Plot results
+Lhat <- with(report, gcm_curve(x, L0, rmax, k, t50))
+lines(x, Lhat, lwd=2, col=2)
+legend("topleft", c("initial","best fit"), lty=c(3,1), lwd=c(1,2),
+       col=c(1,2), bty="n", inset=0.02, y.intersp=1.25)
+
+# Model summary
+est <- report[c("L0", "rmax", "k", "t50", "sigma_min", "sigma_max")]
+est
+fit[-1]
+summary(sdreport)
+
+# Plot 95\% prediction band
+band <- pred_band(x, model)
+areaplot::confplot(cbind(lower,upper)~age, band, xlim=c(0,20), ylim=c(0,100),
+         ylab="len", col="mistyrose")
+points(len~age, otoliths_had, xlim=c(0,20), ylim=c(0,100),
+       pch=16, col="#0080a010")
+lines(x, Lhat, lwd=2, col=2)
+lines(lower~age, band, lty=1, lwd=0.5, col=2)
+lines(upper~age, band, lty=1, lwd=0.5, col=2)
+
+#############################################################################
+
+# Model 2: Fit to skipjack otoliths and tags
 
 # Explore initial parameter values
 plot(len~age, otoliths_skj, xlim=c(0,4), ylim=c(0,100))
@@ -157,7 +202,7 @@ head(summary(sdreport), 6)
 
 #############################################################################
 
-# Model 2: Stepwise estimation procedure, described by Maunder et al. (2018)
+# Model 3: Stepwise estimation procedure, described by Maunder et al. (2018)
 # - estimate L0 and rmax using linear regression on younger fish
 # - estimate k and t0 using GCM and all data, keeping L0 and rmax fixed
 
