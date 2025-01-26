@@ -126,7 +126,7 @@ predicted lengths:
 # Explore initial parameter values
 plot(len~age, otoliths_had, xlim=c(0,20), ylim=c(0,100), pch=16,
      col="#0080a010")
-x <- seq(0, 20, 0.1)
+x <- seq(1, 18, 0.1)
 lines(x, vonberto_curve(x, Linf=100, k=0.1, t0=-1), lty=3)
 
 # Prepare parameters and data
@@ -145,12 +145,24 @@ sdreport <- sdreport(model)
 # Plot results
 Lhat <- with(report, vonberto_curve(x, Linf, k, t0))
 lines(x, Lhat, lwd=2, col=2)
+legend("topleft", c("initial","best fit"), lty=c(3,1), lwd=c(1,2),
+       col=c(1,2), bty="n", inset=0.02, y.intersp=1.25)
 
 # Model summary
 est <- report[c("Linf", "k", "t0", "sigma_min", "sigma_max")]
 est
 fit[-1]
 summary(sdreport)
+
+# Plot 95\% prediction band
+band <- pred_band(x, model)
+areaplot::confplot(cbind(lower,upper)~age, band, xlim=c(0,20), ylim=c(0,100),
+         ylab="len", col="mistyrose")
+points(len~age, otoliths_had, xlim=c(0,20), ylim=c(0,100),
+       pch=16, col="#0080a010")
+lines(x, Lhat, lwd=2, col=2)
+lines(lower~age, band, lty=1, lwd=0.5, col=2)
+lines(upper~age, band, lty=1, lwd=0.5, col=2)
 
 #############################################################################
 
