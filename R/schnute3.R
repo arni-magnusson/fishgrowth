@@ -266,6 +266,10 @@ schnute3_objfun <- function(par, data)
   nll <- 0
 
   # Report quantities of interest
+  type <- "schnute3"
+  curve <- schnute3_curve
+  REPORT(type)
+  REPORT(curve)
   REPORT(L1)
   REPORT(L2)
   REPORT(b)

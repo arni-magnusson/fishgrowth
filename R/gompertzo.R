@@ -263,6 +263,10 @@ gompertzo_objfun <- function(par, data)
   nll <- 0
 
   # Report quantities of interest
+  type <- "gompzertzo"
+  curve <- gompertzo_curve
+  REPORT(type)
+  REPORT(curve)
   REPORT(Linf)
   REPORT(k)
   REPORT(tau)

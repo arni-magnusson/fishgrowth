@@ -254,6 +254,10 @@ gcm_objfun <- function(par, data)
   nll <- 0
 
   # Report quantities of interest
+  type <- "gcm"
+  curve <- gcm_curve
+  REPORT(type)
+  REPORT(curve)
   REPORT(L0)
   REPORT(rmax)
   REPORT(k)

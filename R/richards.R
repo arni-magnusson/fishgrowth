@@ -273,6 +273,10 @@ richards_objfun <- function(par, data)
   nll <- 0
 
   # Report quantities of interest
+  type <- "richards"
+  curve <- richards_curve
+  REPORT(type)
+  REPORT(curve)
   REPORT(L1)
   REPORT(L2)
   REPORT(k)

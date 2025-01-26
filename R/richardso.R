@@ -259,6 +259,10 @@ richardso_objfun <- function(par, data)
   nll <- 0
 
   # Report quantities of interest
+  type <- "richardso"
+  curve <- richardso_curve
+  REPORT(type)
+  REPORT(curve)
   REPORT(Linf)
   REPORT(k)
   REPORT(tau)

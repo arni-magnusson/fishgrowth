@@ -288,6 +288,12 @@ vonberto_objfun <- function(par, data)
   nll <- 0
 
   # Report quantities of interest
+  type <- "vonberto"
+  curve <- vonberto_curve
+  REPORT(type)
+  REPORT(curve)
+  REPORT(type)
+  REPORT(curve)
   REPORT(Linf)
   REPORT(k)
   REPORT(t0)
