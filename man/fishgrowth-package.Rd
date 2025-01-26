@@ -24,6 +24,10 @@ unknown and estimated as a vector of parameters.
   \code{\link{vonbert}}   \tab von Bertalanffy\cr
   \code{\link{vonberto}}  \tab von Bertalanffy (old style)
 }
+\emph{Utilities:}
+\tabular{ll}{
+  \code{\link{pred_band}}  \tab prediction band
+}
 \emph{Example data:}
 \tabular{ll}{
   \code{\link{otoliths_had}} \tab otoliths (haddock)\cr

@@ -45,7 +45,7 @@ pred_band <- function(age, model, level)
   report$t <- age
   Lhat <- with(report, eval(body(report$curve)))
   sigma <- with(report, sigma_intercept + sigma_slope * Lhat)
-  sigma <- pmax(sigma, 0)
+  sigma[sigma < 0] <- NA
   lower <- Lhat - qnorm(0.025) * sigma
   upper <- Lhat + qnorm(0.025) * sigma
   data.frame(age, Lhat, sigma, lower, upper)

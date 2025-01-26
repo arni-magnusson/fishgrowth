@@ -114,6 +114,9 @@
 #' \code{\link{richards}}/\code{\link{richards}}, \code{\link{schnute3}}, and
 #' \code{\link{vonbert}}/\code{vonberto} are alternative growth models.
 #'
+#' \code{\link{pred_band}} calculates a prediction band for a fitted growth
+#' model.
+#'
 #' \code{\link{otoliths_had}}, \code{\link{otoliths_skj}}, and
 #' \code{\link{tags_skj}} are example datasets.
 #'
