@@ -218,9 +218,9 @@ In: W.S. Hoar et al. (eds.) \emph{Fish physiology 8: Bioenergetics and
 growth}. New York: Academic Press, pp. 677-743.
 }
 \seealso{
-\code{\link{gcm}}, \code{\link{gompertz}}/\code{gompertzo},
-\code{\link{richards}}/\code{\link{richards}}, \code{\link{schnute3}}, and
-\code{\link{vonbert}}/\code{\link{vonberto}} are alternative growth models.
+\code{\link{gcm}}, \code{\link{gompertz}}, \code{gompertzo},
+\code{\link{richards}}, \code{\link{richards}}, \code{\link{schnute3}}, and
+\code{\link{vonbert}}, \code{\link{vonberto}} are alternative growth models.
 
 \code{\link{pred_band}} calculates a prediction band for a fitted growth
 model.

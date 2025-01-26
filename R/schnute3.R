@@ -112,9 +112,9 @@
 #' \doi{10.1139/f81-153}.
 #'
 #' @seealso
-#' \code{\link{gcm}}, \code{\link{gompertz}}/\code{\link{gompertzo}},
-#' \code{\link{richards}}/\code{\link{richardso}}, \code{schnute3}, and
-#' \code{\link{vonbert}}/\code{\link{vonberto}} are alternative growth models.
+#' \code{\link{gcm}}, \code{\link{gompertz}}, \code{\link{gompertzo}},
+#' \code{\link{richards}}, \code{\link{richardso}}, \code{schnute3}, and
+#' \code{\link{vonbert}}, \code{\link{vonberto}} are alternative growth models.
 #'
 #' \code{\link{pred_band}} calculates a prediction band for a fitted growth
 #' model.
