@@ -140,7 +140,7 @@
 #' # Plot results
 #' Lhat <- with(report, gcm_curve(x, L0, rmax, k, t50))
 #' lines(x, Lhat, lwd=2, col=2)
-#' legend("topleft", c("initial","best fit"), lty=c(3,1), lwd=c(1,2),
+#' legend("bottomright", c("initial curve","model fit"), lty=c(3,1), lwd=c(1,2),
 #'        col=c(1,2), bty="n", inset=0.02, y.intersp=1.25)
 #'
 #' # Model summary
@@ -152,7 +152,7 @@
 #' # Plot 95% prediction band
 #' band <- pred_band(x, model)
 #' areaplot::confplot(cbind(lower,upper)~age, band, xlim=c(0,20), ylim=c(0,100),
-#'          ylab="len", col="mistyrose")
+#'          ylab="len", col="mistyrose", main="95% prediction band")
 #' points(len~age, otoliths_had, xlim=c(0,20), ylim=c(0,100),
 #'        pch=16, col="#0080a010")
 #' lines(x, Lhat, lwd=2, col=2)
@@ -169,6 +169,9 @@
 #' points(lenRel~I(lenRel/60), tags_skj, col=4)
 #' points(lenRec~I(lenRel/60+liberty), tags_skj, col=3)
 #' lines(x, gcm_curve(x, L0=20, rmax=120, k=2, t50=0), lty=2)
+#' legend("bottomright", c("otoliths","tag releases","tac recaptures",
+#'        "initial curve"), lty=c(0,0,0,2), pch=c(1,1,1,NA), lwd=c(1.2,1.2,1.2,1),
+#'        col=c(1,4,3,1), bty="n", inset=0.02, y.intersp=1.25)
 #'
 #' # Prepare parameters and data
 #' init <- list(L0=20, log_rmax=log(120), log_k=log(4), t50=0,
@@ -192,6 +195,9 @@
 #' points(report$age+report$liberty, report$Lrec, col=3)
 #' Lhat <- with(report, gcm_curve(x, L0, rmax, k, t50))
 #' lines(x, Lhat, lwd=2)
+#' legend("bottomright", c("otoliths","tag releases","tac recaptures",
+#'        "model fit"), lty=c(0,0,0,1), pch=c(1,1,1,NA), lwd=c(1.2,1.2,1.2,2),
+#'        col=c(1,4,3,1), bty="n", inset=0.02, y.intersp=1.25)
 #'
 #' # Model summary
 #' est <- report[c("L0", "rmax", "k", "t50", "sigma_min", "sigma_max")]
@@ -217,6 +223,10 @@
 #' points(t, gcm_curve(t, L0, rmax, k=3, t50=2), col="gray")
 #' points(lenRel~I(lenRel/50), tags_skj, col=4)
 #' points(lenRec~I(lenRel/50+liberty), tags_skj, col=3)
+#' legend("bottomright", c("otoliths","tag releases","tac recaptures",
+#'        "linear regression (otoliths)"), lty=c(0,0,0,1), pch=c(1,1,1,NA),
+#'        lwd=c(1.2,1.2,1.2,2), col=c(1,4,3,1), bty="n", inset=0.02,
+#'        y.intersp=1.25)
 #'
 #' # Prepare parameters
 #' init <- list(L0=L0, log_rmax=log(rmax), log_k=log(3), t50=2,
@@ -237,6 +247,9 @@
 #' points(report$age+report$liberty, report$Lrec, col=3)
 #' Lhat <- with(report, gcm_curve(x, L0, rmax, k, t50))
 #' lines(x, Lhat, lwd=2)
+#' legend("bottomright", c("otoliths","tag releases","tac recaptures",
+#'        "model fit"), lty=c(0,0,0,1), pch=c(1,1,1,NA), lwd=c(1.2,1.2,1.2,2),
+#'        col=c(1,4,3,1), bty="n", inset=0.02, y.intersp=1.25)
 #'
 #' # Model summary
 #' est <- report[c("L0", "rmax", "k", "t50", "sigma_min", "sigma_max")]

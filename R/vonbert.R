@@ -154,7 +154,7 @@
 #' # Plot results
 #' Lhat <- with(report, vonbert_curve(x, L1, L2, k, t1, t2))
 #' lines(x, Lhat, lwd=2, col=2)
-#' legend("topleft", c("initial","best fit"), lty=c(3,1), lwd=c(1,2),
+#' legend("bottomright", c("initial curve","model fit"), lty=c(3,1), lwd=c(1,2),
 #'        col=c(1,2), bty="n", inset=0.02, y.intersp=1.25)
 #'
 #' # Model summary
@@ -183,6 +183,9 @@
 #' points(lenRel~I(lenRel/60), tags_skj, col=4)
 #' points(lenRec~I(lenRel/60+liberty), tags_skj, col=3)
 #' lines(x, vonbert_curve(x, L1=25, L2=75, k=0.8, t1=0, t2=4), lty=2)
+#' legend("bottomright", c("otoliths","tag releases","tac recaptures",
+#'        "initial curve"), lty=c(0,0,0,2), pch=c(1,1,1,NA), lwd=c(1.2,1.2,1.2,1),
+#'        col=c(1,4,3,1), bty="n", inset=0.02, y.intersp=1.25)
 #'
 #' # Prepare parameters and data
 #' init <- list(log_L1=log(25), log_L2=log(75), log_k=log(0.8),
@@ -206,6 +209,9 @@
 #' points(report$age+report$liberty, report$Lrec, col=3)
 #' Lhat <- with(report, vonbert_curve(x, L1, L2, k, t1, t2))
 #' lines(x, Lhat, lwd=2)
+#' legend("bottomright", c("otoliths","tag releases","tac recaptures",
+#'        "model fit"), lty=c(0,0,0,1), pch=c(1,1,1,NA), lwd=c(1.2,1.2,1.2,2),
+#'        col=c(1,4,3,1), bty="n", inset=0.02, y.intersp=1.25)
 #'
 #' # Model summary
 #' est <- report[c("L1", "L2", "k", "sigma_min", "sigma_max")]

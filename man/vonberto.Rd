@@ -145,7 +145,7 @@ sdreport <- sdreport(model)
 # Plot results
 Lhat <- with(report, vonberto_curve(x, Linf, k, t0))
 lines(x, Lhat, lwd=2, col=2)
-legend("topleft", c("initial","best fit"), lty=c(3,1), lwd=c(1,2),
+legend("bottomright", c("initial curve","model fit"), lty=c(3,1), lwd=c(1,2),
        col=c(1,2), bty="n", inset=0.02, y.intersp=1.25)
 
 # Model summary
@@ -174,6 +174,9 @@ x <- seq(0, 4, 0.1)
 points(lenRel~I(lenRel/60), tags_skj, col=4)
 points(lenRec~I(lenRel/60+liberty), tags_skj, col=3)
 lines(x, vonberto_curve(x, Linf=80, k=0.8, t0=-0.5), lty=2)
+legend("bottomright", c("otoliths","tag releases","tac recaptures",
+       "initial curve"), lty=c(0,0,0,2), pch=c(1,1,1,NA), lwd=c(1.2,1.2,1.2,1),
+       col=c(1,4,3,1), bty="n", inset=0.02, y.intersp=1.25)
 
 # Prepare parameters and data
 init <- list(log_Linf=log(80), log_k=log(0.8), t0=-0.5,
@@ -197,6 +200,9 @@ points(report$age, report$Lrel, col=4)
 points(report$age+report$liberty, report$Lrec, col=3)
 Lhat <- with(report, vonberto_curve(x, Linf, k, t0))
 lines(x, Lhat, lwd=2)
+legend("bottomright", c("otoliths","tag releases","tac recaptures",
+       "model fit"), lty=c(0,0,0,1), pch=c(1,1,1,NA), lwd=c(1.2,1.2,1.2,2),
+       col=c(1,4,3,1), bty="n", inset=0.02, y.intersp=1.25)
 
 # Model summary
 est <- report[c("Linf", "k", "t0", "sigma_min", "sigma_max")]
