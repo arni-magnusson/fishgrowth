@@ -25,7 +25,7 @@
 #' \itemize{
 #'   \item \code{log_L1}, predicted length at age \code{t1}
 #'   \item \code{log_L2}, predicted length at age \code{t2}
-#'   \item \code{k}, growth coefficient
+#'   \item \code{log_k}, growth coefficient
 #'   \item \code{log_sigma_min}, growth variability at the shortest observed
 #'         length in the data
 #'   \item \code{log_sigma_max} (*), growth variability at the longest observed
@@ -150,7 +150,7 @@
 #'        col=c(1,4,3,1), bty="n", inset=0.02, y.intersp=1.25)
 #'
 #' # Prepare parameters and data
-#' init <- list(log_L1=log(25), log_L2=log(75), k=1.2,
+#' init <- list(log_L1=log(25), log_L2=log(75), log_k=log(1.2),
 #'              log_sigma_min=log(3), log_sigma_max=log(3),
 #'              log_age=log(tags_skj$lenRel/60))
 #' dat <- list(Aoto=otoliths_skj$age, Loto=otoliths_skj$len,
@@ -185,7 +185,7 @@
 #'
 #' # Model 2: Fit to skipjack otoliths only
 #'
-#' init <- list(log_L1=log(25), log_L2=log(75), k=1.2,
+#' init <- list(log_L1=log(25), log_L2=log(75), log_k=log(1.2),
 #'              log_sigma_min=log(3), log_sigma_max=log(3))
 #' dat <- list(Aoto=otoliths_skj$age, Loto=otoliths_skj$len, t1=0, t2=4)
 #' model <- gompertz(init, dat)
@@ -199,7 +199,7 @@
 #' # but now estimating constant sigma instead of sigma varying by length
 #'
 #' # We do this by omitting log_sigma_max
-#' init <- list(log_L1=log(25), log_L2=log(75), k=1.2,
+#' init <- list(log_L1=log(25), log_L2=log(75), log_k=log(1.2),
 #'              log_sigma_min=log(3))
 #' dat <- list(Aoto=otoliths_skj$age, Loto=otoliths_skj$len, t1=0, t2=4)
 #' model <- gompertz(init, dat)
@@ -211,7 +211,7 @@
 #'
 #' # Model 4: Fit to skipjack tags only
 #'
-#' init <- list(log_L1=log(25), log_L2=log(75), k=1.2,
+#' init <- list(log_L1=log(25), log_L2=log(75), log_k=log(1.2),
 #'              log_sigma_min=log(3), log_sigma_max=log(3),
 #'              log_age=log(tags_skj$lenRel/60))
 #' dat <- list(Lrel=tags_skj$lenRel, Lrec=tags_skj$lenRec,
