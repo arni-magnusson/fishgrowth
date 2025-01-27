@@ -258,7 +258,7 @@ gompertz_objfun <- function(par, data)
   # Extract parameters
   L1 <- exp(par$log_L1)
   L2 <- exp(par$log_L2)
-  k <- par$k
+  k <- exp(par$log_k)
   sigma_min <- exp(par$log_sigma_min)
   sigma_max <- if(is.null(par$log_sigma_max)) NULL else exp(par$log_sigma_max)
 
