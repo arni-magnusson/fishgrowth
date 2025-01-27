@@ -133,10 +133,10 @@ predicted lengths:
 plot(len~age, otoliths_had, xlim=c(0,18), ylim=c(0,100), pch=16,
      col="#0080a010")
 x <- seq(1, 18, 0.1)
-lines(x, gompertzo_curve(x, Linf=70, k=0.4, tau=2), lty=3)
+lines(x, gompertzo_curve(x, Linf=73, k=0.4, tau=2), lty=3)
 
 # Prepare parameters and data
-init <- list(log_Linf=log(70), log_k=log(0.4), tau=2,
+init <- list(log_Linf=log(73), log_k=log(0.4), tau=2,
              log_sigma_min=log(3), log_sigma_max=log(3))
 dat <- list(Aoto=otoliths_had$age, Loto=otoliths_had$len)
 gompertzo_objfun(init, dat)
