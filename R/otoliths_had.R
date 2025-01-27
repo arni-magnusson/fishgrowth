@@ -18,9 +18,16 @@
 #'   \code{len} \tab length (cm)
 #' }
 #'
+#' @note
+#' The data were contributed by the Icelandic Marine and Freshwater Research
+#' Institute. The otoliths were collected following the sampling protocol
+#' described in the survey manual (Sólmundsson et al. 2020).
+#'
 #' @source
-#' Data contributed by the \href{https://www.hafogvatn.is/en/}{Icelandic Marine
-#' and Freshwater Research Institute}.
+#' Sólmundsson, J., Karlsson, H., Björnsson, H., Jónsdóttir, I.G., Jakobsdóttir,
+#' K.B., and Bogason, V. (2020).
+#' \emph{A manual for the Icelandic groundfish survey in spring 2020}.
+#' Marine and Freshwater Research in Iceland HV 2020-08.
 #'
 #' @seealso
 #' \code{\link{gcm}}, \code{\link{gompertz}}, \code{\link{gompertzo}},

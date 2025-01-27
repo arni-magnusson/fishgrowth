@@ -12,8 +12,10 @@ Data frame containing two columns:
 }
 }
 \source{
-Data contributed by the \href{https://www.hafogvatn.is/en/}{Icelandic Marine
-and Freshwater Research Institute}.
+Sólmundsson, J., Karlsson, H., Björnsson, H., Jónsdóttir, I.G., Jakobsdóttir,
+K.B., and Bogason, V. (2020).
+\emph{A manual for the Icelandic groundfish survey in spring 2020}.
+Marine and Freshwater Research in Iceland HV 2020-08.
 }
 \usage{
 otoliths_had
@@ -21,6 +23,11 @@ otoliths_had
 \description{
 Otolith data for Icelandic haddock from the Icelandic spring bottom trawl
 survey 2011-2020.
+}
+\note{
+The data were contributed by the Icelandic Marine and Freshwater Research
+Institute. The otoliths were collected following the sampling protocol
+described in the survey manual (Sólmundsson et al. 2020).
 }
 \examples{
 head(otoliths_had)
