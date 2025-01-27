@@ -153,7 +153,7 @@ summary(sdreport)
 # Plot 95\% prediction band
 band <- pred_band(x, model)
 areaplot::confplot(cbind(lower,upper)~age, band, xlim=c(0,18), ylim=c(0,100),
-         ylab="len", col="mistyrose", main="95\% prediction band")
+         ylab="len", col="mistyrose")
 points(len~age, otoliths_had, xlim=c(0,18), ylim=c(0,100),
        pch=16, col="#0080a010")
 lines(x, Lhat, lwd=2, col=2)
