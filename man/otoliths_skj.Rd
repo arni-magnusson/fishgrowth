@@ -38,8 +38,9 @@ otoliths_skj
 }
 \seealso{
 \code{\link{gcm}}, \code{\link{gompertz}}, \code{\link{gompertzo}},
-\code{\link{richards}}, \code{\link{richardso}}, \code{\link{schnute3}}, and
-\code{\link{vonbert}}, \code{\link{vonberto}} are alternative growth models.
+\code{\link{richards}}, \code{\link{richardso}}, \code{\link{schnute3}},
+\code{\link{vonbert}}, and \code{\link{vonberto}} are alternative growth
+models.
 
 \code{\link{otoliths_had}}, \code{otoliths_skj}, and \code{\link{tags_skj}}
 are example datasets.

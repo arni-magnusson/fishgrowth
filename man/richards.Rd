@@ -275,8 +275,9 @@ A versatile growth model with statistically stable parameters.
 }
 \seealso{
 \code{\link{gcm}}, \code{\link{gompertz}}, \code{\link{gompertzo}},
-\code{richards}, \code{\link{richardso}}, \code{\link{schnute3}}, and
-\code{\link{vonbert}}, \code{\link{vonberto}} are alternative growth models.
+\code{richards}, \code{\link{richardso}}, \code{\link{schnute3}},
+\code{\link{vonbert}}, and \code{\link{vonberto}} are alternative growth
+models.
 
 \code{\link{pred_band}} calculates a prediction band for a fitted growth
 model.

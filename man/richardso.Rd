@@ -267,8 +267,9 @@ Why we need only two model forms.
 }
 \seealso{
 \code{\link{gcm}}, \code{\link{gompertz}}, \code{\link{gompertzo}},
-\code{\link{richards}}, \code{richardso}, \code{\link{schnute3}}, and
-\code{\link{vonbert}}, \code{\link{vonberto}} are alternative growth models.
+\code{\link{richards}}, \code{richardso}, \code{\link{schnute3}},
+\code{\link{vonbert}}, and \code{\link{vonberto}} are alternative growth
+models.
 
 \code{\link{pred_band}} calculates a prediction band for a fitted growth
 model.
