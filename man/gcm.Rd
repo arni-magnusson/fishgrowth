@@ -120,7 +120,7 @@ predicted lengths:
 # Model 1: Fit to haddock otoliths
 
 # Explore initial parameter values
-plot(len~age, otoliths_had, xlim=c(0,18), ylim=c(0,100), pch=16,
+plot(len~age, otoliths_had, xlim=c(0,18), ylim=c(0,105), pch=16,
      col="#0080a010")
 x <- seq(1, 18, 0.1)
 lines(x, gcm_curve(x, L0=5, rmax=20, k=0.15, t50=0), lty=3)

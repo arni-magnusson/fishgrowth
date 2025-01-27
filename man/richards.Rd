@@ -134,7 +134,7 @@ predicted lengths:
 # Model 1: Fit to haddock otoliths
 
 # Explore initial parameter values
-plot(len~age, otoliths_had, xlim=c(0,18), ylim=c(0,100), pch=16,
+plot(len~age, otoliths_had, xlim=c(0,18), ylim=c(0,105), pch=16,
      col="#0080a010")
 x <- seq(1, 18, 0.1)
 lines(x, richards_curve(x, L1=20, L2=70, k=0.1, b=1, t1=1, t2=10), lty=3)
