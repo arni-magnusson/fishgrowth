@@ -24,6 +24,19 @@ A data frame containing five columns:
 \description{
 Calculate a prediction band for a fitted growth curve.
 }
+\note{
+The variability of length at age (\code{sigma}) increases linearly with
+length:
+
+\deqn{\sigma_L ~=~ \alpha \,+\, \beta \hat L}{
+      sigma_L = alpha + beta * Lhat}
+
+This calculation of \code{sigma} is demonstrated in the example below.
+
+The \code{lower} and \code{upper} limits of the prediction band are
+calculated as \eqn{\hat L \pm 1.96\sigma_L}{Lhat +/- 1.96 * sigma_L} at the
+95\% significance level.
+}
 \examples{
 # Fit a model
 init <- list(log_L1=log(20), log_L2=log(70), log_k=log(0.1),
@@ -45,6 +58,13 @@ points(len~age, otoliths_had, xlim=c(0,18), ylim=c(0,100),
 lines(Lhat~age, band, lwd=2, col=2)
 lines(lower~age, band, lty=1, lwd=0.5, col=2)
 lines(upper~age, band, lty=1, lwd=0.5, col=2)
+
+# Calculate sigma by hand
+report <- model$report()
+alpha <- report$sigma_intercept
+beta <- report$sigma_slope
+Lhat <- band$Lhat
+alpha + beta * Lhat  # same values as band$sigma calculated by pred_band()
 
 }
 \seealso{

@@ -15,6 +15,19 @@
 #' \item{lower}{lower limit of prediction band}
 #' \item{upper}{upper limit of prediction band}
 #'
+#' @note
+#' The variability of length at age (\code{sigma}) increases linearly with
+#' length:
+#'
+#' \deqn{\sigma_L ~=~ \alpha \,+\, \beta \hat L}{
+#'       sigma_L = alpha + beta * Lhat}
+#'
+#' This calculation of \code{sigma} is demonstrated in the example below.
+#'
+#' The \code{lower} and \code{upper} limits of the prediction band are
+#' calculated as \eqn{\hat L \pm 1.96\sigma_L}{Lhat +/- 1.96 * sigma_L} at the
+#' 95\% significance level.
+#'
 #' @seealso
 #' \code{\link{gcm}}, \code{\link{gompertz}}, \code{\link{gompertzo}},
 #' \code{\link{richards}}, \code{\link{richardso}}, \code{\link{schnute3}},
@@ -44,6 +57,13 @@
 #' lines(Lhat~age, band, lwd=2, col=2)
 #' lines(lower~age, band, lty=1, lwd=0.5, col=2)
 #' lines(upper~age, band, lty=1, lwd=0.5, col=2)
+#'
+#' # Calculate sigma by hand
+#' report <- model$report()
+#' alpha <- report$sigma_intercept
+#' beta <- report$sigma_slope
+#' Lhat <- band$Lhat
+#' alpha + beta * Lhat  # same values as band$sigma calculated by pred_band()
 #'
 #' @importFrom stats qnorm
 #'
