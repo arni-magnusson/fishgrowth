@@ -188,7 +188,7 @@ model$report()[c("Linf", "k", "tau", "sigma_min", "sigma_max")]
 # Model 3: Fit to skipjack otoliths only,
 # but now estimating constant sigma instead of sigma varying by length
 
-# We do this by omitting log_sigma_max, L_min, L_max
+# We do this by omitting log_sigma_max
 init <- list(log_Linf=log(75), log_k=log(1), tau=0,
              log_sigma_min=log(3))
 dat <- list(Aoto=otoliths_skj$age, Loto=otoliths_skj$len)
