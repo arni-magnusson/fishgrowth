@@ -137,10 +137,10 @@ predicted lengths:
 plot(len~age, otoliths_had, xlim=c(0,18), ylim=c(0,105), pch=16,
      col="#0080a010")
 x <- seq(1, 18, 0.1)
-lines(x, richards_curve(x, L1=20, L2=70, k=0.1, b=1, t1=1, t2=10), lty=3)
+lines(x, richards_curve(x, L1=18, L2=67, k=0.1, b=1, t1=1, t2=10), lty=3)
 
 # Prepare parameters and data
-init <- list(log_L1=log(20), log_L2=log(70), log_k=log(0.1), b=1,
+init <- list(log_L1=log(18), log_L2=log(67), log_k=log(0.1), b=1,
              log_sigma_min=log(3), log_sigma_max=log(3))
 dat <- list(Aoto=otoliths_had$age, Loto=otoliths_had$len, t1=1, t2=10)
 richards_objfun(init, dat)
