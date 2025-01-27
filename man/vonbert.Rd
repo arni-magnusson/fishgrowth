@@ -131,7 +131,7 @@ predicted lengths:
 # Model 1: Fit to haddock otoliths
 
 # Explore initial parameter values
-plot(len~age, otoliths_had, xlim=c(0,20), ylim=c(0,100), pch=16,
+plot(len~age, otoliths_had, xlim=c(0,18), ylim=c(0,100), pch=16,
      col="#0080a010")
 x <- seq(1, 18, 0.1)
 lines(x, vonbert_curve(x, L1=20, L2=70, k=0.1, t1=1, t2=10), lty=3)
@@ -163,9 +163,9 @@ summary(sdreport)
 
 # Plot 95\% prediction band
 band <- pred_band(x, model)
-areaplot::confplot(cbind(lower,upper)~age, band, xlim=c(0,20), ylim=c(0,100),
+areaplot::confplot(cbind(lower,upper)~age, band, xlim=c(0,18), ylim=c(0,100),
          ylab="len", col="mistyrose")
-points(len~age, otoliths_had, xlim=c(0,20), ylim=c(0,100),
+points(len~age, otoliths_had, xlim=c(0,18), ylim=c(0,100),
        pch=16, col="#0080a010")
 lines(x, Lhat, lwd=2, col=2)
 lines(lower~age, band, lty=1, lwd=0.5, col=2)
