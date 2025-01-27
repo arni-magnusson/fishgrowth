@@ -126,7 +126,52 @@
 #' \code{\link{fishgrowth-package}} gives an overview of the package.
 #'
 #' @examples
-#' # Model 1: Fit to skipjack otoliths and tags
+#' # Model 1: Fit to haddock otoliths
+#'
+#' # Explore initial parameter values
+#' plot(len~age, otoliths_had, xlim=c(0,18), ylim=c(0,100), pch=16,
+#'      col="#0080a010")
+#' x <- seq(1, 18, 0.1)
+#' lines(x, richardso_curve(x, Linf=100, k=0.1, tau=-1, b=1), lty=3)
+#'
+#' # Prepare parameters and data
+#' init <- list(log_Linf=log(100), log_k=log(0.1), tau=-1, b=1,
+#'              log_sigma_min=log(3), log_sigma_max=log(3))
+#' dat <- list(Aoto=otoliths_had$age, Loto=otoliths_had$len)
+#' richardso_objfun(init, dat)
+#'
+#' # Fit model
+#' model <- richardso(init, dat)
+#' fit <- nlminb(model$par, model$fn, model$gr,
+#'               control=list(eval.max=1e4, iter.max=1e4))
+#' report <- model$report()
+#' sdreport <- sdreport(model)
+#'
+#' # Plot results
+#' Lhat <- with(report, richardso_curve(x, Linf, k, tau, b))
+#' lines(x, Lhat, lwd=2, col=2)
+#' legend("bottomright", c("initial curve","model fit"), lty=c(3,1), lwd=c(1,2),
+#'        col=c(1,2), bty="n", inset=0.02, y.intersp=1.25)
+#'
+#' # Model summary
+#' est <- report[c("Linf", "k", "tau", "b", "sigma_min", "sigma_max")]
+#' est
+#' fit[-1]
+#' summary(sdreport)
+#'
+#' # Plot 95% prediction band
+#' band <- pred_band(x, model)
+#' areaplot::confplot(cbind(lower,upper)~age, band, xlim=c(0,18), ylim=c(0,100),
+#'          ylab="len", col="mistyrose")
+#' points(len~age, otoliths_had, xlim=c(0,18), ylim=c(0,100),
+#'        pch=16, col="#0080a010")
+#' lines(x, Lhat, lwd=2, col=2)
+#' lines(lower~age, band, lty=1, lwd=0.5, col=2)
+#' lines(upper~age, band, lty=1, lwd=0.5, col=2)
+#'
+#' #############################################################################
+#'
+#' # Model 2: Fit to skipjack otoliths and tags
 #'
 #' # Explore initial parameter values
 #' plot(len~age, otoliths_skj, xlim=c(0,4), ylim=c(0,100))
@@ -172,7 +217,7 @@
 #'
 #' #############################################################################
 #'
-#' # Model 2: Fit to skipjack otoliths only
+#' # Model 3: Fit to skipjack otoliths only
 #'
 #' init <- list(log_Linf=log(80), log_k=log(0.8), tau=-0.5, b=1,
 #'              log_sigma_min=log(3), log_sigma_max=log(3))
@@ -184,7 +229,7 @@
 #'
 #' #############################################################################
 #'
-#' # Model 3: Fit to skipjack otoliths only,
+#' # Model 4: Fit to skipjack otoliths only,
 #' # but now estimating constant sigma instead of sigma varying by length
 #'
 #' # We do this by omitting log_sigma_max
@@ -198,7 +243,7 @@
 #'
 #' #############################################################################
 #'
-#' # Model 4: Fit to skipjack tags only
+#' # Model 5: Fit to skipjack tags only
 #'
 #' init <- list(log_Linf=log(80), log_k=log(0.8), tau=-0.5, b=1,
 #'              log_sigma_min=log(3), log_sigma_max=log(3),
