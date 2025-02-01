@@ -149,8 +149,7 @@ legend("bottomright", c("initial curve","model fit"), lty=c(3,1), lwd=c(1,2),
        col=c(1,2), bty="n", inset=0.02, y.intersp=1.25)
 
 # Model summary
-est <- report[c("Linf", "k", "t0", "sigma_min", "sigma_max")]
-est
+report[c("Linf", "k", "t0", "sigma_min", "sigma_max")]
 fit[-1]
 summary(sdreport)
 
@@ -205,8 +204,7 @@ legend("bottomright", c("otoliths","tag releases","tac recaptures",
        col=c(1,4,3,1), bty="n", inset=0.02, y.intersp=1.25)
 
 # Model summary
-est <- report[c("Linf", "k", "t0", "sigma_min", "sigma_max")]
-est
+report[c("Linf", "k", "t0", "sigma_min", "sigma_max")]
 fit[-1]
 head(summary(sdreport), 5)
 
@@ -248,7 +246,7 @@ dat <- list(Lrel=tags_skj$lenRel, Lrec=tags_skj$lenRec,
 model <- vonberto(init, dat)
 fit <- nlminb(model$par, model$fn, model$gr,
               control=list(eval.max=1e4, iter.max=1e4))
-model$report()[c("Linf", "k", "t0")]
+model$report()[c("Linf", "k", "t0", "sigma_min", "sigma_max")]
 
 }
 \references{

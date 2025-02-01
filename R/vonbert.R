@@ -158,8 +158,7 @@
 #'        col=c(1,2), bty="n", inset=0.02, y.intersp=1.25)
 #'
 #' # Model summary
-#' est <- report[c("L1", "L2", "k", "sigma_min", "sigma_max")]
-#' est
+#' report[c("L1", "L2", "k", "sigma_min", "sigma_max")]
 #' fit[-1]
 #' summary(sdreport)
 #'
@@ -214,8 +213,7 @@
 #'        col=c(1,4,3,1), bty="n", inset=0.02, y.intersp=1.25)
 #'
 #' # Model summary
-#' est <- report[c("L1", "L2", "k", "sigma_min", "sigma_max")]
-#' est
+#' report[c("L1", "L2", "k", "sigma_min", "sigma_max")]
 #' fit[-1]
 #' head(summary(sdreport), 5)
 #'
@@ -257,7 +255,7 @@
 #' model <- vonbert(init, dat)
 #' fit <- nlminb(model$par, model$fn, model$gr,
 #'               control=list(eval.max=1e4, iter.max=1e4))
-#' model$report()[c("L1", "L2", "k")]
+#' model$report()[c("L1", "L2", "k", "sigma_min", "sigma_max")]
 #'
 #' @importFrom RTMB dnorm MakeADFun REPORT
 #'
