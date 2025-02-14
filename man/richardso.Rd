@@ -246,9 +246,9 @@ init <- list(log_Linf=log(80), log_k=log(0.8), tau=-0.5, b=1,
              log_age=log(tags_skj$lenRel/60))
 dat <- list(Lrel=tags_skj$lenRel, Lrec=tags_skj$lenRec,
             liberty=tags_skj$liberty)
-model <- richardso(init, dat)
-fit <- nlminb(model$par, model$fn, model$gr,
-              control=list(eval.max=1e4, iter.max=1e4))
+model <- richardso(init, dat)           # using 1e3 to keep CRAN checks fast,
+fit <- nlminb(model$par, model$fn, model$gr,             # but try 1e4 to get
+              control=list(eval.max=1e3, iter.max=1e3))  # better convergence
 model$report()[c("Linf", "k", "tau", "b", "sigma_min", "sigma_max")]
 
 }
