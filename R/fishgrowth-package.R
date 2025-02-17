@@ -5,8 +5,8 @@
 #' @title Fit Growth Curves to Fish Data
 #'
 #' @description
-#' Fit growth models to otoliths and/or tagging data, using
-#' \code{\link[RTMB]{RTMB}} and maximum likelihood.
+#' Fit growth models to otoliths and/or tagging data, using the
+#' \code{\link[RTMB]{RTMB}} package and maximum likelihood.
 #'
 #' The otoliths (or similar measurements of age) provide direct observed
 #' coordinates of age and length. The tagging data provide information about the

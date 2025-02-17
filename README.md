@@ -1,7 +1,7 @@
 # fishgrowth
 
-Fit growth models to otoliths and/or tagging data, using `RTMB` and maximum
-likelihood.
+Fit growth models to otoliths and/or tagging data, using the `RTMB` package and
+maximum likelihood.
 
 The otoliths (or similar measurements of age) provide direct observed
 coordinates of age and length. The tagging data provide information about the
