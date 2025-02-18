@@ -1,6 +1,6 @@
 Package: fishgrowth
-Version: 1.0.0
-Date: 2025-02-14
+Version: 1.0.1
+Date: 2025-02-18
 Title: Fit Growth Curves to Fish Data
 Authors@R: c(person("Arni", "Magnusson", role=c("aut","cre"), email="thisisarni@gmail.com"),
              person("Mark", "Maunder", role="aut"))
