@@ -1,3 +1,7 @@
+[![CRAN Status](https://r-pkg.org/badges/version/fishgrowth)](https://cran.r-project.org/package=fishgrowth)
+[![CRAN Monthly](https://cranlogs.r-pkg.org/badges/fishgrowth)](https://cran.r-project.org/package=fishgrowth)
+[![CRAN Total](https://cranlogs.r-pkg.org/badges/grand-total/fishgrowth)](https://cran.r-project.org/package=fishgrowth)
+
 # fishgrowth
 
 Fit growth models to otoliths and/or tagging data, using the `RTMB` package and
@@ -14,11 +18,12 @@ two. Growth variability can be modelled as constant or increasing with length.
 
 ## Installation
 
-The package can be installed from GitHub using the `install_github` command:
+The package can be installed from
+[CRAN](https://cran.r-project.org/package=fishgrowth) using the
+`install.packages` command:
 
 ```R
-library(remotes)
-install_github("arni-magnusson/fishgrowth")
+install.packages("fishgrowth")
 ```
 
 ## Usage
@@ -38,3 +43,10 @@ The package is developed openly on
 Feel free to open an
 [issue](https://github.com/arni-magnusson/fishgrowth/issues) there if you
 encounter problems or have suggestions for future versions.
+
+The current development version can be installed using:
+
+```R
+library(remotes)
+install_github("arni-magnusson/fishgrowth")
+```
