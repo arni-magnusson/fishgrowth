@@ -105,7 +105,8 @@ predicts length at age as:
 
 \deqn{\hat L_t ~=~ \left[\:L_1^b\;+\;(L_2^b-L_1^b)\,
       \frac{1-e^{-k(t-t_1)}}{1-e^{-k(t_2-t_1)}}\,\right]^{1/b}}{
-      (L1^b + (L2^b-L1^b) * (1-exp(-k*(t-t1))) / (1-exp(-k*(t2-t1))))^(1/b)}
+      Lt = (L1^b + (L2^b-L1^b) * (1-exp(-k*(t-t1))) /
+      (1-exp(-k*(t2-t1))))^(1/b)}
 
 The variability of length at age increases linearly with length,
 

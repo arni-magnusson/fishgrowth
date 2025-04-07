@@ -89,9 +89,10 @@ tagging data only. The data vectors \code{Lrel}, \code{Lrec}, and
 \note{
 The growth cessation model (Maunder et al. 2018) predicts length at age as:
 
-\deqn{\hat L_t ~=~ r_{\max}\!\left[\,\frac{\log\left(1+e^{-kt_{50}}
+\deqn{\hat L_t ~=~ L_0 ~+~ r_{\max}\!\left[\,\frac{\log\left(1+e^{-kt_{50}}
       \right) \;-\;\log\left(1+e^{k(t-t_{50})}\right)}{k}\;+\;t\:\right]}{
-      L0 + rmax * ((log(1 + exp(-k*t50)) - log(1 + exp(k*(t-t50)))) / k + t)}
+      Lt = L0 + rmax * ((log(1 + exp(-k*t50)) - log(1 + exp(k*(t-t50)))) / k
+      + t)}
 
 The variability of length at age increases linearly with length,
 

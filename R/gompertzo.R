@@ -79,8 +79,8 @@
 #' The Gompertz (1825) growth model, as parametrized by Ricker (1979, Eq. 23)
 #' predicts length at age as:
 #'
-#' \deqn{L ~=~ L_\infty\exp\!\big(\!\!-\!e^{-k(t-\tau)}\big)}{
-#'       Linf * exp(-exp(-k * (t-tau)))}
+#' \deqn{\hat L_t ~=~ L_\infty\exp\!\big(\!\!-\!e^{-k(t-\tau)}\big)}{
+#'       Lt = Linf * exp(-exp(-k * (t-tau)))}
 #'
 #' The variability of length at age increases linearly with length,
 #'
