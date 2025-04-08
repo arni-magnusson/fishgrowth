@@ -41,6 +41,41 @@ modelled as constant or increasing with length.
   \code{\link{tags_skj}}     \tab tags (skipjack)
 }
 }
+\note{
+The parameter estimation method follows the statistical approach of Maunder
+et al. (2018), which stems from Aires-da-Silva et al. (2015), Eveson et al.
+(2004), and Laslett et al. (2002), collectively called the
+Laslett-Eveson-Polacheck approach.
+}
+\references{
+Aires-da-Silva, A.M., Maunder, M.N., Schaefer, K.M., and Fuller, D.W. (2015).
+Improved growth estimates from integrated analysis of direct aging and
+tag-recapture data: An illustration with bigeye tuna (\emph{Thunnus obesus})
+of the eastern Pacific Ocean with implications for management.
+\emph{Fisheries Research}, \bold{163}, 119--126.
+\doi{10.1016/j.fishres.2014.04.001}.
+
+Maunder, M.N., Deriso, R.B., Schaefer, K.M., Fuller, D.W., Aires-da-Silva,
+A.M., Minte-Vera, C.V., and Campana, S.E. (2018).
+The growth cessation model: a growth model for species showing a near
+cessation in growth with application to bigeye tuna (\emph{Thunnus obesus}).
+\emph{Marine Biology}, \bold{165}, 76.
+\doi{10.1007/s00227-018-3336-9}.
+
+Eveson, J.P., Laslett, G.M., and Polacheck, T. (2004).
+An integrated model for growth incorporating tag-recapture, length-frequency,
+and direct aging data.
+\emph{Canadian Journal of Fisheries and Aquatic Sciences}, \bold{61},
+292--306.
+\doi{10.1139/f03-163}.
+
+Laslett, G.M., Eveson, J.P., and Polacheck, T. (2002).
+A flexible maximum likelihood approach for fitting growth curves to
+tag-recapture data.
+\emph{Canadian Journal of Fisheries and Aquatic Sciences}, \bold{59},
+976--986.
+\doi{10.1139/f02-069}.
+}
 \seealso{
 Useful links:
 \itemize{

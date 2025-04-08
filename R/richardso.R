@@ -113,6 +113,9 @@
 #' Why we need only two model forms.
 #' \emph{Journal of Theoretical Biology}, \bold{267}, 417-425.
 #'
+#' The \code{\link{fishgrowth-package}} help page includes references describing
+#' the parameter estimation method.
+#'
 #' @seealso
 #' \code{\link{gcm}}, \code{\link{gompertz}}, \code{\link{gompertzo}},
 #' \code{\link{richards}}, \code{richardso}, \code{\link{schnute3}},

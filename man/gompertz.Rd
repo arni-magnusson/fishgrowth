@@ -273,6 +273,9 @@ A versatile growth model with statistically stable parameters.
 \emph{Canadian Journal of Fisheries and Aquatic Science}, \bold{38},
 1128-1140.
 \doi{10.1139/f81-153}.
+
+The \code{\link{fishgrowth-package}} help page includes references describing
+the parameter estimation method.
 }
 \seealso{
 \code{\link{gcm}}, \code{gompertz}, \code{\link{gompertzo}},

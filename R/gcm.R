@@ -103,6 +103,9 @@
 #' \emph{Marine Biology}, \bold{165}, 76.
 #' \doi{10.1007/s00227-018-3336-9}.
 #'
+#' The \code{\link{fishgrowth-package}} help page includes references describing
+#' the parameter estimation method.
+#'
 #' @seealso
 #' \code{gcm}, \code{\link{gompertz}}, \code{\link{gompertzo}},
 #' \code{\link{richards}}, \code{\link{richardso}}, \code{\link{schnute3}},

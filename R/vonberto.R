@@ -109,6 +109,9 @@
 #' \emph{On the dynamics of exploited fish populations}.
 #' London: Her Majesty's Stationery Office.
 #'
+#' The \code{\link{fishgrowth-package}} help page includes references describing
+#' the parameter estimation method.
+#'
 #' @seealso
 #' \code{\link{gcm}}, \code{\link{gompertz}}, \code{\link{gompertzo}},
 #' \code{\link{richards}}, \code{\link{richards}}, \code{\link{schnute3}},

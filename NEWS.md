@@ -1,4 +1,6 @@
-# fishgrowth 1.0.2 (development)
+# fishgrowth 1.0.2 (2025-04-08)
+
+* Added references describing the parameter estimation method.
 
 * Improved documentation of growth model equations.
 

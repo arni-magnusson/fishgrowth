@@ -117,6 +117,9 @@
 #' In: W.S. Hoar et al. (eds.) \emph{Fish physiology 8: Bioenergetics and
 #' growth}. New York: Academic Press, pp. 677-743.
 #'
+#' The \code{\link{fishgrowth-package}} help page includes references describing
+#' the parameter estimation method.
+#'
 #' @seealso
 #' \code{\link{gcm}}, \code{\link{gompertz}}, \code{gompertzo},
 #' \code{\link{richards}}, \code{\link{richards}}, \code{\link{schnute3}},

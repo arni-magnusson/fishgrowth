@@ -258,6 +258,9 @@ A quantitative theory of organic growth.
 Beverton, R.J.H. and Holt, S.J. (1957).
 \emph{On the dynamics of exploited fish populations}.
 London: Her Majesty's Stationery Office.
+
+The \code{\link{fishgrowth-package}} help page includes references describing
+the parameter estimation method.
 }
 \seealso{
 \code{\link{gcm}}, \code{\link{gompertz}}, \code{\link{gompertzo}},

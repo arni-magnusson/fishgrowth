@@ -267,6 +267,9 @@ A new approach to length-frequency analysis: Growth structure.
 \emph{Canadian Journal of Fisheries and Aquatic Science}, \bold{37},
 1337-1351.
 \doi{10.1139/f80-172}.
+
+The \code{\link{fishgrowth-package}} help page includes references describing
+the parameter estimation method.
 }
 \seealso{
 \code{\link{gcm}}, \code{\link{gompertz}}, \code{\link{gompertzo}},
