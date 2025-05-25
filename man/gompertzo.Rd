@@ -179,7 +179,7 @@ x <- seq(0, 4, 0.1)
 points(lenRel~I(lenRel/60), tags_skj, col=4)
 points(lenRec~I(lenRel/60+liberty), tags_skj, col=3)
 lines(x, gompertzo_curve(x, Linf=75, k=1, tau=0), lty=2)
-legend("bottomright", c("otoliths","tag releases","tac recaptures",
+legend("bottomright", c("otoliths","tag releases","tag recaptures",
        "initial curve"), col=c(1,4,3,1), pch=c(1,1,1,NA), lty=c(0,0,0,2),
        lwd=c(1.2,1.2,1.2,1), bty="n", inset=0.02, y.intersp=1.25)
 
@@ -205,7 +205,7 @@ points(report$age, report$Lrel, col=4)
 points(report$age+report$liberty, report$Lrec, col=3)
 Lhat <- with(report, gompertzo_curve(x, Linf, k, tau))
 lines(x, Lhat, lwd=2)
-legend("bottomright", c("otoliths","tag releases","tac recaptures",
+legend("bottomright", c("otoliths","tag releases","tag recaptures",
        "model fit"), col=c(1,4,3,1), pch=c(1,1,1,NA), lty=c(0,0,0,1),
        lwd=c(1.2,1.2,1.2,2), bty="n", inset=0.02, y.intersp=1.25)
 
