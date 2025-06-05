@@ -155,7 +155,7 @@ band <- pred_band(x, model)
 areaplot::confplot(cbind(lower,upper)~age, band, xlim=c(0,18), ylim=c(0,100),
          ylab="len", col="mistyrose")
 points(len~age, otoliths_had, pch=16, col="#0080a010")
-lines(x, Lhat, lwd=2, col=2)
+lines(Lhat~age, band, lwd=2, col=2)
 lines(lower~age, band, lty=1, lwd=0.5, col=2)
 lines(upper~age, band, lty=1, lwd=0.5, col=2)
 
