@@ -101,8 +101,7 @@ The Schnute Case 3 model (Schnute 1981, Eq. 17) predicts length at age as:
 
 The variability of length at age increases linearly with length,
 
-\deqn{\sigma_L ~=~ \alpha \,+\, \beta \hat L}{
-      sigma_L = alpha + beta * Lhat}
+\deqn{\sigma_L ~=~ \alpha \,+\, \beta \hat L}{sigma = alpha + beta * Lhat}
 
 where the intercept is \eqn{\alpha=\sigma_{\min} - \beta L_{\min}}{alpha =
 sigma_min - beta * L_min}, the slope is
