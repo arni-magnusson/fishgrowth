@@ -102,7 +102,7 @@ Fournier (1980), predicts length at age as:
 
 \deqn{\hat L_t ~=~ L_1 \;+\; (L_2-L_1)\,
       \frac{1\,-\,e^{-k(t-t_1)}}{\,1\,-\,e^{-k(t_2-t_1)}\,}}{
-      Lt = L1 + (L2-L1) * (1-exp(-k*(t-t1))) / (1-exp(-k*(t2-t1)))}
+      Lhat = L1 + (L2-L1) * (1-exp(-k*(t-t1))) / (1-exp(-k*(t2-t1)))}
 
 The variability of length at age increases linearly with length,
 

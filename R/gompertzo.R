@@ -80,7 +80,7 @@
 #' predicts length at age as:
 #'
 #' \deqn{\hat L_t ~=~ L_\infty\exp\!\big(\!\!-\!e^{-k(t-\tau)}\big)}{
-#'       Lt = Linf * exp(-exp(-k * (t-tau)))}
+#'       Lhat = Linf * exp(-exp(-k * (t-tau)))}
 #'
 #' The variability of length at age increases linearly with length,
 #'

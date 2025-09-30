@@ -99,7 +99,7 @@ Eq. 4), predicts length at age as:
 
 \deqn{\hat L_t ~=~ L_\infty\left(1\,-\,\frac{1}{b}\,
       e^{-k(t-\tau)}\right)^{\!b}}{
-      Lt = Linf * (1 - (1/b) * exp(-k*(t-tau)))^b}
+      Lhat = Linf * (1 - (1/b) * exp(-k*(t-tau)))^b}
 
 The variability of length at age increases linearly with length,
 

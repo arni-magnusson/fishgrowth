@@ -95,7 +95,7 @@ The von Bertalanffy (1938) growth model, as parametrized by Beverton and Holt
 (1957), predicts length at age as:
 
 \deqn{\hat L_t ~=~ L_\infty\left(1\,-\,e^{-k(t-t_0)}\right)}{
-      Lt = Linf * (1 - exp(-k*(t-t0)))}
+      Lhat = Linf * (1 - exp(-k*(t-t0)))}
 
 The variability of length at age increases linearly with length,
 

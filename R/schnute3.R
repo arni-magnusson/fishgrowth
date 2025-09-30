@@ -74,7 +74,7 @@
 #'
 #' \deqn{\hat L_t ~=~ \left[\;L_1^b\;+\;(L_2^b-L_1^b)\,
 #'       \frac{t-t_1}{t_2-t_1}\,\right]^{1/b}}{
-#'       Lt = (L1^b + (L2^b-L1^b) * (t-t1) / (t2-t1))^(1/b)}
+#'       Lhat = (L1^b + (L2^b-L1^b) * (t-t1) / (t2-t1))^(1/b)}
 #'
 #' The variability of length at age increases linearly with length,
 #'

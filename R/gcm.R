@@ -69,8 +69,8 @@
 #'
 #' \deqn{\hat L_t ~=~ L_0 ~+~ r_{\max}\!\left[\,\frac{\log\left(1+e^{-kt_{50}}
 #'       \right) \;-\;\log\left(1+e^{k(t-t_{50})}\right)}{k}\;+\;t\:\right]}{
-#'       Lt = L0 + rmax * ((log(1 + exp(-k*t50)) - log(1 + exp(k*(t-t50)))) / k
-#'       + t)}
+#'       Lhat = L0 + rmax * ((log(1 + exp(-k*t50)) - log(1 + exp(k*(t-t50))))
+#'       / k + t)}
 #'
 #' The variability of length at age increases linearly with length,
 #'

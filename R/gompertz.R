@@ -85,7 +85,7 @@
 #'
 #' \deqn{\hat L_t ~=~ L_1\exp\!\left[\,\log(L_2/L_1)\,
 #'       \frac{1-e^{-k(t-t_1)}}{1-e^{-k(t_2-t_1)}}\,\right]}{
-#'       Lt = L1 * exp(log(L2/L1) * (1-exp(-k*(t-t1))) / (1-exp(-k*(t2-t1))))}
+#'       Lhat = L1 * exp(log(L2/L1) * (1-exp(-k*(t-t1))) / (1-exp(-k*(t2-t1))))}
 #'
 #' The variability of length at age increases linearly with length,
 #'
