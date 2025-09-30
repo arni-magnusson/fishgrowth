@@ -1,3 +1,10 @@
+# fishgrowth 1.0.3 (2025-10-01)
+
+* Improved documentation of the objective function.
+
+
+
+
 # fishgrowth 1.0.2 (2025-04-08)
 
 * Added references describing the parameter estimation method.
