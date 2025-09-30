@@ -90,13 +90,13 @@
 #' \eqn{\sigma_L=\sigma_{\min}}{sigma_L=sigma_min} that does not vary with
 #' length, by omitting \code{log_sigma_max} from the parameter list (see above).
 #'
-#' The negative log-likelihood is calculated by comparing the observed and
-#' predicted lengths:
-#' \preformatted{
-#'   nll_Loto <- -dnorm(Loto, Loto_hat, sigma_Loto, TRUE)
-#'   nll_Lrel <- -dnorm(Lrel, Lrel_hat, sigma_Lrel, TRUE)
-#'   nll_Lrec <- -dnorm(Lrec, Lrec_hat, sigma_Lrec, TRUE)
-#'   nll <- sum(nll_Loto) + sum(nll_Lrel) + sum(nll_Lrec)
+#' The negative log-likelihood objective function integrates (sums) the
+#' likelihood components from the otoliths and tags:
+#'
+#' \deqn{
+#' -\log L = \sum_{i=1}^{N_\mathrm{oto}} 0.5\log(2\pi) + \log\sigma_i + \frac{(L_i-\hat L_i)^2}{2\sigma_i^2}
+#' }{
+#' -log L = sum(0.5 log(2 pi) + log sigma + ((L_i-\hat L_i)^2)/(2 sigma^2))
 #' }
 #'
 #' @references
