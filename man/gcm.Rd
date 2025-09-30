@@ -99,12 +99,12 @@ The variability of length at age increases linearly with length,
 \deqn{\sigma_L ~=~ \alpha \,+\, \beta \hat L}{
       sigma_L = alpha + beta * Lhat}
 
-where the slope is \eqn{\beta=(\sigma_{\max}-\sigma_{\min}) /
-(L_{\max}-L_{\min})}{beta = (sigma_max-sigma_min) / (L_max-L_min)}, the
-intercept is \eqn{\alpha=\sigma_{\min} - \beta L_{\min}}{alpha = sigma_min -
-beta * L_min}, and \eqn{L_{\min}}{L_min} and \eqn{L_{\max}}{L_max} are the
-shortest and longest observed lengths in the data. Alternatively, growth
-variability can be modelled as a constant
+where the intercept is \eqn{\alpha=\sigma_{\min} - \beta L_{\min}}{alpha =
+sigma_min - beta * L_min}, the slope is
+\eqn{\beta=(\sigma_{\max}-\sigma_{\min}) / (L_{\max}-L_{\min})}{beta =
+(sigma_max-sigma_min) / (L_max-L_min)}, and \eqn{L_{\min}}{L_min} and
+\eqn{L_{\max}}{L_max} are the shortest and longest observed lengths in the
+data. Alternatively, growth variability can be modelled as a constant
 \eqn{\sigma_L=\sigma_{\min}}{sigma_L=sigma_min} that does not vary with
 length, by omitting \code{log_sigma_max} from the parameter list (see above).
 
