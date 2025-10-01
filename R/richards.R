@@ -97,14 +97,24 @@
 #' \eqn{\sigma_L=\sigma_{\min}}{sigma_L=sigma_min} that does not vary with
 #' length, by omitting \code{log_sigma_max} from the parameter list (see above).
 #'
-#' The negative log-likelihood is calculated by comparing the observed and
-#' predicted lengths:
-#' \preformatted{
-#'   nll_Loto <- -dnorm(Loto, Loto_hat, sigma_Loto, TRUE)
-#'   nll_Lrel <- -dnorm(Lrel, Lrel_hat, sigma_Lrel, TRUE)
-#'   nll_Lrec <- -dnorm(Lrec, Lrec_hat, sigma_Lrec, TRUE)
-#'   nll <- sum(nll_Loto) + sum(nll_Lrel) + sum(nll_Lrec)
-#' }
+#' The negative log-likelihood objective function integrates (sums) the
+#' likelihood components from the otoliths and tags,
+#'
+#' \deqn{f ~=~ \sum_{i=1}^{N_\mathrm{oto}}\, 0.5\log(2\pi) \,+\,
+#'       \log\sigma_i \,+\, \frac{(L_i-\hat L_i)^2}{2\sigma_i^2}}{f
+#'       = sum(0.5*log(2*pi) + log(sigma_i) + ((L_i-Lhat_i)^2)/(2*sigma_i^2))}
+#' \deqn{~~~~ ~+\,~ \sum_{j=1}^{N_\mathrm{tag}}\, 0.5\log(2\pi) \,+\,
+#'       \log\sigma_j \,+\, \frac{(L_j-\hat L_j)^2}{2\sigma_j^2}}{
+#'       + sum(0.5*log(2*pi) + log(sigma_j) + ((L_j-Lhat_j)^2)/(2*sigma_j^2))}
+#' \deqn{~~~~ ~+\,~ \sum_{k=1}^{N_\mathrm{tag}}\, 0.5\log(2\pi) \,+\,
+#'       \log\sigma_k \,+\, \frac{(L_k-\hat L_k)^2}{2\sigma_k^2}}{
+#'       + sum(0.5*log(2*pi) + log(sigma_k) + ((L_k-Lhat_k)^2)/(2*sigma_k^2))}
+#'
+#' where \eqn{L_i} are length measurements from the otolith data, \eqn{L_j} are
+#' length measurements at tag release, and \eqn{L_k} are length measurements at
+#' tag recapture. \if{html,latex}{\eqn{N_\mathrm{oto}} is the number of fish in
+#' the otolith data and \eqn{N_\mathrm{tag}} is the number of fish in the
+#' tagging data.}
 #'
 #' @references
 #' Richards, F.J. (1959).
