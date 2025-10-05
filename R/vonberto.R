@@ -207,7 +207,10 @@
 #' sdreport <- sdreport(model)
 #'
 #' # Plot results
-#' plot(len~age, otoliths_skj, xlim=c(0,4), ylim=c(0,100))
+#' band <- pred_band(x, model)
+#' areaplot::confplot(cbind(lower,upper)~age, band, xlim=c(0,4), ylim=c(0,100),
+#'          ylab="len", col="gray90")
+#' points(len~age, otoliths_skj)
 #' points(report$age, report$Lrel, col=4)
 #' points(report$age+report$liberty, report$Lrec, col=3)
 #' Lhat <- with(report, vonberto_curve(x, Linf, k, t0))

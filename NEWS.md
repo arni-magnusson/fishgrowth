@@ -1,3 +1,10 @@
+# fishgrowth 1.0.4 (2025-10-06)
+
+* Added prediction band in skipjack model examples.
+
+
+
+
 # fishgrowth 1.0.3 (2025-10-01)
 
 * Improved documentation of the objective function.
