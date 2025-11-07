@@ -1,4 +1,6 @@
-# fishgrowth 1.0.4 (2025-10-06)
+# fishgrowth 1.0.4 (2025-11-07)
+
+* Improved handling of NA values, which are now omitted with a warning.
 
 * Added prediction band in skipjack model examples.
 

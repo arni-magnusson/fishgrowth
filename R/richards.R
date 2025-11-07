@@ -309,6 +309,11 @@ richards_curve <- function(t, L1, L2, k, b, t1, t2)
 
 richards_objfun <- function(par, data)
 {
+  # Omit NA values
+  valid <- na_omit(par, data)
+  par <- valid$par
+  data <- valid$data
+
   # Extract parameters
   L1 <- exp(par$log_L1)
   L2 <- exp(par$log_L2)

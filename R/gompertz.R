@@ -313,6 +313,11 @@ gompertz_curve <- function(t, L1, L2, k, t1, t2)
 
 gompertz_objfun <- function(par, data)
 {
+  # Omit NA values
+  valid <- na_omit(par, data)
+  par <- valid$par
+  data <- valid$data
+
   # Extract parameters
   L1 <- exp(par$log_L1)
   L2 <- exp(par$log_L2)

@@ -300,6 +300,11 @@ gcm_curve <- function(t, L0, rmax, k, t50)
 
 gcm_objfun <- function(par, data)
 {
+  # Omit NA values
+  valid <- na_omit(par, data)
+  par <- valid$par
+  data <- valid$data
+
   # Extract parameters
   L0 <- par$L0
   rmax <- exp(par$log_rmax)

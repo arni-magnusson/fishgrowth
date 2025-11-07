@@ -294,6 +294,11 @@ vonberto_curve <- function(t, Linf, k, t0)
 
 vonberto_objfun <- function(par, data)
 {
+  # Omit NA values
+  valid <- na_omit(par, data)
+  par <- valid$par
+  data <- valid$data
+
   # Extract parameters
   Linf <- exp(par$log_Linf)
   k <- exp(par$log_k)
